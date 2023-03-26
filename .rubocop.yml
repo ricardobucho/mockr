@@ -1,0 +1,26 @@
+inherit_from:
+  - https://raw.githubusercontent.com/thoughtbot/guides/main/ruby/.rubocop.yml
+
+require:
+  - rubocop-rails
+  - rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 3.2.1
+  NewCops: enable
+  Exclude:
+    - 'bin/{rails,rake}'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/BlockLength:
+  Max: 120

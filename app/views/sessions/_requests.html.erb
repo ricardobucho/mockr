@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-auto">
+    <h2 class="text-body-emphasis align-middle">Endpoints</h2>
+  </div>
+  <div class="col">
+    <% if current_user.manager? %>
+      <a href="<%= avo_path %>" data-turbo="false" class="btn btn-primary">
+        <i class="bi bi-gear"></i>
+        Manage
+      </a>
+    <% end %>
+  </div>
+</div>
+
+<div class="accordion mt-2" id="clients-accordion">
+  <% Client.includes(requests: :responses).find_each.with_index do |client, index| %>
+    <div class="accordion-item">
+      <div class="accordion-header">
+        <button
+          class="accordion-button h1"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#client-<%= client.slug %>"
+          aria-expanded="true"
+          aria-controls="client-<%= client.slug %>"
+        >
+          <%= client.name %>
+        </button>
+      </div>
+      <div
+        id="client-<%= client.slug %>"
+        class="accordion-collapse <%= index == 0 ? "show" : "collapse" %>"
+        data-bs-parent="#clients-accordion"
+      >
+        <div class="accordion-body">
+          <div class="list-group">
+            <% client.requests.each do |request| %>
+              <div class="list-group-item p-3" aria-current="true">
+                <div class="d-flex w-100">
+                  <div class="col">
+                    <div class="mb-0 fw-semibold"><%= request.name %></div>
+                    <div>
+                      <span class="badge bg-success align-middle"><%= request.method %></span>
+                      <span class="fst-italic align-middle">/clients/<%= client.slug %><%= request.path %></span>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <div class="btn-group align-middle" role="group">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-success"
+                        data-bs-toggle="tooltip"
+                        data-bs-title="Responses"
+                      >
+                        <i class="bi bi-chat-square-dots-fill"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row row-cols-4 gap-2 mt-3">
+                  <% request.responses.each do |response| %>
+                    <div class="col">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="d-flex w-100">
+                            <div class="col">
+                              <div class="mb-0 fw-semibold"><%= response.name %></div>
+                              <div class="mt-2">
+                                <% response.conditions.sort.each do |(key, value)| %>
+                                  <div>
+                                    <span class="badge bg-secondary align-middle">
+                                      <%= key %>
+                                    </span>
+                                    <span class="align-middle">
+                                      <%= value %>
+                                    </span>
+                                  </div>
+                                <% end %>
+                              </div>
+                            </div>
+                            <div class="col-auto">
+                              <div class="btn-group align-middle" role="group">
+                                <button
+                                  type="button"
+                                  class="btn btn-sm btn-primary"
+                                  data-bs-toggle="tooltip"
+                                  data-bs-title="View Response"
+                                >
+                                  <i class="bi bi-braces"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
