@@ -4,7 +4,7 @@
 set -o errexit
 
 bundle install
-npm install
+yarn install
 
 bundle exec rails assets:precompile
 bundle exec rails assets:clean
