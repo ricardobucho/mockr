@@ -10,8 +10,8 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :provider_uid, null: false
       t.string :provider_username, null: false
       t.string :provider_email, null: false
-      t.string :oauth_token, null: false
-      t.datetime :oauth_expires_at, null: false
+      t.string :oauth_token
+      t.datetime :oauth_expires_at
 
       # Timestamps
       t.timestamps

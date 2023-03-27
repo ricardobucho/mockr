@@ -7,6 +7,7 @@ class CreateResponses < ActiveRecord::Migration[7.0]
       t.jsonb :conditions, default: {}, null: false
       t.integer :status, null: false, default: 200
       t.jsonb :headers, default: {}, null: false
+      t.string :format, null: false, default: "json"
       t.string :path, null: false
       t.timestamps
       t.datetime :deleted_at, index: true

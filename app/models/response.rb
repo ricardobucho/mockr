@@ -5,6 +5,16 @@ class Response < ApplicationRecord
 
   belongs_to :request
 
+  enum format: {
+    "JSON" => "json",
+    "HTML" => "html",
+    "XML" => "xml",
+  }
+
+  validates :format, presence: true
+  validates :status, presence: true
+  validates :name, presence: true, uniqueness: { scope: :request_id }
+
   before_save :set_path!
   before_save :upload_response!
 

@@ -1,19 +1,28 @@
+# rubocop:disable Rails/ApplicationController
+
 class EndpointsController < ActionController::Base
+  include Errors
+
   skip_before_action :verify_authenticity_token
 
   def handler
-    # return bad_request if user_token.blank?
+    return unauthorized("Missing authentication token.") if
+      user_token.blank?
 
-    # user = User.find_by(token: user_token)
+    return unauthorized("Invalid authentication token.") if
+      user.blank?
 
-    # return bad_request if user.blank?
+    return bad_request("Client not found.") if
+      client.blank?
 
-    return bad_request if client.blank?
-    return bad_request if client_request.blank?
-    return not_found if client_response.blank?
+    return not_found("Request with given path not found.") if
+      client_request.blank?
+
+    return not_found("Response not found.") if
+      client_response.blank?
 
     render(
-      json: client_response.body,
+      client_response_format => client_response.body,
       status: client_response.status,
       headers: client_response.headers,
     )
@@ -21,16 +30,12 @@ class EndpointsController < ActionController::Base
 
   private
 
-  def bad_request
-    render json: { error: "Bad Request" }, status: :bad_request
-  end
-
-  def not_found
-    render json: { error: "Not Found" }, status: :not_found
-  end
-
   def user_token
     request.headers["Authorization"]&.split(" ")&.last
+  end
+
+  def user
+    @user ||= User.find_by(token: user_token)
   end
 
   def client
@@ -52,4 +57,10 @@ class EndpointsController < ActionController::Base
         end
       end
   end
+
+  def client_response_format
+    @client_response_format ||= client_response.format_before_type_cast.to_sym
+  end
 end
+
+# rubocop:enable Rails/ApplicationController

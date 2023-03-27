@@ -13,6 +13,8 @@ Avo.configure do |config|
   ## == Set the context ==
   config.set_context do
     self.class.include Authentication
+
+    def login_path = "/login"
   end
 
   ## == Authentication ==
@@ -20,9 +22,9 @@ Avo.configure do |config|
 
   # config.current_user_resource_name = :current_user
 
-  # config.authenticate_with do
-  #   redirect_to root_path unless current_user.manager?
-  # end
+  config.authenticate_with do
+    redirect_to "/" unless current_user&.manager?
+  end
 
   ## == Authorization ==
   config.authorization_client = :pundit

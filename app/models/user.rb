@@ -28,7 +28,7 @@ class User < ApplicationRecord
         provider_username: auth_hash["info"]["nickname"],
         provider_email: auth_hash["info"]["email"],
         oauth_token: auth_hash["credentials"]["token"],
-        oauth_expires_at: Time.at(auth_hash["credentials"].fetch("expires_at", 0)),
+        oauth_expires_at: Time.now + 7.days,
       )
 
       user
@@ -41,4 +41,11 @@ class User < ApplicationRecord
 
   def user? = self.class.roles[role] == "user"
   def manager? = self.class.roles[role] == "manager"
+
+  def oauth_expired?
+    oauth_token.blank? || (
+      oauth_expires_at.present? &&
+      oauth_expires_at < Time.now
+    )
+  end
 end
