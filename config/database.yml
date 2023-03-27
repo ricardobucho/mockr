@@ -9,6 +9,9 @@ production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
 
+staging:
+  <<: *production
+
 development:
   <<: *default
   database: mockr_development
