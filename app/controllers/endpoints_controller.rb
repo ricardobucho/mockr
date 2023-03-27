@@ -12,6 +12,9 @@ class EndpointsController < ActionController::Base
     return unauthorized("Invalid authentication token.") if
       user.blank?
 
+    return unauthorized("Expired oauth session.") if
+      user.oauth_expired?
+
     return bad_request("Client not found.") if
       client.blank?
 

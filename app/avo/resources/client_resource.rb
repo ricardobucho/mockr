@@ -1,6 +1,8 @@
 class ClientResource < Avo::BaseResource
   self.title = :name
-  self.includes = []
+  self.includes = %i[requests]
+
+  field :requests, as: :has_many
 
   field :id, as: :id
   field :name, as: :text, required: true

@@ -1,6 +1,6 @@
 class RequestResource < Avo::BaseResource
   self.title = :name
-  self.includes = []
+  self.includes = %i[responses]
 
   field :id, as: :id
   field :client, as: :belongs_to, required: true

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "sessions#create", as: :auth_callback
   get "/auth/failure", to: "sessions#failure", as: :auth_failure
 
+  get "/regenerate_token", to: "user#regenerate_token", as: :regenerate_token
+
   scope :clients do
     scope ":client", defaults: { client: "default" } do
       match "*path", to: "endpoints#handler", via: :all

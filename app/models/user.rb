@@ -28,7 +28,7 @@ class User < ApplicationRecord
         provider_username: auth_hash["info"]["nickname"],
         provider_email: auth_hash["info"]["email"],
         oauth_token: auth_hash["credentials"]["token"],
-        oauth_expires_at: Time.now + 7.days,
+        oauth_expires_at: nil,
       )
 
       user
