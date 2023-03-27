@@ -34,10 +34,8 @@ module Authentication
   end
 
   def current_user
-    user = User.find_by(id: session[:user_id]) if session[:user_id]
+    return if session[:user_id].blank?
 
-    return if user.blank?
-
-    @current_user ||= user
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 end

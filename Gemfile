@@ -30,6 +30,7 @@ gem "turbo-rails", "~> 1.1"
 
 group :development, :test do
   gem "debug"
+  gem "prosopite"
   gem "web-console"
 
   gem "pry"
