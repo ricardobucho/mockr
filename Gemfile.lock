@@ -328,7 +328,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_paranoid
-  avo (= 2.26)
+  avo
   aws-sdk-s3
   bootsnap
   cssbundling-rails (~> 1.1)
