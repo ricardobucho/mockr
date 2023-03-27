@@ -8,10 +8,8 @@ Rails.application.routes.draw do
   get "/auth/logout", to: "sessions#destroy", as: :auth_logout
 
   scope :clients do
-    Client.find_each do |client|
-      scope ":client", as: client.slug do
-        match "*path", to: "endpoints#handler", via: :all
-      end
+    scope ":client", defaults: { client: "default" } do
+      match "*path", to: "endpoints#handler", via: :all
     end
   end
 
