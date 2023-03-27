@@ -1,0 +1,36 @@
+<div class="list-group-item p-3" aria-current="true">
+  <div class="d-flex w-100">
+    <div class="col">
+      <div class="mb-0 fw-semibold"><%= request.name %></div>
+      <div>
+        <span class="badge bg-success align-middle"><%= request.method %></span>
+        <span class="fst-italic align-middle">/clients/<%= client.slug %><%= request.path %></span>
+      </div>
+    </div>
+    <div class="col-auto">
+      <div class="btn-group align-middle" role="group">
+        <button
+          type="button"
+          class="btn btn-sm btn-success"
+          data-bs-toggle="tooltip"
+          data-bs-title="Responses"
+        >
+          <i class="bi bi-chat-square-dots-fill"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-cols-4 gap-2 mt-3">
+    <% request.responses.each do |response| %>
+      <%=
+        render(
+          "sessions/endpoints/response",
+          client: client,
+          request: request,
+          response: response,
+        )
+      %>
+    <% end %>
+  </div>
+</div>

@@ -3,6 +3,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     :github,
     ENV.fetch("GITHUB_CLIENT_ID", nil),
     ENV.fetch("GITHUB_CLIENT_SECRET", nil),
-    scope: "user,read:org",
+    scope: "user:email,user:profile,read:org",
   )
 end

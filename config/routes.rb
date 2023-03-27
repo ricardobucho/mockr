@@ -7,29 +7,10 @@ Rails.application.routes.draw do
   get "/auth/failure", to: "sessions#failure", as: :auth_failure
   get "/auth/logout", to: "sessions#destroy", as: :auth_logout
 
-  if ActiveRecord::Base.connected?
-    namespace :clients do
-      Client.includes(requests: :responses).find_each do |client|
-        namespace client.slug do
-          client.requests.each do |request|
-            request.responses.each do |response|
-              send(
-                request.method.downcase.to_sym,
-                request.path,
-                to: ->(_env) {
-                  [
-                    response.status,
-                    {
-                      "Content-Type" => "application/json",
-                      **response.headers,
-                    },
-                    [response.body],
-                  ]
-                },
-              )
-            end
-          end
-        end
+  scope :clients do
+    Client.find_each do |client|
+      scope ":client", as: client.slug do
+        match "*path", to: "endpoints#handler", via: :all
       end
     end
   end

@@ -1,0 +1,35 @@
+<div class="col">
+  <div class="card">
+    <div class="card-body">
+      <div class="d-flex w-100">
+        <div class="col">
+          <div class="mb-0 fw-semibold"><%= response.name %></div>
+          <div class="mt-2">
+            <% response.conditions.sort.each do |(key, value)| %>
+              <div>
+                <span class="badge bg-secondary align-middle">
+                  <%= key %>
+                </span>
+                <span class="align-middle">
+                  <%= value %>
+                </span>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div class="btn-group align-middle" role="group">
+            <button
+              type="button"
+              class="btn btn-sm btn-primary"
+              data-bs-toggle="tooltip"
+              data-bs-title="View Response"
+            >
+              <i class="bi bi-braces"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
