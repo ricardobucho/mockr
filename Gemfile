@@ -5,7 +5,7 @@ source "https://rubygems.org"
 ruby "3.2.1"
 
 gem "acts_as_paranoid"
-gem "avo", github: "avo-hq/avo"
+gem "avo", "2.26"
 gem "aws-sdk-s3"
 gem "bootsnap"
 gem "dotenv-rails"

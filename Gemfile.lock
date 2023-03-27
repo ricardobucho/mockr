@@ -1,22 +1,3 @@
-GIT
-  remote: https://github.com/avo-hq/avo.git
-  revision: 0fe20f939b81ba4f563419ab131d7b52f4bf37e3
-  specs:
-    avo (2.28.0)
-      actionview (>= 6.0)
-      active_link_to
-      activerecord (>= 6.0)
-      addressable
-      docile
-      dry-initializer
-      httparty
-      inline_svg
-      meta-tags
-      pagy
-      turbo-rails
-      view_component
-      zeitwerk (>= 2.6.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -94,6 +75,20 @@ GEM
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
+    avo (2.26.0)
+      actionview (>= 6.0)
+      active_link_to
+      activerecord (>= 6.0)
+      addressable
+      docile
+      dry-initializer
+      httparty
+      inline_svg
+      meta-tags
+      pagy
+      turbo-rails
+      view_component
+      zeitwerk (>= 2.6.2)
     aws-eventstream (1.2.0)
     aws-partitions (1.735.0)
     aws-sdk-core (3.171.0)
@@ -333,7 +328,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_paranoid
-  avo!
+  avo (= 2.26)
   aws-sdk-s3
   bootsnap
   cssbundling-rails (~> 1.1)
