@@ -4,3 +4,7 @@
 require_relative "config/application"
 
 Rails.application.load_tasks
+
+Rake::Task["assets:precompile"].enhance do
+  Rake::Task["avo:build-assets"].execute
+end
