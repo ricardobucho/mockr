@@ -26,6 +26,7 @@ gem "rubocop-rails", require: false
 
 gem "cssbundling-rails", "~> 1.1"
 gem "jsbundling-rails", "~> 1.1"
+gem "stimulus-rails", "~> 1.1"
 gem "turbo-rails", "~> 1.1"
 
 group :development, :test do

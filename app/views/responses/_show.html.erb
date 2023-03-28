@@ -1,0 +1,7 @@
+<%= turbo_frame_tag "modal" do %>
+  <% render "shared/modal_content", title: @response.name do %>
+    <pre>
+      <%= @response.body %>
+    </pre>
+  <% end %>
+<% end %>

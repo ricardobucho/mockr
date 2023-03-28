@@ -299,6 +299,8 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    stimulus-rails (1.2.1)
+      railties (>= 6.0.0)
     thor (1.2.1)
     timeout (0.3.2)
     turbo-rails (1.4.0)
@@ -353,6 +355,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   sprockets-rails
+  stimulus-rails (~> 1.1)
   turbo-rails (~> 1.1)
   web-console
 
