@@ -1,51 +1,47 @@
-<div class="row">
-  <div class="col-auto">
-    <h2 class="text-body-emphasis align-middle">Endpoints</h2>
-  </div>
-  <div class="col">
-    <% if current_user.manager? %>
-      <a href="<%= avo_path %>" data-turbo="false" class="btn btn-primary">
-        <i class="bi bi-gear"></i>
-        Manage
-      </a>
-    <% end %>
-  </div>
-</div>
-
-<div class="accordion mt-2" id="clients-accordion">
-  <% Client.includes(requests: :responses).find_each.with_index do |client, index| %>
-    <div class="accordion-item">
-      <div class="accordion-header">
-        <button
-          class="accordion-button"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#client-<%= client.slug %>"
-          aria-expanded="true"
-          aria-controls="client-<%= client.slug %>"
+<turbo-frame id="clients">
+  <div class="accordion mt-2" id="clients-accordion">
+    <% @clients.each.with_index do |client, index| %>
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <button
+            class="accordion-button <%= index == 0 ? "" : "collapsed" %>"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#client-<%= client.slug %>"
+            aria-expanded="true"
+            aria-controls="client-<%= client.slug %>"
+          >
+            <%= client.name %>
+          </button>
+        </div>
+        <div
+          id="client-<%= client.slug %>"
+          class="accordion-collapse collapse <%= index == 0 ? "show" : "" %>"
+          data-bs-parent="#clients-accordion"
         >
-          <%= client.name %>
-        </button>
-      </div>
-      <div
-        id="client-<%= client.slug %>"
-        class="accordion-collapse <%= index == 0 ? "show" : "collapse" %>"
-        data-bs-parent="#clients-accordion"
-      >
-        <div class="accordion-body">
-          <div class="list-group">
-            <% client.requests.each do |request| %>
-              <%=
-                render(
-                  "dashboard/endpoints/request",
-                  client: client,
-                  request: request,
-                )
-              %>
-            <% end %>
+          <div class="accordion-body">
+            <div class="list-group">
+              <% client.requests.each do |request| %>
+                <%=
+                  render(
+                    "dashboard/endpoints/request",
+                    client: client,
+                    request: request,
+                  )
+                %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+    <% if @clients.none? %>
+      <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <div>
+          No results found for your search.
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

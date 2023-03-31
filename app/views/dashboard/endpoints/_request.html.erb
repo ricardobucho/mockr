@@ -3,7 +3,7 @@
     <div class="col">
       <div class="mb-0 fw-semibold"><%= request.name %></div>
       <div>
-        <span class="badge bg-<%= @method_class_map[request.method] %> align-middle"><%= request.method %></span>
+        <span class="badge bg-<%= method_class_map[request.method] %> align-middle"><%= request.method %></span>
         <span class="fst-italic align-middle">/clients/<%= client.slug %><%= request.path %></span>
       </div>
     </div>

@@ -6,3 +6,9 @@ import { application } from "./application";
 
 import ModalController from "./modal_controller";
 application.register("modal", ModalController);
+
+import SearchFormController from "./search_form_controller";
+application.register("search-form", SearchFormController);
+
+import SearchInputController from "./search_input_controller";
+application.register("search-input", SearchInputController);

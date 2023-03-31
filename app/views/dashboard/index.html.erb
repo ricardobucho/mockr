@@ -71,7 +71,53 @@
         </div>
 
         <div class="col-lg-8 col-md-12 col-xs-12">
-          <%= render "dashboard/endpoints/clients" %>
+          <div class="row">
+            <div class="col-auto">
+              <h2 class="text-body-emphasis">Endpoints</h2>
+            </div>
+            <div class="col">
+              <%=
+                form_tag(
+                  clients_path,
+                  method: "get",
+                  data: {
+                    turbo_frame: "clients",
+                    controller: "search-form",
+                  }
+                ) do
+              %>
+                <div class="input-group mb-3 w-100">
+                  <span class="input-group-text" id="basic-addon1">
+                    <i class="bi bi-search"></i>
+                  </span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="q"
+                    maxlength="50"
+                    cols="50"
+                    data-controller="search-input"
+                    data-action="keyup->search-form#submit"
+                  />
+                  <a
+                    class="btn btn-outline-secondary"
+                    data-action="click->search-input#clearSearch"
+                  >
+                    <i class="bi bi-x"></i>
+                  </a>
+                </div>
+              <% end %>
+            </div>
+            <div class="col-auto">
+              <% if current_user.manager? %>
+                <a href="<%= avo_path %>" data-turbo="false" class="btn btn-primary">
+                  <i class="bi bi-gear"></i>
+                  Manage
+                </a>
+              <% end %>
+            </div>
+          </div>
+          <%= turbo_frame_tag "clients", src: clients_path %>
         </div>
       </div>
     </main>

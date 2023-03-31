@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   mount Avo::Engine, at: Avo.configuration.root_path
 
+  get "/clients", to: "dashboard#clients", as: :clients
+
   get "/login", to: "sessions#index", as: :login
   get "/logout", to: "sessions#destroy", as: :logout
 
