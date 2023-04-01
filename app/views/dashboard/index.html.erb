@@ -96,14 +96,14 @@
                     name="q"
                     maxlength="50"
                     cols="50"
-                    data-controller="search-input"
+                    data-search-form-target="textInput"
                     data-action="keyup->search-form#submit"
                   />
                   <a
                     class="btn btn-outline-secondary"
-                    data-action="click->search-input#clearSearch"
+                    data-action="click->search-form#clear"
                   >
-                    <i class="bi bi-x"></i>
+                    <i class="bi bi-x-lg"></i>
                   </a>
                 </div>
               <% end %>
