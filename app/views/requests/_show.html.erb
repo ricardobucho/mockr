@@ -1,0 +1,101 @@
+<%= turbo_frame_tag "modal" do %>
+  <% render "shared/modal_content", title: "Request Logs [#{@request.client.name} | #{@request.name}]" do %>
+    <% if @logs.empty? %>
+      <div class="alert alert-warning d-flex align-items-center m-0" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <div>
+          There are no logs for this request.
+        </div>
+      </div>
+    <% end %>
+    <% @logs.each.with_index do |log, index| %>
+      <ul class="list-group <%= index == 0 ? "" : "mt-3" %> log-entry">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-2 text-end fw-bold">
+              Entry
+            </div>
+            <div class="col-10">
+              #<%= log.id %> ~ <%= log.created_at %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-2 text-end fw-bold">
+              Parameters
+            </div>
+            <div class="col-10">
+              <% log.data.dig("request", "params", "endpoint")&.each do |key, value| %>
+                <span class="badge bg-secondary">
+                  <%= key %>: <%= value %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-2 text-end fw-bold">
+              Response
+            </div>
+            <div class="col-10">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-2 text-end fw-bold">
+                      Name
+                    </div>
+                    <div class="col-10">
+                      <%= log.data.dig("response", "name") %>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-2 text-end fw-bold">
+                      Status
+                    </div>
+                    <div class="col-10">
+                      <%= log.data.dig("response", "status") %>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-2 text-end fw-bold">
+                      Headers
+                    </div>
+                    <div class="col-10">
+                      <% log.data.dig("response", "headers")&.each do |key, value| %>
+                        <span class="badge bg-secondary">
+                          <%= key %>: <%= value %>
+                        </span>
+                      <% end %>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-2 text-end fw-bold">
+                      Conditions
+                    </div>
+                    <div class="col-10">
+                      <% log.data.dig("response", "conditions")&.each do |key, value| %>
+                        <span class="badge bg-secondary">
+                          <%= key %>: <%= value %>
+                        </span>
+                      <% end %>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    <% end %>
+  <% end %>
+<% end %>
+
+{"user": {"id": 1, "uid": "18581478", "email": "ricardobucho@live.com", "provider": "github"}, "request": {"name": "glorious", "path": "/clients/wow/kekw", "client": null, "params": {"abcd": "1234", "path": "kekw", "action": "handler", "client": "wow", "endpoint": {"abcd": "1234"}, "controller": "endpoints"}}, "response": {"name": "thats it boy", "status": 200, "headers": {}, "conditions": {"abcd": "1234"}}}

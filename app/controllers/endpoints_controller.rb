@@ -21,6 +21,8 @@ class EndpointsController < ActionController::Base
     return not_found("Request with given path not found.") if
       client_request.blank?
 
+    create_request_log
+
     return not_found("Response not found.") if
       client_response.blank?
 
@@ -63,6 +65,15 @@ class EndpointsController < ActionController::Base
 
   def client_response_format
     @client_response_format ||= client_response.format_before_type_cast.to_sym
+  end
+
+  def create_request_log
+    RequestLogger.new(
+      user,
+      request,
+      client_request,
+      client_response,
+    ).call
   end
 end
 

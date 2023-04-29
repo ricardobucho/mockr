@@ -2,10 +2,10 @@
   "name": "mockr",
   "private": "true",
   "scripts": {
-    "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
-    "watch:css": "yarn build:css -- --watch",
-    "watch": "yarn build -- --watch"
+    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+    "build": "esbuild app/javascript/*.* --loader:.js=jsx --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
+    "watch:css": "yarn build:css --watch",
+    "watch": "yarn build --watch"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.1",
@@ -15,6 +15,10 @@
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
     "esbuild": "^0.14.54",
+    "prismjs": "^1.29.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-simple-code-editor": "^0.13.1",
     "sass": "^1.60.0"
   }
 }

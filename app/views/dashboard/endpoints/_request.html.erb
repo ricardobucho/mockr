@@ -9,14 +9,15 @@
     </div>
     <div class="col-auto">
       <div class="btn-group align-middle" role="group">
-        <button
-          type="button"
-          class="btn btn-sm btn-success"
+        <a
+          href="<%= show_request_path(request.id) %>"
+          class="btn btn-sm btn-success text-white"
           data-bs-toggle="tooltip"
-          data-bs-title="Responses"
+          data-bs-title="Logs"
+          data-turbo-frame="modal"
         >
-          <i class="bi bi-chat-square-dots-fill"></i>
-        </button>
+          <i class="bi bi-braces"></i>
+        </a>
       </div>
     </div>
   </div>

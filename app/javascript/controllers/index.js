@@ -2,10 +2,16 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application";
+import { application } from "./application"
 
-import ModalController from "./modal_controller";
-application.register("modal", ModalController);
+import EditorController from "./editor_controller"
+application.register("editor", EditorController)
 
-import SearchFormController from "./search_form_controller";
-application.register("search-form", SearchFormController);
+import GlobalController from "./global_controller"
+application.register("global", GlobalController)
+
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)
+
+import SearchFormController from "./search_form_controller"
+application.register("search-form", SearchFormController)

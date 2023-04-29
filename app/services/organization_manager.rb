@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrganizationManager
   def initialize(user)
     @user = user

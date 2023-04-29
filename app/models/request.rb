@@ -3,6 +3,7 @@ class Request < ApplicationRecord
 
   belongs_to :client
   has_many :responses, dependent: :destroy
+  has_many :logs, dependent: :destroy
 
   enum method: {
     "GET" => "get",

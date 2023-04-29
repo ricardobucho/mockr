@@ -1,0 +1,13 @@
+// Bootstrap Overrides
+
+$primary: #5064a8;
+$info: #6697f8;
+$success: #67b415;
+$warning: #ffc57d;
+$danger: #f80969;
+
+$border-radius: .16rem;
+$input-btn-focus-width: .08rem;
+
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons';

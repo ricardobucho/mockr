@@ -1,7 +1,13 @@
 <%= turbo_frame_tag "modal" do %>
-  <% render "shared/modal_content", title: @response.name do %>
-    <pre>
-      <%= @response.body %>
-    </pre>
+  <%
+    render(
+      "shared/modal_content",
+      title: "Response [#{@response.request.client.name} | #{@response.request.name} | #{@response.name}]",
+    ) do
+  %>
+    <div
+      data-controller="editor"
+      data-editor-language-value="<%= Response.formats[@response.format] %>"
+    ><%= @response.body %></div>
   <% end %>
 <% end %>
