@@ -4,6 +4,7 @@
 
 <p align="center">
   <img height="20" src="https://app.codacy.com/project/badge/Grade/db335904b8cf4fc9ac115159e351b963" alt="Codacy Code Quality" />
+  <img height="20" src="https://app.codacy.com/project/badge/Coverage/db335904b8cf4fc9ac115159e351b963" alt="Codacy Code Coverage" />
 </center>
 
 ---
