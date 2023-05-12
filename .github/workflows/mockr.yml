@@ -24,12 +24,9 @@ jobs:
           POSTGRES_USER: rails
           POSTGRES_PASSWORD: password
     env:
+      REPORT_COVERAGE: true
       RAILS_ENV: test
       DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
-      CODACY_ORGANIZATION_PROVIDER: gh
-      CODACY_API_TOKEN: ${{ vars.CODACY_API_TOKEN }}
-      CODACY_USERNAME: ${{ vars.CODACY_USERNAME }}
-      CODACY_PROJECT_NAME: mockr
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -44,3 +41,9 @@ jobs:
       # Add or replace test runners here
       - name: Run tests
         run: bundle exec rspec
+      # Report coverage to codacy
+      - name: Report Coverage
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ vars.CODACY_PROJECT_TOKEN }}
+          coverage-reports: ./coverage/coverage.xml

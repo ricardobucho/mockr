@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+require "simplecov"
+require "simplecov-cobertura"
+
+SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
+
+# SimpleCov
+if ENV.fetch("REPORT_COVERAGE", false)
+  SimpleCov.start "rails" do
+    add_filter "controllers/avo"
+    add_filter "channels"
+    add_filter "mailers"
+  end
+end
+
 require "spec_helper"
 require "database_cleaner/active_record"
 
@@ -75,6 +89,12 @@ RSpec.configure do |config|
   config.around do |example|
     DatabaseCleaner.cleaning do
       example.run
+    end
+  end
+
+  config.after(:suite) do
+    if ENV.fetch("REPORT_COVERAGE", false)
+      SimpleCov.result.format!
     end
   end
 end
