@@ -36,4 +36,5 @@ group :development, :test do
   gem "prosopite"
   gem "rspec"
   gem "rspec-rails"
+  gem "shoulda-matchers"
 end
