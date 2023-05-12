@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserConstraint
   def initialize(&block)
     @block = block

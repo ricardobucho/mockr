@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails/all"
@@ -12,7 +14,7 @@ module Mockr
       g.helpers false
       g.integration_tool false
       g.system_tests false
-      g.test_framework false
+      g.test_framework :rspec
     end
 
     config.session_store :cookie_store, key: "_mockr_session"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DashboardController < ApplicationController
   helper_method :method_class_map
 

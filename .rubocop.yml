@@ -9,13 +9,14 @@ AllCops:
   TargetRubyVersion: 3.2.1
   NewCops: enable
   Exclude:
-    - 'bin/{rails,rake}'
+    - 'bin/**/*'
     - 'node_modules/**/*'
     - 'vendor/**/*'
 
 Rails/UnknownEnv:
   Environments:
     - production
+    - staging
     - development
     - test
 
@@ -24,3 +25,6 @@ Layout/LineLength:
 
 Metrics/BlockLength:
   Max: 120
+
+Style/FrozenStringLiteralComment:
+  Enabled: true

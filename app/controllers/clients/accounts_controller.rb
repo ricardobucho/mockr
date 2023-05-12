@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Clients
   class AccountsController < ApplicationController
     def search

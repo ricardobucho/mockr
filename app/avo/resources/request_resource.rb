@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RequestResource < Avo::BaseResource
   self.title = :name
   self.includes = %i[responses]
