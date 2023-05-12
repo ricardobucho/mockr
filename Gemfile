@@ -30,6 +30,7 @@ gem "stimulus-rails", "~> 1.1"
 gem "turbo-rails", "~> 1.1"
 
 group :development, :test do
+  gem "database_cleaner"
   gem "debug"
   gem "factory_bot_rails"
   gem "faker"
