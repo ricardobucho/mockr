@@ -1,7 +1,9 @@
 <p align="center">
+  <img height="100" src="./app/assets/images/mockr.svg" alt="Mockr" />
+</p>
 
-![Mockr](app/assets/images/mockr.svg)
-
+<p align="center">
+  <img height="20" src="https://app.codacy.com/project/badge/Grade/db335904b8cf4fc9ac115159e351b963" alt="Codacy Code Quality" />
 </center>
 
 ---
@@ -40,3 +42,13 @@ For JavaScript and CSS development, you'll need to install the dependencies with
 ## Checking Rubocop Offenses
 
 - Run `bundle exec rubocop`
+
+---
+
+## Versioning
+
+Mockr uses [SemVer](https://semver.org/) for versioning. For the versions available, check the releases on this repository. Versions before `v1.0.0` are considered unstable and may contain breaking changes.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
