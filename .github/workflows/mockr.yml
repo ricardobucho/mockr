@@ -13,6 +13,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: test
     services:
       postgres:
         image: postgres:15-alpine
@@ -25,6 +26,10 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+      CODACY_ORGANIZATION_PROVIDER: gh
+      CODACY_API_TOKEN: ${{ vars.CODACY_API_TOKEN }}
+      CODACY_USERNAME: ${{ vars.CODACY_USERNAME }}
+      CODACY_PROJECT_NAME: mockr
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
