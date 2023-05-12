@@ -1,9 +1,0 @@
-extends:
-  - eslint:recommended
-  - plugin:react/recommended
-parser: "@babel/eslint-parser"
-env:
-  browser: true
-settings:
-  react:
-    pragma: React
