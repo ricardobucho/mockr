@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class LogResource < Avo::BaseResource
-  self.title = :id
+  self.title = :created_at
   self.includes = []
-  # self.search_query = -> do
-  #   scope.ransack(id_eq: params[:q], m: "or").result(distinct: false)
-  # end
 
   field :id, as: :id
-  # add fields here
+  field :created_at, as: :date_time, readonly: true
+  field :request, as: :belongs_to, readonly: true
+  field :data, as: :code, readonly: true
 end

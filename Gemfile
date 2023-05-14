@@ -10,6 +10,7 @@ gem "aws-sdk-s3"
 gem "bootsnap"
 gem "dotenv-rails"
 gem "octokit"
+gem "panko_serializer"
 gem "pg"
 gem "puma"
 gem "rails", "~> 7.0"
@@ -39,4 +40,5 @@ group :development, :test do
   gem "shoulda-matchers"
   gem "simplecov"
   gem "simplecov-cobertura"
+  gem "vcr"
 end

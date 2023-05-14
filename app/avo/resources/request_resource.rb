@@ -2,7 +2,7 @@
 
 class RequestResource < Avo::BaseResource
   self.title = :name
-  self.includes = %i[responses]
+  self.includes = %i[responses logs]
 
   field :id, as: :id
   field :client, as: :belongs_to, required: true
@@ -11,4 +11,5 @@ class RequestResource < Avo::BaseResource
   field :method, as: :select, enum: Request.methods, required: true
   field :path, as: :text, required: true
   field :responses, as: :has_many
+  field :logs, as: :has_many
 end

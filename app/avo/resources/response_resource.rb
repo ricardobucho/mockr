@@ -12,5 +12,5 @@ class ResponseResource < Avo::BaseResource
   field :status, as: :number, required: true
   field :headers, as: :key_value, default: {}
   field :format, as: :select, enum: Response.formats, default: "json", required: true
-  field :body, as: :code, required: true, language: "json", default: "{}"
+  field :body, as: :code, required: true, default: "{}"
 end

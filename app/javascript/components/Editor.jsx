@@ -10,11 +10,8 @@ export default function Editor({ code = "", language = "json" }) {
   return (
     <SimpleEditor
       readOnly
-      value={code}
+      value={code.replace(/\t/g, "  ")}
       highlight={(code) => highlight(code, languages[language])}
-      tabSize={2}
-      insertSpaces={true}
-      padding={10}
       style={{
         fontFamily: "--bs-font-monospace, monospace",
         fontSize: 14,

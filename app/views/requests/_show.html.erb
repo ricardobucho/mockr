@@ -1,5 +1,11 @@
 <%= turbo_frame_tag "modal" do %>
-  <% render "shared/modal_content", title: "Request Logs [#{@request.client.name} | #{@request.name}]" do %>
+  <% render "shared/modal_content", title: "Request Logs" do %>
+    <h6>
+      <%= @request.client.name %>
+      <i class="bi bi-chevron-right"></i>
+      <b class="text-muted"><%= @request.name %></b>
+    </h6>
+    <hr />
     <% if @logs.empty? %>
       <div class="alert alert-warning d-flex align-items-center m-0" role="alert">
         <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -16,7 +22,7 @@
               Entry
             </div>
             <div class="col-10">
-              #<%= log.id %> ~ <%= log.created_at %>
+              <%= log["created_at"] %>#<%= log["id"] %>
             </div>
           </div>
         </li>
@@ -26,10 +32,14 @@
               Parameters
             </div>
             <div class="col-10">
-              <% log.data.dig("request", "params", "endpoint")&.each do |key, value| %>
-                <span class="badge bg-secondary">
-                  <%= key %>: <%= value %>
-                </span>
+              <% if log["request_params?"] %>
+                <% log["request_params"].each do |key, value| %>
+                  <span class="badge bg-secondary">
+                    <%= key %>: <%= value %>
+                  </span>
+                <% end %>
+              <% else %>
+                -
               <% end %>
             </div>
           </div>
@@ -47,7 +57,7 @@
                       Name
                     </div>
                     <div class="col-10">
-                      <%= log.data.dig("response", "name") %>
+                      <%= log["response_name"] %>
                     </div>
                   </div>
                 </li>
@@ -57,7 +67,7 @@
                       Status
                     </div>
                     <div class="col-10">
-                      <%= log.data.dig("response", "status") %>
+                      <%= log["response_status"] %>
                     </div>
                   </div>
                 </li>
@@ -67,10 +77,14 @@
                       Headers
                     </div>
                     <div class="col-10">
-                      <% log.data.dig("response", "headers")&.each do |key, value| %>
-                        <span class="badge bg-secondary">
-                          <%= key %>: <%= value %>
-                        </span>
+                      <% if log["response_headers?"] %>
+                        <% log["response_headers"].each do |key, value| %>
+                          <span class="badge bg-secondary">
+                            <%= key %>: <%= value %>
+                          </span>
+                        <% end %>
+                      <% else %>
+                        -
                       <% end %>
                     </div>
                   </div>
@@ -81,10 +95,14 @@
                       Conditions
                     </div>
                     <div class="col-10">
-                      <% log.data.dig("response", "conditions")&.each do |key, value| %>
-                        <span class="badge bg-secondary">
-                          <%= key %>: <%= value %>
-                        </span>
+                      <% if log["response_conditions?"] %>
+                        <% log["response_conditions"].each do |key, value| %>
+                          <span class="badge bg-secondary">
+                            <%= key %>: <%= value %>
+                          </span>
+                        <% end %>
+                      <% else %>
+                        -
                       <% end %>
                     </div>
                   </div>
