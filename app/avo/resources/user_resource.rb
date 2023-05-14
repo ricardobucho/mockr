@@ -3,7 +3,6 @@
 class UserResource < Avo::BaseResource
   self.title = :email
   self.includes = []
-  self.authorization_policy = UserPolicy
 
   field :id, as: :id
   field :provider, as: :text, readonly: true

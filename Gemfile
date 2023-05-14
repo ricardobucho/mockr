@@ -12,7 +12,6 @@ gem "dotenv-rails"
 gem "octokit"
 gem "pg"
 gem "puma"
-gem "pundit"
 gem "rails", "~> 7.0"
 gem "sprockets-rails", require: "sprockets/railtie"
 
