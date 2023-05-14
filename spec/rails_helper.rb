@@ -9,8 +9,6 @@ SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
 if ENV.fetch("REPORT_COVERAGE", false)
   SimpleCov.start "rails" do
     add_filter "controllers/avo"
-    add_filter "channels"
-    add_filter "mailers"
   end
 end
 
