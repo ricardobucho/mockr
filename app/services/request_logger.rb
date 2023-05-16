@@ -1,8 +1,17 @@
 # frozen_string_literal: true
 
+#
+# RequestLogger
+#
+# This class is responsible for logging requests and responses.
+#
+# The response body is ommitted from the log as it may contain sensitive
+# information and the S3 version may not have been the same as the version that
+# was sent to the client at the time of the request.
+#
 class RequestLogger
   #
-  # Initializes a new instance of RequestLogger.
+  # Initializes a new instance of the RequestLogger class.
   #
   # @param [User] user
   # @param [ActionDispatch::Request] request
@@ -51,14 +60,16 @@ class RequestLogger
   def request_hash
     {
       name: @client_request.name,
-      client: @request.path_parameters["client"],
+      client: @request.path_parameters[:client],
       path: @request.path,
       params: @request.params.to_h,
+      user_agent: @request.user_agent,
+      ip: @request.ip,
     }
   end
 
   def response_hash
-    return { status: 404 } if @client_response.blank?
+    return { status: 500 } if @client_response.blank?
 
     {
       name: @client_response.name,

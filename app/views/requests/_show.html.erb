@@ -29,18 +29,57 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-2 text-end fw-bold">
-              Parameters
+              Request
             </div>
             <div class="col-10">
-              <% if log["request_params?"] %>
-                <% log["request_params"].each do |key, value| %>
-                  <span class="badge bg-secondary">
-                    <%= key %>: <%= value %>
-                  </span>
-                <% end %>
-              <% else %>
-                -
-              <% end %>
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-2 text-end fw-bold">
+                      Agent
+                    </div>
+                    <div class="col-10">
+                      <% if log["request_user_agent?"] %>
+                        <%= log["request_user_agent"] %>
+                      <% else %>
+                        -
+                      <% end %>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-2 text-end fw-bold">
+                      IP
+                    </div>
+                    <div class="col-10">
+                      <% if log["request_ip?"] %>
+                        <%= log["request_ip"] %>
+                      <% else %>
+                        -
+                      <% end %>
+                    </div>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="row">
+                    <div class="col-2 text-end fw-bold">
+                      Parameters
+                    </div>
+                    <div class="col-10">
+                      <% if log["request_params?"] %>
+                        <% log["request_params"].each do |key, value| %>
+                          <span class="badge bg-secondary">
+                            <%= key %>: <%= value %>
+                          </span>
+                        <% end %>
+                      <% else %>
+                        -
+                      <% end %>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </li>
