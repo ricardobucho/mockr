@@ -42,7 +42,7 @@ RSpec.describe RequestLogger, type: :service do
     let(:entry) { create_log_entry.call }
     let(:data) { entry.data.deep_symbolize_keys }
 
-    it "create a log entry" do
+    it "creates a log entry" do
       expect { entry }.to change(Log, :count).by(1)
 
       expect(entry).to be_a(Log)
