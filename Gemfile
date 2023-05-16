@@ -16,6 +16,9 @@ gem "puma"
 gem "rails", "~> 7.0"
 gem "sprockets-rails", require: "sprockets/railtie"
 
+gem "faraday"
+gem "faraday-retry"
+
 gem "omniauth"
 gem "omniauth-github"
 gem "omniauth-rails_csrf_protection"

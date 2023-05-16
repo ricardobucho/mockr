@@ -84,6 +84,11 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
+  config.before(:each) do
+    allow_any_instance_of(Response).to receive(:upload_response!).and_return(nil)
+    allow_any_instance_of(Response).to receive(:body).and_return("{}")
+  end
+
   config.around do |example|
     DatabaseCleaner.cleaning do
       example.run
