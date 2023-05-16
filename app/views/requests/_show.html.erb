@@ -36,11 +36,11 @@
                 <li class="list-group-item">
                   <div class="row">
                     <div class="col-2 text-end fw-bold">
-                      Agent
+                      IP
                     </div>
                     <div class="col-10">
-                      <% if log["request_user_agent?"] %>
-                        <%= log["request_user_agent"] %>
+                      <% if log["request_ip?"] %>
+                        <%= log["request_ip"] %>
                       <% else %>
                         -
                       <% end %>
@@ -50,11 +50,11 @@
                 <li class="list-group-item">
                   <div class="row">
                     <div class="col-2 text-end fw-bold">
-                      IP
+                      Agent
                     </div>
                     <div class="col-10">
-                      <% if log["request_ip?"] %>
-                        <%= log["request_ip"] %>
+                      <% if log["request_user_agent?"] %>
+                        <%= log["request_user_agent"] %>
                       <% else %>
                         -
                       <% end %>
@@ -154,5 +154,3 @@
     <% end %>
   <% end %>
 <% end %>
-
-{"user": {"id": 1, "uid": "18581478", "email": "ricardobucho@live.com", "provider": "github"}, "request": {"name": "glorious", "path": "/clients/wow/kekw", "client": null, "params": {"abcd": "1234", "path": "kekw", "action": "handler", "client": "wow", "endpoint": {"abcd": "1234"}, "controller": "endpoints"}}, "response": {"name": "thats it boy", "status": 200, "headers": {}, "conditions": {"abcd": "1234"}}}
