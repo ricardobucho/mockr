@@ -15,7 +15,7 @@ A simple, yet customizable API mock server built with Ruby on Rails. With Mockr 
 
 ## Dependencies
 
-- Ruby: 3.1.2
+- Ruby: 3.2.2
 - Node: 16.14.2
 - Postgres: 15
 
