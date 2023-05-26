@@ -28,6 +28,8 @@ class EndpointsController < ActionController::Base
     return not_found("Response not found.") if
       client_response.blank?
 
+    sleep(client_response.throttle / 1000)
+
     render(
       client_response_format => client_response.body,
       status: client_response.status,

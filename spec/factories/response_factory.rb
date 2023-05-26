@@ -6,6 +6,7 @@ FactoryBot.define do
 
     name { Faker::Company.name }
     format { Response.formats["JSON"] }
+    throttle { 0 }
     status { 200 }
 
     body do
