@@ -1,0 +1,49 @@
+version: "3"
+services:
+  web:
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WEB_CPUS:-0}"
+          memory: "${DOCKER_WEB_MEMORY:-0}"
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "bundle exec rails server -b 0.0.0.0"
+    environment:
+      - RAILS_ENV=${RAILS_ENV}
+      - RACK_ENV=${RACK_ENV}
+      - RAILS_SERVE_STATIC_FILES=${RAILS_SERVE_STATIC_FILES:-true}
+      - RAILS_LOG_TO_STDOUT=${RAILS_LOG_TO_STDOUT:-true}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_URL=postgres://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+  db:
+    image: postgres:15
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_DB_CPUS:-0}"
+          memory: "${DOCKER_DB_MEMORY:-0}"
+    command: "postgres -c 'max_connections=250'"
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data: {}
