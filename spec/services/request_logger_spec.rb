@@ -69,6 +69,7 @@ RSpec.describe RequestLogger, type: :service do
           response: {
             name: client_response.name,
             status: client_response.status,
+            throttle: client_response.throttle,
             headers: client_response.headers,
             conditions: client_response.conditions,
           },

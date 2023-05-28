@@ -16,6 +16,8 @@ module Requests
       :response_name?,
       :response_status,
       :response_status?,
+      :response_throttle,
+      :response_throttle?,
       :response_headers,
       :response_headers?,
       :response_conditions,
@@ -36,6 +38,9 @@ module Requests
 
     def response_status = object.data.dig("response", "status")
     def response_status? = response_status.present?
+
+    def response_throttle = object.data.dig("response", "throttle") || 0
+    def response_throttle? = response_throttle.present?
 
     def response_headers = object.data.dig("response", "headers") || []
     def response_headers? = response_headers.present?
