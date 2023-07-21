@@ -7,6 +7,7 @@ class OrganizationManager
 
   def member?
     return false if @user.blank?
+    return true unless @user.provider == "github"
     return true if organization.blank?
 
     Octokit::Client.

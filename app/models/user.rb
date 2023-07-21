@@ -27,10 +27,10 @@ class User < ApplicationRecord
       user.token = generate_token if user.token.blank?
 
       user.update!(
-        provider_username: auth_hash["info"]["nickname"],
+        provider_username: provider_nickname(auth_hash),
         provider_email: auth_hash["info"]["email"],
         oauth_token: auth_hash["credentials"]["token"],
-        oauth_expires_at: nil,
+        oauth_expires_at: auth_hash["credentials"]["expires_at"].presence || nil,
       )
 
       user
@@ -38,6 +38,16 @@ class User < ApplicationRecord
 
     def generate_token
       "mkr_#{Digest::MD5.hexdigest("#{SecureRandom.hex(10)}-#{DateTime.now}")}"
+    end
+
+    def provider_nickname(auth_hash)
+      return auth_hash["info"]["nickname"] if
+        auth_hash["provider"] == "github"
+
+      return auth_hash["extra"]["raw_info"]["preferred_username"] if
+        auth_hash["provider"] == "okta"
+
+      auth_hash["info"]["email"]
     end
   end
 

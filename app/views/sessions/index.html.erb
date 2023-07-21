@@ -35,8 +35,14 @@
 </style>
 
 <main class="form-signin w-100 m-auto text-center">
-  <%= form_tag("/auth/github", method: "post", data: { turbo: false }) do %>
-    <%= image_tag("mockr.svg", height: 70, class: "mb-5") %>
-    <button type="submit" class="w-100 btn btn-lg btn-primary">Login with GitHub</button>
+  <%= image_tag("mockr.svg", height: 70, class: "mb-5") %>
+
+  <% auth_providers.each do |provider| %>
+    <%= form_tag("/auth/#{provider[:name]}", method: "post", data: { turbo: false }, class: "mb-2") do %>
+      <button type="submit" class="w-100 btn btn-lg btn-primary">
+        <i class="bi bi-<%= provider[:icon] %> me-1"></i>
+        Login with <%= provider[:title] %>
+      </button>
+    <% end %>
   <% end %>
 </main>
