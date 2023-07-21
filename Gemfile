@@ -21,6 +21,7 @@ gem "faraday-retry"
 
 gem "omniauth"
 gem "omniauth-github"
+gem "omniauth-okta"
 gem "omniauth-rails_csrf_protection"
 
 gem "rubocop", require: false
