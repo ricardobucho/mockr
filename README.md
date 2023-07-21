@@ -21,7 +21,7 @@ A simple, yet customizable API mock server built with Ruby on Rails. With Mockr 
 
 ## Building for Production
 
-Make sure your environment variables are set up correctly. You can find a list of all the required environment variables in `.env.example`. If you don't set `GITHUB_ORGANIZATION`, anyone with a GitHub account will be able to login. A simple build script is included on `./bin/builds/rails.sh`.
+Make sure your environment variables are set up correctly. You can find a list of all the required environment variables in `.env.example`. Current supported oAuth providers are **GitHub** and **Okta**. For GitHub, if you don't set `GITHUB_ORGANIZATION`, anyone with a GitHub account will be able to login. A simple build script is included on `./bin/builds/rails.sh`.
 
 ## Development Setup
 
