@@ -7,5 +7,7 @@ class Client < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
 
   has_many :requests, dependent: :destroy
+  has_many :indices, through: :requests
   has_many :responses, through: :requests
+  has_many :logs, through: :requests
 end

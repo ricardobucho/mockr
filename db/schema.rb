@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_01_000006) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_15_172052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_01_000006) do
     t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_clients_on_deleted_at"
     t.index ["slug"], name: "index_clients_on_slug", unique: true
+  end
+
+  create_table "indices", force: :cascade do |t|
+    t.bigint "request_id", null: false
+    t.string "name", null: false
+    t.text "description"
+    t.string "method", null: false
+    t.string "path", null: false
+    t.integer "status", default: 200, null: false
+    t.integer "throttle", default: 0
+    t.jsonb "headers", default: {}, null: false
+    t.jsonb "properties", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_indices_on_deleted_at"
+    t.index ["request_id", "method", "path"], name: "index_indices_on_request_id_and_method_and_path", unique: true
+    t.index ["request_id"], name: "index_indices_on_request_id"
   end
 
   create_table "logs", force: :cascade do |t|
@@ -44,7 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_01_000006) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["client_id", "path"], name: "index_requests_on_client_id_and_path", unique: true
+    t.index ["client_id", "method", "path"], name: "index_requests_on_client_id_and_method_and_path", unique: true
     t.index ["client_id"], name: "index_requests_on_client_id"
     t.index ["deleted_at"], name: "index_requests_on_deleted_at"
   end
@@ -85,6 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_01_000006) do
     t.index ["token"], name: "index_users_on_token", unique: true
   end
 
+  add_foreign_key "indices", "requests"
   add_foreign_key "logs", "requests"
   add_foreign_key "requests", "clients"
   add_foreign_key "responses", "requests"

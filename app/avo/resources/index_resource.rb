@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-class ResponseResource < Avo::BaseResource
+class IndexResource < Avo::BaseResource
   self.title = :name
-  self.includes = %i[]
+  self.includes = []
 
   field :id, as: :id
   field :request, as: :belongs_to, required: true
   field :name, as: :text, required: true
   field :description, as: :text
-  field :conditions, as: :key_value, default: {}
-  field :status, as: :number, required: true
+  field :method, as: :select, enum: Request.methods, required: true
+  field :path, as: :text, required: true
   field :throttle, as: :number, default: 0, help: "The number of milliseconds to delay the request."
+  field :status, as: :number, required: true
   field :headers, as: :key_value, default: {}
-  field :format, as: :select, enum: Response.formats, default: "json", required: true
-  field :body, as: :code, required: true, default: "{}"
+  field :properties, as: :key_value, default: {}
 end

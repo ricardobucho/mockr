@@ -1,21 +1,11 @@
 # frozen_string_literal: true
 
-class Request < ApplicationRecord
+class Index < ApplicationRecord
   acts_as_paranoid
 
-  belongs_to :client
+  belongs_to :request
 
-  has_many :indices, dependent: :nullify
-  has_many :responses, dependent: :destroy
-  has_many :logs, dependent: :destroy
-
-  enum method: {
-    "GET" => "get",
-    "POST" => "post",
-    "PUT" => "put",
-    "PATCH" => "patch",
-    "DELETE" => "delete",
-  }
+  enum method: Request.methods
 
   validates :name, presence: true
   validates :method, presence: true

@@ -26,5 +26,8 @@ Layout/LineLength:
 Metrics/BlockLength:
   Max: 120
 
+Metrics/PerceivedComplexity:
+  Max: 10
+
 Style/FrozenStringLiteralComment:
   Enabled: true

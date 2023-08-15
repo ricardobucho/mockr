@@ -17,10 +17,8 @@ Rails.application.routes.draw do
 
   get "/regenerate_token", to: "user#regenerate_token", as: :regenerate_token
 
-  scope :clients do
-    scope ":client", defaults: { client: "default" } do
-      match "*path", to: "endpoints#handler", via: :all
-    end
+  scope "(/clients)/:client", defaults: { client: "default" } do
+    match "*path", to: "endpoints#show", via: :all
   end
 
   root to: "dashboard#index"

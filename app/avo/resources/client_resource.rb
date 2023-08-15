@@ -2,7 +2,7 @@
 
 class ClientResource < Avo::BaseResource
   self.title = :name
-  self.includes = %i[requests]
+  self.includes = %i[requests responses logs]
 
   field :requests, as: :has_many
 

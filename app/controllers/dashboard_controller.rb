@@ -8,8 +8,8 @@ class DashboardController < ApplicationController
   def clients
     @clients =
       Client.
-        includes(requests: :responses).
-        references(requests: :responses).
+        includes(requests: %i[indices responses]).
+        references(requests: %i[indices responses]).
         merge(clients_search_sql)
 
     render "dashboard/endpoints/_clients"
@@ -39,6 +39,8 @@ class DashboardController < ApplicationController
         clients.name LIKE :query
         OR requests.name LIKE :query
         OR requests.path LIKE :query
+        OR indices.name LIKE :query
+        OR indices.properties::text LIKE :query
         OR responses.name LIKE :query
         OR responses.conditions::text LIKE :query
       SQL

@@ -7,7 +7,7 @@ class EndpointsController < ActionController::Base
 
   skip_before_action :verify_authenticity_token
 
-  def handler
+  def show
     return unauthorized("Missing authentication token.") if
       user_token.blank?
 
@@ -23,18 +23,9 @@ class EndpointsController < ActionController::Base
     return not_found("Request with given path not found.") if
       client_request.blank?
 
-    create_request_log
+    return respond_with_index if client_index.present?
 
-    return not_found("Response not found.") if
-      client_response.blank?
-
-    sleep(client_response.throttle / 1000)
-
-    render(
-      client_response_format => client_response.body,
-      status: client_response.status,
-      headers: client_response.headers,
-    )
+    respond_with_response
   end
 
   private
@@ -51,11 +42,24 @@ class EndpointsController < ActionController::Base
     @client ||= Client.find_by(slug: request.path_parameters[:client])
   end
 
+  def client_index
+    @client_index ||=
+      client.indices.find_by(
+        path: "/#{request.path_parameters[:path]}",
+        method: request.method.downcase,
+      )
+  end
+
   def client_request
-    @client_request ||= client.requests.find_by(
-      path: "/#{request.path_parameters[:path]}",
-      method: request.method.downcase,
-    )
+    @client_request ||=
+      if client_index.present?
+        client_index.request
+      else
+        client.requests.find_by(
+          path: "/#{request.path_parameters[:path]}",
+          method: request.method.downcase,
+        )
+      end
   end
 
   def client_response
@@ -78,6 +82,42 @@ class EndpointsController < ActionController::Base
       client_request,
       client_response,
     ).call
+  end
+
+  def respond_with_index
+    return if client_index.blank?
+
+    sleep(client_index.throttle / 1000)
+
+    render(
+      json:
+        client_request.responses.select do |client_response|
+          client_response.format == Response.formats.key("json") &&
+            JSON.parse(client_response.body).any? do |(_, value)|
+              value.downcase.include?(params[:q]&.downcase || "")
+            end
+        end.flat_map do |response|
+          client_index.properties.map do |key, value|
+            { key => JSON.parse(response.body)[value] }
+          end
+        end,
+      status: :ok,
+    )
+  end
+
+  def respond_with_response
+    create_request_log
+
+    return not_found("Response not found.") if
+      client_response.blank?
+
+    sleep(client_response.throttle / 1000)
+
+    render(
+      client_response_format => client_response.body,
+      status: client_response.status,
+      headers: client_response.headers,
+    )
   end
 end
 
