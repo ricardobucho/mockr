@@ -3,8 +3,12 @@
     <div class="col">
       <div class="mb-0 fw-semibold"><%= request.name %></div>
       <div>
-        <span class="badge bg-<%= method_class_map[request.method] %> align-middle"><%= request.method %></span>
-        <span class="fst-italic align-middle">/<%= client.slug %><%= request.path %></span>
+        <span class="badge bg-<%= method_class_map[request.method] %> align-middle">
+          <%= request.method %>
+        </span>
+        <span class="fst-italic align-middle">
+          /<%= client.slug %><%= request.path %>
+        </span>
       </div>
     </div>
     <div class="col-auto">
@@ -22,7 +26,7 @@
     </div>
   </div>
 
-  <div class="row row-cols-4 gap-2 mt-3">
+  <div class="row row-cols-2 mt-3">
     <% request.indices.each do |index| %>
       <%=
         render(
@@ -33,6 +37,9 @@
         )
       %>
     <% end %>
+  </div>
+
+  <div class="row row-cols-4 mt-3">
     <% request.responses.each do |response| %>
       <%=
         render(

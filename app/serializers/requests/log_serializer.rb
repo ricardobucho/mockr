@@ -6,6 +6,7 @@ module Requests
       :id,
       :data,
       :created_at,
+      :created_at_formatted,
       :request_user_agent,
       :request_user_agent?,
       :request_ip,
@@ -23,6 +24,8 @@ module Requests
       :response_conditions,
       :response_conditions?,
     )
+
+    def created_at_formatted = object.created_at.strftime("%Y-%m-%d %H:%M:%S %Z")
 
     def request_user_agent = object.data.dig("request", "user_agent")
     def request_user_agent? = request_user_agent.present?
