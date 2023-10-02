@@ -61,24 +61,38 @@
                     </div>
                   </div>
                 </li>
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-2 text-end fw-bold">
-                      Parameters
-                    </div>
-                    <div class="col-10">
-                      <% if log["request_params?"] %>
-                        <% log["request_params"].each do |key, value| %>
+                <% if log["request_query_params?"] %>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-2 text-end fw-bold">
+                        Query
+                      </div>
+                      <div class="col-10">
+                        <% log["request_query_params"].each do |key, value| %>
                           <span class="badge bg-secondary">
                             <%= key %>: <%= value %>
                           </span>
                         <% end %>
-                      <% else %>
-                        -
-                      <% end %>
+                      </div>
                     </div>
-                  </div>
-                </li>
+                  </li>
+                <% end %>
+                <% if log["request_body_params?"] %>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-2 text-end fw-bold">
+                        Body
+                      </div>
+                      <div class="col-10">
+                        <% log["request_body_params"].each do |key, value| %>
+                          <span class="badge bg-secondary">
+                            <%= key %>: <%= value %>
+                          </span>
+                        <% end %>
+                      </div>
+                    </div>
+                  </li>
+                <% end %>
               </ul>
             </div>
           </div>
@@ -138,24 +152,46 @@
                     </div>
                   </div>
                 </li>
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-2 text-end fw-bold">
-                      Conditions
-                    </div>
-                    <div class="col-10">
-                      <% if log["response_conditions?"] %>
-                        <% log["response_conditions"].each do |key, value| %>
-                          <span class="badge bg-secondary">
-                            <%= key %>: <%= value %>
-                          </span>
+                <% if log["response_conditions?"] %>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-2 text-end fw-bold">
+                        Conditions
+                      </div>
+                      <div class="col-10">
+                        <% if log["response_conditions?"] %>
+                          <% log["response_conditions"].each do |key, value| %>
+                            <span class="badge bg-secondary">
+                              <%= key %>: <%= value %>
+                            </span>
+                          <% end %>
+                        <% else %>
+                          -
                         <% end %>
-                      <% else %>
-                        -
-                      <% end %>
+                      </div>
                     </div>
-                  </div>
-                </li>
+                  </li>
+                <% end %>
+                <% if log["response_properties?"] %>
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="col-2 text-end fw-bold">
+                        Properties
+                      </div>
+                      <div class="col-10">
+                        <% if log["response_properties?"] %>
+                          <% log["response_properties"].each do |key, value| %>
+                            <span class="badge bg-secondary">
+                              <%= key %>: <%= value %>
+                            </span>
+                          <% end %>
+                        <% else %>
+                          -
+                        <% end %>
+                      </div>
+                    </div>
+                  </li>
+                <% end %>
               </ul>
             </div>
           </div>

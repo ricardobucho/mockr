@@ -80,12 +80,15 @@ class EndpointsController < ActionController::Base
       user,
       request,
       client_request,
+      client_index,
       client_response,
     ).call
   end
 
   def respond_with_index
     return if client_index.blank?
+
+    create_request_log
 
     sleep(client_index.throttle / 1000)
 

@@ -11,8 +11,10 @@ module Requests
       :request_user_agent?,
       :request_ip,
       :request_ip?,
-      :request_params,
-      :request_params?,
+      :request_query_params,
+      :request_query_params?,
+      :request_body_params,
+      :request_body_params?,
       :response_name,
       :response_name?,
       :response_status,
@@ -23,6 +25,8 @@ module Requests
       :response_headers?,
       :response_conditions,
       :response_conditions?,
+      :response_properties,
+      :response_properties?,
     )
 
     def created_at_formatted = object.created_at.strftime("%Y-%m-%d %H:%M:%S %Z")
@@ -33,8 +37,11 @@ module Requests
     def request_ip = object.data.dig("request", "ip")
     def request_ip? = request_ip.present?
 
-    def request_params = object.data.dig("request", "params", "endpoint") || []
-    def request_params? = request_params.present?
+    def request_query_params = object.data.dig("request", "query_params")
+    def request_query_params? = request_query_params.present?
+
+    def request_body_params = object.data.dig("request", "body_params", "endpoint")
+    def request_body_params? = request_body_params.present?
 
     def response_name = object.data.dig("response", "name")
     def response_name? = response_name.present?
@@ -50,5 +57,8 @@ module Requests
 
     def response_conditions = object.data.dig("response", "conditions") || []
     def response_conditions? = response_conditions.present?
+
+    def response_properties = object.data.dig("response", "properties") || []
+    def response_properties? = response_properties.present?
   end
 end

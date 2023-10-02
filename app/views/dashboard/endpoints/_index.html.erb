@@ -20,7 +20,11 @@
       <div class="mt-2">
         <% index.properties.sort.each do |(key, value)| %>
           <div>
-            <span class="badge bg-secondary align-middle">
+            <span
+              class="badge bg-secondary align-middle"
+              data-bs-toggle="tooltip"
+              data-bs-title="Property"
+            >
               <%= key %>
             </span>
             <span class="align-middle">

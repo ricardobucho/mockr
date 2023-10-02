@@ -16,12 +16,14 @@ class RequestLogger
   # @param [User] user
   # @param [ActionDispatch::Request] request
   # @param [Request] client_request
+  # @param [Index] client_index
   # @param [Response] client_response
   #
-  def initialize(user, request, client_request, client_response)
+  def initialize(user, request, client_request, client_index, client_response)
     @user = user
     @request = request
     @client_request = client_request
+    @client_index = client_index
     @client_response = client_response
   end
 
@@ -62,16 +64,31 @@ class RequestLogger
       name: @client_request.name,
       client: @request.path_parameters[:client],
       path: @request.path,
-      params: @request.params.to_h,
+      query_params: @request.query_parameters.to_h,
+      body_params: @request.request_parameters.to_h,
       user_agent: @request.user_agent,
       ip: @request.ip,
     }
   end
 
+  def index_hash
+    {
+      id: @client_index.id,
+      name: @client_index.name,
+      status: @client_index.status,
+      throttle: @client_index.throttle,
+      headers: @client_index.headers,
+      properties: @client_index.properties,
+    }
+  end
+
   def response_hash
+    return index_hash if @client_index.present?
+
     return { status: 500 } if @client_response.blank?
 
     {
+      id: @client_response.id,
       name: @client_response.name,
       status: @client_response.status,
       throttle: @client_response.throttle,
