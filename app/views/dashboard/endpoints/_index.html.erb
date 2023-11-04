@@ -17,21 +17,18 @@
           /<%= client.slug %><%= index.path %>
         </span>
       </div>
-      <div class="mt-2">
-        <% index.properties.sort.each do |(key, value)| %>
-          <div>
-            <span
-              class="badge bg-secondary align-middle"
-              data-bs-toggle="tooltip"
-              data-bs-title="Property"
-            >
-              <%= key %>
-            </span>
-            <span class="align-middle">
-              <%= value %>
-            </span>
-          </div>
-        <% end %>
+    </div>
+    <div class="col-auto">
+      <div class="btn-group align-middle" role="group">
+        <a
+          href="<%= show_index_path(index.id) %>"
+          class="btn btn-sm btn-primary"
+          data-bs-toggle="tooltip"
+          data-bs-title="Body"
+          data-turbo-frame="modal"
+        >
+          <i class="bi bi-braces-asterisk"></i>
+        </a>
       </div>
     </div>
   </div>

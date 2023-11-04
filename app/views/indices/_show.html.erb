@@ -1,0 +1,16 @@
+<%= turbo_frame_tag "modal" do %>
+  <% render "shared/modal_content", title: "Index" do %>
+    <h6>
+      <%= @index.request.client.name %>
+      <i class="bi bi-chevron-right"></i>
+      <%= @index.request.name %>
+      <i class="bi bi-chevron-right"></i>
+      <b class="text-muted"><%= @index.name %></b>
+    </h6>
+    <hr />
+    <div
+      data-controller="editor"
+      data-editor-language-value="html"
+    ><%== @index.template %></div>
+  <% end %>
+<% end %>

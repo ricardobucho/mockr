@@ -13,5 +13,18 @@ class IndexResource < Avo::BaseResource
   field :throttle, as: :number, default: 0, help: "The number of milliseconds to delay the request."
   field :status, as: :number, required: true
   field :headers, as: :key_value, default: {}
-  field :properties, as: :key_value, default: {}
+
+  field(
+    :template,
+    as: :code,
+    language: "json",
+    default: nil,
+    help:
+      <<~HELP.squish,
+        The JSON template is used to transform and render each response element.
+        We leverage the <b>ERB</b> templating engine for ease of manipulation.
+        The iterating response item is available as a variable named
+        <code>response</code> and has been parsed into a symbolized Ruby hash.
+      HELP
+  )
 end
