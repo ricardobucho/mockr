@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_15_172052) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_08_130433) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +38,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_15_172052) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.text "generator"
+    t.text "template"
     t.index ["deleted_at"], name: "index_indices_on_deleted_at"
     t.index ["request_id", "method", "path"], name: "index_indices_on_request_id_and_method_and_path", unique: true
     t.index ["request_id"], name: "index_indices_on_request_id"
@@ -62,6 +62,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_15_172052) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.boolean "listing", default: false, null: false
+    t.jsonb "listing_attributes", default: {}, null: false
     t.index ["client_id", "method", "path"], name: "index_requests_on_client_id_and_method_and_path", unique: true
     t.index ["client_id"], name: "index_requests_on_client_id"
     t.index ["deleted_at"], name: "index_requests_on_deleted_at"

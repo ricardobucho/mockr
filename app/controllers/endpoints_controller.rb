@@ -94,16 +94,11 @@ class EndpointsController < ActionController::Base
 
     render(
       json:
-        client_request.responses.select do |client_response|
-          client_response.format == Response.formats.key("json") &&
-            JSON.parse(client_response.body).any? do |(_, value)|
-              value.downcase.include?(params[:q]&.downcase || "")
-            end
-        end.flat_map do |response|
-          client_index.properties.map do |key, value|
-            { key => JSON.parse(response.body)[value] }
-          end
-        end,
+        EndpointResponses::Index.new(
+          request: client_request,
+          index: client_index,
+          params:,
+        ).call,
       status: :ok,
     )
   end

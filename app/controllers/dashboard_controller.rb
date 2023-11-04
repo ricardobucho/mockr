@@ -40,7 +40,7 @@ class DashboardController < ApplicationController
         OR requests.name LIKE :query
         OR requests.path LIKE :query
         OR indices.name LIKE :query
-        OR indices.properties::text LIKE :query
+        OR indices.path LIKE :query
         OR responses.name LIKE :query
         OR responses.conditions::text LIKE :query
       SQL

@@ -8,6 +8,7 @@ RSpec.describe RequestLogger, type: :service do
       user,
       request,
       client_request,
+      client_index,
       client_response,
     )
   end
@@ -15,6 +16,7 @@ RSpec.describe RequestLogger, type: :service do
   let(:user) { nil }
   let(:request) { nil }
   let(:client_request) { nil }
+  let(:client_index) { nil }
   let(:client_response) { nil }
 
   context "when all the parameters are present" do
@@ -33,7 +35,10 @@ RSpec.describe RequestLogger, type: :service do
         path_parameters: {
           client: client.name,
         },
-        params: {
+        query_parameters: {
+          example: "value",
+        },
+        request_parameters: {
           example: "value",
         },
       )
@@ -42,7 +47,7 @@ RSpec.describe RequestLogger, type: :service do
     let(:entry) { create_log_entry.call }
     let(:data) { entry.data.deep_symbolize_keys }
 
-    it "creates a log entry" do
+    it "creates a response log entry" do
       expect { entry }.to change(Log, :count).by(1)
 
       expect(entry).to be_a(Log)
@@ -60,13 +65,17 @@ RSpec.describe RequestLogger, type: :service do
             name: client_request.name,
             client: client.name,
             path: "/api/v1/clients/#{client.slug}#{client_request.path}",
-            params: {
+            query_params: {
+              example: "value",
+            },
+            body_params: {
               example: "value",
             },
             user_agent: "Fake User Agent",
             ip: "0.0.0.0",
           },
           response: {
+            id: client_response.id,
             name: client_response.name,
             status: client_response.status,
             throttle: client_response.throttle,
@@ -75,6 +84,49 @@ RSpec.describe RequestLogger, type: :service do
           },
         },
       )
+    end
+
+    context "when the log is for an index" do
+      let(:client_index) { FactoryBot.create(:index, request: client_request, path: "index") }
+
+      it "creates an index log entry" do
+        expect { entry }.to change(Log, :count).by(1)
+
+        expect(entry).to be_a(Log)
+        expect(entry.request_id).to eq(client_request.id)
+
+        expect(data).to match(
+          {
+            user: {
+              id: user.id,
+              provider: user.provider,
+              uid: user.provider_uid,
+              email: user.provider_email,
+            },
+            request: {
+              name: client_request.name,
+              client: client.name,
+              path: "/api/v1/clients/#{client.slug}#{client_request.path}",
+              query_params: {
+                example: "value",
+              },
+              body_params: {
+                example: "value",
+              },
+              user_agent: "Fake User Agent",
+              ip: "0.0.0.0",
+            },
+            response: {
+              id: client_index.id,
+              name: client_index.name,
+              status: client_index.status,
+              throttle: client_index.throttle,
+              headers: client_index.headers,
+              properties: client_index.properties,
+            },
+          },
+        )
+      end
     end
   end
 end
