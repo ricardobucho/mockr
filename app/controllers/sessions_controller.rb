@@ -3,7 +3,9 @@
 class SessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index create failure]
 
-  def index; end
+  def index
+    redirect_to root_path if current_user
+  end
 
   def create
     user = User.find_or_create_by_auth_hash(auth_hash)

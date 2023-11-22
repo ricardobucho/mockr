@@ -12,6 +12,8 @@ class DashboardController < ApplicationController
         references(requests: %i[indices responses]).
         merge(clients_search_sql)
 
+    @searching = query.present?
+
     render "dashboard/endpoints/_clients"
   end
 
@@ -36,15 +38,15 @@ class DashboardController < ApplicationController
 
     Client.where(
       <<~SQL.squish,
-        clients.name LIKE :query
-        OR requests.name LIKE :query
-        OR requests.path LIKE :query
-        OR indices.name LIKE :query
-        OR indices.path LIKE :query
-        OR responses.name LIKE :query
-        OR responses.conditions::text LIKE :query
+        clients.name ilike :query
+        or requests.name ilike :query
+        or requests.path ilike :query
+        or indices.name ilike :query
+        or indices.path ilike :query
+        or responses.name ilike :query
+        or responses.conditions::text ilike :query
       SQL
-      query: "%#{query}%",
+      query: "%#{query.chars.join('%')}%",
     )
   end
 end

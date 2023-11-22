@@ -7,7 +7,7 @@
           <%= request.method %>
         </span>
         <span class="fst-italic align-middle">
-          /<%= client.slug %><%= request.path %>
+          /<%= client.slug %><%= request.path unless request.path == "/" %>
         </span>
       </div>
     </div>
@@ -26,29 +26,33 @@
     </div>
   </div>
 
-  <div class="row row-cols-2 mt-3">
-    <% request.indices.each do |index| %>
-      <%=
-        render(
-          "dashboard/endpoints/index",
-          client: client,
-          request: request,
-          index: index,
-        )
-      %>
-    <% end %>
-  </div>
+  <% if request.indices.any? %>
+    <div class="row row-cols-2 mt-3">
+      <% request.indices.each do |index| %>
+        <%=
+          render(
+            "dashboard/endpoints/index",
+            client: client,
+            request: request,
+            index: index,
+          )
+        %>
+      <% end %>
+    </div>
+  <% end %>
 
-  <div class="row row-cols-4 mt-3">
-    <% request.responses.each do |response| %>
-      <%=
-        render(
-          "dashboard/endpoints/response",
-          client: client,
-          request: request,
-          response: response,
-        )
-      %>
-    <% end %>
-  </div>
+  <% if request.responses.any? %>
+    <div class="row row-cols-4 mt-3">
+      <% request.responses.each do |response| %>
+        <%=
+          render(
+            "dashboard/endpoints/response",
+            client: client,
+            request: request,
+            response: response,
+          )
+        %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

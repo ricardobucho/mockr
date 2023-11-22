@@ -1,47 +1,70 @@
 <turbo-frame id="clients">
-  <div class="accordion mt-2" id="clients-accordion">
+  <ul class="nav nav-pills mt-4 mb-3" id="pills-clients" role="tablist">
     <% @clients.each.with_index do |client, index| %>
-      <div class="accordion-item">
-        <div class="accordion-header">
-          <button
-            class="accordion-button <%= index == 0 ? "" : "collapsed" %>"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#client-<%= client.slug %>"
-            aria-expanded="true"
-            aria-controls="client-<%= client.slug %>"
-          >
-            <%= client.name %>
-          </button>
-        </div>
-        <div
-          id="client-<%= client.slug %>"
-          class="accordion-collapse collapse <%= index == 0 ? "show" : "" %>"
-          data-bs-parent="#clients-accordion"
+      <li class="nav-item me-2" role="presentation">
+        <button
+          class="nav-link border border-primary rounded-pill <%= index == 0 ? "active" : "" %>"
+          id="pills-<%= client.id %>-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-<%= client.id %>"
+          type="button"
+          role="tab"
+          aria-controls="pills-<%= client.id %>"
+          aria-selected="true"
         >
-          <div class="accordion-body">
-            <div class="list-group">
-              <% client.requests.each do |request| %>
-                <%=
-                  render(
-                    "dashboard/endpoints/request",
-                    client: client,
-                    request: request,
-                  )
-                %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
+          <%= client.name %>
+        </button>
+      </li>
     <% end %>
-    <% if @clients.none? %>
-      <div class="alert alert-warning d-flex align-items-center" role="alert">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i>
-        <div>
-          No results found for your search.
+  </ul>
+
+  <div class="tab-content" id="pills-clientDetails">
+    <% @clients.each.with_index do |client, index| %>
+      <div
+        class="tab-pane <%= index == 0 ? "show active" : "" %>"
+        id="pills-<%= client.id %>"
+        role="tabpanel"
+        aria-labelledby="pills-<%= client.id %>-tab"
+      >
+        <div class="list-group">
+          <% client.requests.each do |request| %>
+            <%=
+              render(
+                "dashboard/endpoints/request",
+                client: client,
+                request: request,
+              )
+            %>
+          <% end %>
+
+          <% if client.requests.none? && !@searching %>
+            <div class="alert alert-warning d-flex align-items-center" role="alert">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>
+              <div>
+                There are no requests for this client.
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     <% end %>
   </div>
+
+  <% if @clients.none? && @searching %>
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      <div>
+        No results found for your search.
+      </div>
+    </div>
+  <% end %>
+
+  <% if @clients.none? && !@searching %>
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+      <i class="bi bi-info-circle-fill me-2"></i>
+      <div>
+        Available endpoints will be listed here once they are created.
+      </div>
+    </div>
+  <% end %>
 </div>
