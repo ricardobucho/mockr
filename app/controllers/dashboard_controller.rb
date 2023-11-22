@@ -12,6 +12,8 @@ class DashboardController < ApplicationController
         references(requests: %i[indices responses]).
         merge(clients_search_sql)
 
+    @searching = query.present?
+
     render "dashboard/endpoints/_clients"
   end
 
