@@ -7,7 +7,7 @@
           <%= request.method %>
         </span>
         <span class="fst-italic align-middle">
-          /<%= client.slug %><%= request.path %>
+          /<%= client.slug %><%= request.path unless request.path == "/" %>
         </span>
       </div>
     </div>
