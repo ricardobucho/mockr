@@ -1,58 +1,71 @@
-<div class="list-group-item p-3" aria-current="true">
-  <div class="d-flex w-100">
-    <div class="col">
-      <div class="mb-0 fw-semibold"><%= request.name %></div>
-      <div>
-        <span class="badge bg-<%= method_class_map[request.method] %> align-middle">
-          <%= request.method %>
-        </span>
-        <span class="fst-italic align-middle">
-          /<%= client.slug %><%= request.path unless request.path == "/" %>
-        </span>
+<div class="col mb-3">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <i
+            class="bi bi-tags-fill me-1"
+            data-bs-toggle="tooltip"
+            data-bs-title="Request"
+          ></i>
+          <%= request.name %>
+        </div>
+        <div class="col-auto">
+          <div class="btn-group align-middle" role="group">
+            <a
+              href="<%= show_request_path(request.id) %>"
+              class="btn btn-sm btn-success text-white"
+              data-bs-toggle="tooltip"
+              data-bs-title="Logs"
+              data-turbo-frame="modal"
+            >
+              <i class="bi bi-journals"></i>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-auto">
-      <div class="btn-group align-middle" role="group">
-        <a
-          href="<%= show_request_path(request.id) %>"
-          class="btn btn-sm btn-success text-white"
-          data-bs-toggle="tooltip"
-          data-bs-title="Logs"
-          data-turbo-frame="modal"
-        >
-          <i class="bi bi-braces"></i>
-        </a>
-      </div>
+    <div class="card-body">
+      <span class="badge bg-<%= method_class_map[request.method] %> align-middle">
+        <%= request.method %>
+      </span>
+      <span class="fst-italic align-middle">
+        /<%= client.slug %><%= request.path unless request.path == "/" %>
+      </span>
     </div>
+    <ul class="list-group list-group-flush">
+      <% if request.indices.any? %>
+        <li class="list-group-item pt-3 pb-0">
+          <div class="row row-cols-1 row-cols-xl-2">
+            <% request.indices.each do |index| %>
+              <%=
+                render(
+                  "dashboard/endpoints/index",
+                  client: client,
+                  request: request,
+                  index: index,
+                )
+              %>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+      <% if request.responses.any? %>
+        <li class="list-group-item pt-3 pb-0">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
+            <% request.responses.each do |response| %>
+              <%=
+                render(
+                  "dashboard/endpoints/response",
+                  client: client,
+                  request: request,
+                  response: response,
+                )
+              %>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
   </div>
-
-  <% if request.indices.any? %>
-    <div class="row row-cols-2 mt-3">
-      <% request.indices.each do |index| %>
-        <%=
-          render(
-            "dashboard/endpoints/index",
-            client: client,
-            request: request,
-            index: index,
-          )
-        %>
-      <% end %>
-    </div>
-  <% end %>
-
-  <% if request.responses.any? %>
-    <div class="row row-cols-4 mt-3">
-      <% request.responses.each do |response| %>
-        <%=
-          render(
-            "dashboard/endpoints/response",
-            client: client,
-            request: request,
-            response: response,
-          )
-        %>
-      <% end %>
-    </div>
-  <% end %>
 </div>

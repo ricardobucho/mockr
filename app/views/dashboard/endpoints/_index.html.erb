@@ -1,35 +1,39 @@
-<div class="col">
-  <div class="d-flex w-100 bg-light p-3">
-    <div class="col">
-      <div class="fw-semibold">
-        <i
-          class="bi bi-regex me-1 align-top"
-          data-bs-toggle="tooltip"
-          data-bs-title="Index"
-        ></i>
-        <%= index.name %>
+<div class="col mb-3">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <i
+            class="bi bi-collection-fill me-1 align-top"
+            data-bs-toggle="tooltip"
+            data-bs-title="Index"
+          ></i>
+          <%= index.name %>
+        </div>
+        <div class="col-auto">
+          <div class="btn-group align-middle" role="group">
+            <a
+              href="<%= show_index_path(index.id) %>"
+              class="btn btn-sm btn-primary"
+              data-bs-toggle="tooltip"
+              data-bs-title="Template"
+              data-turbo-frame="modal"
+            >
+              <i class="bi bi-code-slash"></i>
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="mt-1">
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
         <span class="badge bg-<%= method_class_map[request.method] %> align-middle">
           <%= request.method %>
         </span>
         <span class="fst-italic align-middle">
           /<%= client.slug %><%= index.path unless index.path == "/" %>
         </span>
-      </div>
-    </div>
-    <div class="col-auto">
-      <div class="btn-group align-middle" role="group">
-        <a
-          href="<%= show_index_path(index.id) %>"
-          class="btn btn-sm btn-primary"
-          data-bs-toggle="tooltip"
-          data-bs-title="Body"
-          data-turbo-frame="modal"
-        >
-          <i class="bi bi-braces-asterisk"></i>
-        </a>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 </div>
