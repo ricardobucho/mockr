@@ -11,6 +11,28 @@
           <%= response.name %>
         </div>
         <div class="col-auto">
+          <% if current_user.manager? %>
+            <div class="btn-group align-middle" role="group">
+              <a
+                href="<%= avo.resources_response_path(response.id) %>"
+                class="btn btn-sm btn-outline-secondary"
+                target="_blank"
+                data-bs-toggle="tooltip"
+                data-bs-title="View in Manager"
+              >
+                <i class="bi bi-eye"></i>
+              </a>
+              <a
+                href="<%= avo.edit_resources_response_path(response.id) %>"
+                class="btn btn-sm btn-outline-secondary"
+                target="_blank"
+                data-bs-toggle="tooltip"
+                data-bs-title="Edit in Manager"
+              >
+                <i class="bi bi-pencil"></i>
+              </a>
+            </div>
+          <% end %>
           <div class="btn-group align-middle" role="group">
             <a
               href="<%= show_response_path(response.id) %>"
