@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount Avo::Engine, at: Avo.configuration.root_path
+  mount_avo at: Avo.configuration.root_path
 
   get "/clients", to: "dashboard#clients", as: :clients
 

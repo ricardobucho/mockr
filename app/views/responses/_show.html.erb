@@ -8,9 +8,6 @@
       <b class="text-muted"><%= @response.name %></b>
     </h6>
     <hr />
-    <div
-      data-controller="editor"
-      data-editor-language-value="<%= Response.formats[@response.format] %>"
-    ><%= @response.body %></div>
+    <pre class="code-display"><code data-controller="highlight" class="language-<%= @response.format %>"><%= @response.body %></code></pre>
   <% end %>
 <% end %>

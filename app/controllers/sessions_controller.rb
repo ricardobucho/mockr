@@ -10,14 +10,21 @@ class SessionsController < ApplicationController
   def create
     user = User.find_or_create_by_auth_hash(auth_hash)
 
-    return destroy unless OrganizationManager.new(user).member?
+    unless OrganizationManager.new(user).member?
+      session[:user_id] = nil
+      return redirect_to login_path, alert: "You must be a member of the organization to access this application."
+    end
 
     session[:user_id] = user.id
 
     redirect_to root_path
   end
 
-  def destroy = destroy_session!
+  def destroy
+    return redirect_to(login_path) unless current_user
+
+    destroy_session!
+  end
 
   def failure
     redirect_to root_path

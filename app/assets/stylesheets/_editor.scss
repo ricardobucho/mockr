@@ -1,5 +1,23 @@
-@import 'prismjs/themes/prism';
+@import 'prismjs/themes/prism-tomorrow';
 
-.npm__react-simple-code-editor__textarea {
-  outline: none;
+pre.code-display,
+.modal pre.code-display,
+.modal-body pre.code-display {
+  background: #2d2d2d !important;
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 0;
+  overflow: auto;
+  max-height: 400px;
+  color: #ccc;
+
+  code {
+    font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #ccc;
+    background: transparent;
+  }
 }

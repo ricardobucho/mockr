@@ -9,7 +9,6 @@ Avo.configure do |config|
   # config.home_path = nil
 
   ## == Licensing ==
-  config.license = "community" # change this to "pro" when you add the license key
   # config.license_key = ENV["AVO_LICENSE_KEY"]
 
   ## == Set the context ==
@@ -41,7 +40,7 @@ Avo.configure do |config|
     destroy: "destroy?",
   }
 
-  config.raise_error_on_missing_policy = true
+  config.explicit_authorization = true
 
   ## == Localization ==
   # config.locale = "en-US"

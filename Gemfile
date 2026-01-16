@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-ruby "3.3.4"
+ruby "3.3.6"
 
 gem "acts_as_paranoid"
 gem "avo"
@@ -15,7 +15,7 @@ gem "octokit"
 gem "panko_serializer"
 gem "pg"
 gem "puma"
-gem "rails", "~> 7.0"
+gem "rails", "~> 7.2"
 gem "sprockets-rails", require: "sprockets/railtie"
 
 gem "faraday"
@@ -30,10 +30,10 @@ gem "rubocop", require: false
 gem "rubocop-performance", require: false
 gem "rubocop-rails", require: false
 
-gem "cssbundling-rails", "~> 1.1"
-gem "jsbundling-rails", "~> 1.1"
-gem "stimulus-rails", "~> 1.1"
-gem "turbo-rails", "~> 1.1"
+gem "cssbundling-rails", "~> 1.4"
+gem "jsbundling-rails", "~> 1.3"
+gem "stimulus-rails", "~> 1.3"
+gem "turbo-rails", "~> 2.0"
 
 group :development, :test do
   gem "database_cleaner"

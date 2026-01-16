@@ -4,11 +4,11 @@
 
 import { application } from "./application"
 
-import EditorController from "./editor_controller"
-application.register("editor", EditorController)
-
 import GlobalController from "./global_controller"
 application.register("global", GlobalController)
+
+import HighlightController from "./highlight_controller"
+application.register("highlight", HighlightController)
 
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
