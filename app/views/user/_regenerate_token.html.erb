@@ -1,14 +1,20 @@
 <turbo-frame id="user_regenerate_token">
   <%= form_tag(regenerate_token_path, method: "get") do %>
-    <div class="input-group">
-      <span class="input-group-text" id="basic-addon1">Bearer</span>
+    <div class="input-group input-group-sm token-group">
+      <span class="input-group-text text-mono">Bearer</span>
       <input
         type="text"
-        class="form-control"
+        class="form-control text-mono"
         readonly="readonly"
         value="<%= current_user.token %>"
+        style="font-size: 0.75rem;"
       />
-      <button class="btn btn-secondary" type="submit">
+      <button 
+        class="btn btn-token-refresh" 
+        type="submit"
+        data-bs-toggle="tooltip"
+        data-bs-title="Regenerate Token"
+      >
         <i class="bi bi-arrow-clockwise"></i>
       </button>
     </div>

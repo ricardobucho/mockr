@@ -1,13 +1,13 @@
 <%= turbo_frame_tag "modal" do %>
-  <% render "shared/modal_content", title: "Response" do %>
-    <h6>
-      <%= @response.request.client.name %>
-      <i class="bi bi-chevron-right"></i>
-      <%= @response.request.name %>
-      <i class="bi bi-chevron-right"></i>
-      <b class="text-muted"><%= @response.name %></b>
-    </h6>
-    <hr />
+  <%= render "shared/modal_content", title: "Response Body" do %>
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <span class="text-muted"><%= @response.request.client.name %></span>
+      <i class="bi bi-chevron-right text-muted small"></i>
+      <span class="text-muted"><%= @response.request.name %></span>
+      <i class="bi bi-chevron-right text-muted small"></i>
+      <span class="fw-medium"><%= @response.name %></span>
+    </div>
+    
     <pre class="code-display"><code data-controller="highlight" class="language-<%= @response.format %>"><%= @response.body %></code></pre>
   <% end %>
 <% end %>

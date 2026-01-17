@@ -48,3 +48,7 @@ group :development, :test do
   gem "simplecov-cobertura"
   gem "vcr"
 end
+
+group :development do
+  gem "ruby-lsp"
+end

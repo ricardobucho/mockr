@@ -6,12 +6,12 @@ require:
   - rubocop-performance
 
 AllCops:
-  TargetRubyVersion: 3.2.1
+  TargetRubyVersion: 3.3
   NewCops: enable
   Exclude:
-    - 'bin/**/*'
-    - 'node_modules/**/*'
-    - 'vendor/**/*'
+    - "bin/**/*"
+    - "node_modules/**/*"
+    - "vendor/**/*"
 
 Rails/UnknownEnv:
   Environments:

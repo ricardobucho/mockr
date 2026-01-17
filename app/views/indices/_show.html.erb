@@ -1,13 +1,13 @@
 <%= turbo_frame_tag "modal" do %>
-  <%= render "shared/modal_content", title: "Index" do %>
-    <h6>
-      <%= @index.request.client.name %>
-      <i class="bi bi-chevron-right"></i>
-      <%= @index.request.name %>
-      <i class="bi bi-chevron-right"></i>
-      <b class="text-muted"><%= @index.name %></b>
-    </h6>
-    <hr />
+  <%= render "shared/modal_content", title: "Index Template" do %>
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <span class="text-muted"><%= @index.request.client.name %></span>
+      <i class="bi bi-chevron-right text-muted small"></i>
+      <span class="text-muted"><%= @index.request.name %></span>
+      <i class="bi bi-chevron-right text-muted small"></i>
+      <span class="fw-medium"><%= @index.name %></span>
+    </div>
+    
     <pre class="code-display"><code data-controller="highlight" class="language-html"><%= @index.template %></code></pre>
   <% end %>
 <% end %>

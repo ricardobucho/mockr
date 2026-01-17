@@ -1,70 +1,74 @@
 <turbo-frame id="clients">
-  <ul class="nav nav-pills mt-4 mb-3" id="pills-clients" role="tablist">
-    <% @clients.each.with_index do |client, index| %>
-      <li class="nav-item me-2" role="presentation">
-        <button
-          class="nav-link border border-primary rounded-pill <%= index == 0 ? "active" : "" %>"
-          id="pills-<%= client.id %>-tab"
-          data-bs-toggle="pill"
-          data-bs-target="#pills-<%= client.id %>"
-          type="button"
-          role="tab"
-          aria-controls="pills-<%= client.id %>"
-          aria-selected="true"
+  <% if @clients.any? %>
+    <div class="client-selector mb-4">
+      <i class="bi bi-ui-radios-grid client-selector-icon"></i>
+      <ul class="nav nav-pills" id="pills-clients" role="tablist">
+          <% @clients.each.with_index do |client, index| %>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link <%= index == 0 ? "active" : "" %>"
+                id="pills-<%= client.id %>-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-<%= client.id %>"
+                type="button"
+                role="tab"
+                aria-controls="pills-<%= client.id %>"
+                aria-selected="<%= index == 0 %>"
+              >
+                <%= client.name %>
+              </button>
+            </li>
+          <% end %>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="pills-clientDetails">
+      <% @clients.each.with_index do |client, index| %>
+        <div
+          class="tab-pane fade <%= index == 0 ? "show active" : "" %>"
+          id="pills-<%= client.id %>"
+          role="tabpanel"
+          aria-labelledby="pills-<%= client.id %>-tab"
         >
-          <%= client.name %>
-        </button>
-      </li>
-    <% end %>
-  </ul>
+          <div class="row row-cols-1 g-3">
+            <% client.requests.each do |request| %>
+              <%=
+                render(
+                  "dashboard/endpoints/request",
+                  client: client,
+                  request: request,
+                )
+              %>
+            <% end %>
 
-  <div class="tab-content" id="pills-clientDetails">
-    <% @clients.each.with_index do |client, index| %>
-      <div
-        class="tab-pane <%= index == 0 ? "show active" : "" %>"
-        id="pills-<%= client.id %>"
-        role="tabpanel"
-        aria-labelledby="pills-<%= client.id %>-tab"
-      >
-        <div class="list-group">
-          <% client.requests.each do |request| %>
-            <%=
-              render(
-                "dashboard/endpoints/request",
-                client: client,
-                request: request,
-              )
-            %>
-          <% end %>
-
-          <% if client.requests.none? && !@searching %>
-            <div class="alert alert-warning d-flex align-items-center" role="alert">
-              <i class="bi bi-exclamation-triangle-fill me-2"></i>
-              <div>
-                There are no requests for this client.
+            <% if client.requests.none? && !@searching %>
+              <div class="col">
+                <div class="empty-state">
+                  <i class="bi bi-inbox empty-state-icon"></i>
+                  <div class="empty-state-title">No requests yet</div>
+                  <p>There are no requests for this client.</p>
+                </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 
   <% if @clients.none? && @searching %>
-    <div class="alert alert-warning d-flex align-items-center" role="alert">
-      <i class="bi bi-exclamation-triangle-fill me-2"></i>
-      <div>
-        No results found for your search.
-      </div>
+    <div class="empty-state">
+      <i class="bi bi-search empty-state-icon"></i>
+      <div class="empty-state-title">No results found</div>
+      <p>Try adjusting your search terms.</p>
     </div>
   <% end %>
 
   <% if @clients.none? && !@searching %>
-    <div class="alert alert-primary d-flex align-items-center" role="alert">
-      <i class="bi bi-info-circle-fill me-2"></i>
-      <div>
-        Available endpoints will be listed here once they are created.
-      </div>
+    <div class="empty-state">
+      <i class="bi bi-layers empty-state-icon"></i>
+      <div class="empty-state-title">No clients yet</div>
+      <p>Create your first client to get started.</p>
     </div>
   <% end %>
-</div>
+</turbo-frame>

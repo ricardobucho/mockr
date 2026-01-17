@@ -1,110 +1,80 @@
-<style>
-  body {
-    padding-bottom: 40px;
-    background-color: #f5f5f5;
-  }
-</style>
-
-<div class="container-fluid">
-  <div class="mx-auto p-4">
-    <header class="pb-3 mb-5 border-bottom">
-      <div class="row">
-        <div class="col-auto">
-          <a href="/">
-            <%= image_tag("mockr.svg", height: 55, class: "mb-2") %>
-          </a>
-        </div>
-        <div class="col-auto">
+<div class="container-fluid app-container">
+  <div class="mx-auto px-4 py-3">
+    <header class="app-header d-flex align-items-center">
+      <div class="header-left">
+        <a href="/">
+          <%= image_tag("mockr.svg", class: "logo") %>
+        </a>
+      </div>
+      
+      <div class="header-center">
+        <%=
+          form_tag(
+            clients_path,
+            method: "get",
+            data: {
+              turbo_frame: "clients",
+              controller: "search-form",
+            }
+          ) do
+        %>
+          <div class="input-group input-group-sm search-group">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              name="q"
+              placeholder="Search endpoints..."
+              maxlength="50"
+              data-search-form-target="textInput"
+              data-action="keyup->search-form#submit"
+            />
+            <button
+              type="button"
+              class="btn btn-search-clear"
+              data-action="click->search-form#clear"
+            >
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="header-right d-flex align-items-center justify-content-end gap-3">
+        <span class="user-info">
+          <i class="bi bi-<%= current_user_icon %> me-1"></i>
+          <%= current_user.provider_username %>
+        </span>
+        <div class="header-buttons d-flex align-items-center">
           <button
-            class="btn btn-secondary btn-sm mt-3"
+            class="btn btn-header-action"
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#mockrOffcanvas"
             aria-controls="mockrOffcanvas"
+            data-tooltip="Settings"
+            data-tooltip-placement="bottom"
           >
-            <i class="bi bi-three-dots align-middle"></i>
+            <i class="bi bi-gear"></i>
           </button>
-        </div>
-        <div class="col">
-          <ul class="nav justify-content-end mt-2">
-            <li class="nav-item border-end border-black">
-              <a class="nav-link disabled text-black">
-                <i class="bi bi-<%= current_user_icon %> align-middle me-1"></i>
-                <span class="align-middle"><%= current_user.provider_username %></span>
-                <span class="badge text-bg-primary ms-1"><%= current_user.role %></span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <%= link_to("Logout", logout_path, class: "nav-link align-middle") %>
-            </li>
-          </ul>
+          <% if current_user.manager? %>
+            <a href="<%= avo_path %>" data-turbo="false" class="btn btn-header-action" data-bs-toggle="tooltip" data-bs-title="Manage" data-bs-placement="bottom">
+              <i class="bi bi-sliders"></i>
+            </a>
+          <% end %>
+          <span class="header-divider"></span>
+          <%= link_to(logout_path, class: "btn btn-header-action", data: { bs_toggle: "tooltip", bs_title: "Logout", bs_placement: "bottom" }) do %>
+            <i class="bi bi-box-arrow-right"></i>
+          <% end %>
         </div>
       </div>
     </header>
 
-    <main>
-      <div class="row">
-        <div class="col-auto">
-          <h2 class="text-body-emphasis">Endpoints</h2>
-        </div>
-        <div class="col">
-          <%=
-            form_tag(
-              clients_path,
-              method: "get",
-              data: {
-                turbo_frame: "clients",
-                controller: "search-form",
-              }
-            ) do
-          %>
-            <div class="input-group mb-3 w-100">
-              <span class="input-group-text" id="basic-addon1">
-                <i class="bi bi-search"></i>
-              </span>
-              <input
-                type="text"
-                class="form-control"
-                name="q"
-                maxlength="50"
-                cols="50"
-                data-search-form-target="textInput"
-                data-action="keyup->search-form#submit"
-              />
-              <a
-                class="btn btn-outline-secondary"
-                data-action="click->search-form#clear"
-              >
-                <i class="bi bi-x-lg"></i>
-              </a>
-            </div>
-          <% end %>
-        </div>
-        <div class="col-auto">
-          <% if current_user.manager? %>
-            <a href="<%= avo_path %>" data-turbo="false" class="btn btn-primary">
-              <i class="bi bi-gear"></i>
-              Manage
-            </a>
-          <% end %>
-        </div>
-      </div>
-
+    <main class="mt-4">
       <%= turbo_frame_tag "clients", src: clients_path %>
     </main>
-
-    <footer class="text-center border-top pt-5 mt-5">
-      <a
-        href="https://github.com/ricardobucho/mockr"
-        class="link-secondary text-decoration-none"
-        target="_blank"
-      >
-        <i
-          class="bi bi-github"
-          style="font-size: 1.5rem;"
-        ></i>
-      </a>
-    </footer>
   </div>
 </div>
 
@@ -114,47 +84,55 @@
   id="mockrOffcanvas"
 >
   <div class="offcanvas-header">
-    <h5 class="offcanvas-title">Welcome to Mockr!</h5>
+    <%= image_tag("mockr.svg", height: 28) %>
     <button
       type="button"
-      class="btn-close text-reset"
+      class="btn-close"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
   </div>
-  <div class="offcanvas-body">
-    <p>
-      Mockr is a simple tool for creating mock API endpoints and responses.
-      On the Endpoints dashboard you can see all available endpoints and
-      their responses. You can also search for endpoints and responses by
-      name or any other attribute.
-    </p>
-    <% if ENV.fetch("GITHUB_ORGANIZATION", nil).present? %>
-      <div class="alert alert-secondary d-flex align-items-center" role="alert">
-        <div>
-          Organizational restriction is active. Only members of
-          <code><%= ENV.fetch("GITHUB_ORGANIZATION") %></code> can login,
-          manage endpoints and responses and make requests to the application.
+  <div class="offcanvas-body d-flex flex-column">
+    <div class="flex-grow-1">
+      <p class="text-muted small">
+        Mockr is a simple tool for creating mock API endpoints and responses.
+        Search and browse all available endpoints, or use the Manage panel to create new ones.
+      </p>
+      
+      <% if ENV.fetch("GITHUB_ORGANIZATION", nil).present? %>
+        <div class="alert alert-info-subtle d-flex align-items-start" role="alert">
+          <i class="bi bi-info-circle me-2 mt-1"></i>
+          <div>
+            <strong>Organization Restriction</strong><br>
+            <small>Only members of <code><%= ENV.fetch("GITHUB_ORGANIZATION") %></code> can access this application.</small>
+          </div>
+        </div>
+      <% end %>
+      
+      <div class="card mt-3">
+        <div class="card-header py-2">
+          <small><i class="bi bi-key me-1"></i> API Token</small>
+        </div>
+        <div class="card-body py-2">
+          <p class="text-muted small mb-2">
+            Use this token in the <code>Authorization</code> header.
+          </p>
+          <%= render "user/regenerate_token" %>
         </div>
       </div>
-    <% end %>
-    <div class="card mt-2">
-      <div class="card-body">
-        <p>
-          Use the <code>token</code> below to be able to make requests
-          to the API. You can regenerate it at any time but remember to update
-          your client applications.
-        </p>
-        <ul class="list-group ">
-          <li class="list-group-item">
-            <b class="align-middle">Authorization</b>
-            <span class="badge bg-secondary ms-1">HEADER</span>
-          </li>
-          <li class="list-group-item">
-            <%= render "user/regenerate_token" %>
-          </li>
-        </ul>
-      </div>
+    </div>
+    
+    <div class="offcanvas-footer pt-3 mt-3 border-top d-flex justify-content-center">
+      <a
+        href="https://github.com/ricardobucho/mockr"
+        target="_blank"
+        class="btn btn-header-action"
+        data-bs-toggle="tooltip"
+        data-bs-title="View on GitHub"
+        data-bs-placement="top"
+      >
+        <i class="bi bi-github"></i>
+      </a>
     </div>
   </div>
 </div>

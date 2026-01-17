@@ -1,61 +1,51 @@
-<div class="col mb-3">
-  <div class="card">
+<div class="col">
+  <div class="card nested-card">
     <div class="card-header">
-      <div class="row">
-        <div class="col">
-          <i
-            class="bi bi-collection-fill me-1 align-top"
-            data-bs-toggle="tooltip"
-            data-bs-title="Index"
-          ></i>
-          <%= index.name %>
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-collection text-muted"></i>
+          <span><%= index.name %></span>
         </div>
-        <div class="col-auto">
+        <div class="d-flex align-items-center gap-1">
           <% if current_user.manager? %>
-            <div class="btn-group align-middle" role="group">
+            <div class="btn-group btn-group-actions" role="group">
               <a
                 href="<%= avo.resources_index_path(index.id) %>"
-                class="btn btn-sm btn-outline-secondary"
+                class="btn btn-action btn-outline-secondary"
                 target="_blank"
                 data-bs-toggle="tooltip"
-                data-bs-title="View in Manager"
+                data-bs-title="View"
               >
                 <i class="bi bi-eye"></i>
               </a>
               <a
                 href="<%= avo.edit_resources_index_path(index.id) %>"
-                class="btn btn-sm btn-outline-secondary"
+                class="btn btn-action btn-outline-secondary"
                 target="_blank"
                 data-bs-toggle="tooltip"
-                data-bs-title="Edit in Manager"
+                data-bs-title="Edit"
               >
                 <i class="bi bi-pencil"></i>
               </a>
             </div>
           <% end %>
-          <div class="btn-group align-middle" role="group">
-            <a
-              href="<%= show_index_path(index.id) %>"
-              class="btn btn-sm btn-primary"
-              data-bs-toggle="tooltip"
-              data-bs-title="Template"
-              data-turbo-frame="modal"
-            >
-              <i class="bi bi-code-slash"></i>
-            </a>
-          </div>
+          <a
+            href="<%= show_index_path(index.id) %>"
+            class="btn btn-action btn-outline-secondary"
+            data-bs-toggle="tooltip"
+            data-bs-title="View Template"
+            data-turbo-frame="modal"
+          >
+            <i class="bi bi-code-slash"></i>
+          </a>
         </div>
       </div>
     </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        <span class="badge bg-<%= method_class_map[request.method] %> align-middle">
-          <%= request.method %>
-        </span>
-        <span class="fst-italic align-middle">
-          /<%= client.slug %><%= index.path unless index.path == "/" %>
-        </span>
-      </li>
-    </ul>
+    <div class="card-body">
+      <span class="method-badge method-<%= request.method.downcase %>"><%= request.method %></span>
+      <span class="endpoint-path ms-2">
+        /<%= client.slug %><%= index.path unless index.path == "/" %>
+      </span>
+    </div>
   </div>
 </div>
