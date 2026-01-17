@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "drawer-stacked" do %>
+  <%= render Manage::StackedDrawerComponent.new(title: "New Index", subtitle: @request.name) do %>
+    <%= render "form", index: @index, request: @request %>
+  <% end %>
+<% end %>

@@ -4,11 +4,29 @@
 
 import { application } from "./application"
 
+import ClientTabsController from "./client_tabs_controller"
+application.register("client-tabs", ClientTabsController)
+
+import CodeEditorController from "./code_editor_controller"
+application.register("code-editor", CodeEditorController)
+
+import CodeViewerController from "./code_viewer_controller"
+application.register("code-viewer", CodeViewerController)
+
+import DeleteConfirmController from "./delete_confirm_controller"
+application.register("delete-confirm", DeleteConfirmController)
+
+import DrawerController from "./drawer_controller"
+application.register("drawer", DrawerController)
+
 import GlobalController from "./global_controller"
 application.register("global", GlobalController)
 
 import HighlightController from "./highlight_controller"
 application.register("highlight", HighlightController)
+
+import KeyValueController from "./key_value_controller"
+application.register("key-value", KeyValueController)
 
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
@@ -18,3 +36,6 @@ application.register("search-form", SearchFormController)
 
 import ThemeController from "./theme_controller"
 application.register("theme", ThemeController)
+
+import ToastController from "./toast_controller"
+application.register("toast", ToastController)

@@ -1,0 +1,15 @@
+<div 
+  class="toast-notification <%= toast_class %>" 
+  data-controller="toast"
+  data-toast-duration-value="5000"
+  role="alert"
+  aria-live="polite"
+>
+  <div class="toast-icon">
+    <i class="bi bi-<%= icon_name %>"></i>
+  </div>
+  <div class="toast-message"><%= message %></div>
+  <button type="button" class="toast-close" data-action="toast#dismiss" aria-label="Close">
+    <i class="bi bi-x"></i>
+  </button>
+</div>

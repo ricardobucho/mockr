@@ -8,6 +8,9 @@
       <span class="fw-medium"><%= @response.name %></span>
     </div>
     
-    <pre class="code-display"><code data-controller="highlight" class="language-<%= @response.format %>"><%= @response.body %></code></pre>
+    <%= render Manage::Fields::CodeViewerComponent.new(
+      code: @response.body,
+      language: @response.format
+    ) %>
   <% end %>
 <% end %>

@@ -1,0 +1,115 @@
+<div class="mb-3">
+  <% if label.present? %>
+    <label class="form-label" for="<%= field_id %>">
+      <%= label %>
+      <% if required %><abbr title="required">*</abbr><% end %>
+    </label>
+  <% end %>
+
+  <div 
+    class="key-value-editor <%= 'is-invalid' if has_errors? %>"
+    data-controller="key-value"
+    data-key-value-field-name-value="<%= field_name %>"
+  >
+    <div class="key-value-header">
+      <span class="key-value-header-cell key-value-header-key"><%= key_label %></span>
+      <span class="key-value-header-cell key-value-header-value"><%= value_label %></span>
+      <button 
+        type="button" 
+        class="key-value-add-btn"
+        data-action="key-value#addRow"
+        title="Add row"
+      >
+        <i class="bi bi-plus-lg"></i>
+      </button>
+    </div>
+
+    <div class="key-value-body" data-key-value-target="rows">
+      <% rows.each do |key, value| %>
+        <div class="key-value-row" data-key-value-target="row">
+          <span class="key-value-drag-handle" data-key-value-target="handle">
+            <i class="bi bi-grip-vertical"></i>
+          </span>
+          <input 
+            type="text" 
+            class="key-value-input key-value-key-input" 
+            value="<%= key %>"
+            placeholder="<%= key_label %>"
+            data-key-value-target="keyInput"
+            data-action="input->key-value#updateHiddenField"
+          />
+          <input 
+            type="text" 
+            class="key-value-input key-value-value-input" 
+            value="<%= value %>"
+            placeholder="<%= value_label %>"
+            data-key-value-target="valueInput"
+            data-action="input->key-value#updateHiddenField"
+          />
+          <button 
+            type="button" 
+            class="key-value-delete-btn"
+            data-action="key-value#removeRow"
+            title="Delete row"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      <% end %>
+    </div>
+
+    <% if rows.empty? %>
+      <div class="key-value-empty" data-key-value-target="empty">
+        No entries. Click + to add one.
+      </div>
+    <% end %>
+
+    <input 
+      type="hidden" 
+      name="<%= field_name %>" 
+      id="<%= field_id %>"
+      value="<%= current_value.to_json %>"
+      data-key-value-target="hiddenField"
+    />
+
+    <template data-key-value-target="rowTemplate">
+      <div class="key-value-row" data-key-value-target="row">
+        <span class="key-value-drag-handle" data-key-value-target="handle">
+          <i class="bi bi-grip-vertical"></i>
+        </span>
+        <input 
+          type="text" 
+          class="key-value-input key-value-key-input" 
+          placeholder="<%= key_label %>"
+          data-key-value-target="keyInput"
+          data-action="input->key-value#updateHiddenField"
+        />
+        <input 
+          type="text" 
+          class="key-value-input key-value-value-input" 
+          placeholder="<%= value_label %>"
+          data-key-value-target="valueInput"
+          data-action="input->key-value#updateHiddenField"
+        />
+        <button 
+          type="button" 
+          class="key-value-delete-btn"
+          data-action="key-value#removeRow"
+          title="Delete row"
+        >
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </template>
+  </div>
+
+  <% if has_errors? %>
+    <div class="invalid-feedback d-block">
+      <%= error_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <% if help_text.present? %>
+    <div class="form-text"><%= help_text %></div>
+  <% end %>
+</div>

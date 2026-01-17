@@ -1,111 +1,13 @@
-@import 'prismjs/themes/prism';
+// -----------------------------------------------------------------------------
+// CodeMirror Viewer Styles (for read-only code display in modals)
+// -----------------------------------------------------------------------------
 
-pre.code-display,
-.modal pre.code-display,
-.modal-body pre.code-display {
-  background: var(--bs-gray-50) !important;
+// Code viewer in modals - add border since it doesn't have a wrapper
+.modal-body [data-controller="code-viewer"] .CodeMirror {
   border: 1px solid var(--bs-gray-300);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  margin: 0;
-  overflow: auto;
-  max-height: 400px;
-  color: var(--bs-gray-800);
-
-  code {
-    font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-    font-size: 0.8125rem;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    word-break: break-word;
-    color: var(--bs-gray-800);
-    background: transparent;
-  }
+  border-radius: 0.375rem;
 }
 
-// -----------------------------------------------------------------------------
-// Dark Mode Code Display
-// -----------------------------------------------------------------------------
-
-[data-bs-theme="dark"] {
-  pre.code-display,
-  .modal pre.code-display,
-  .modal-body pre.code-display {
-    background: #0f172a !important;
-    border-color: #334155;
-    color: #e2e8f0;
-    
-    code {
-      color: #e2e8f0;
-      text-shadow: none;
-    }
-  }
-  
-  // Prism.js dark theme overrides
-  code[class*="language-"],
-  pre[class*="language-"] {
-    color: #e2e8f0;
-    background: #0f172a;
-    text-shadow: none;
-  }
-  
-  .token {
-    text-shadow: none;
-  }
-  
-  .token.comment,
-  .token.prolog,
-  .token.doctype,
-  .token.cdata {
-    color: #64748b;
-  }
-  
-  .token.punctuation {
-    color: #94a3b8;
-  }
-  
-  .token.property,
-  .token.tag,
-  .token.boolean,
-  .token.number,
-  .token.constant,
-  .token.symbol,
-  .token.deleted {
-    color: #f472b6;
-  }
-  
-  .token.selector,
-  .token.attr-name,
-  .token.string,
-  .token.char,
-  .token.builtin,
-  .token.inserted {
-    color: #a5f3fc;
-  }
-  
-  .token.operator,
-  .token.entity,
-  .token.url,
-  .language-css .token.string,
-  .style .token.string {
-    color: #94a3b8;
-    background: transparent;
-  }
-  
-  .token.atrule,
-  .token.attr-value,
-  .token.keyword {
-    color: #c4b5fd;
-  }
-  
-  .token.function,
-  .token.class-name {
-    color: #7dd3fc;
-  }
-  
-  .token.regex,
-  .token.important,
-  .token.variable {
-    color: #fdba74;
-  }
+[data-bs-theme="dark"] .modal-body [data-controller="code-viewer"] .CodeMirror {
+  border-color: #334155;
 }

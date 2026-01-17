@@ -59,23 +59,41 @@
           <i class="bi bi-<%= current_user_icon %> me-1"></i>
           <%= current_user.provider_username %>
         </span>
+        <% if current_user.manager? %>
+          <div class="dropdown manage-dropdown">
+            <button 
+              class="btn btn-header-manage" 
+              type="button" 
+              data-bs-toggle="dropdown" 
+              aria-expanded="false"
+            >
+              <i class="bi bi-sliders2"></i>
+              <span>Manage</span>
+              <i class="bi bi-chevron-down"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <%= link_to manage_users_path, class: "dropdown-item", data: { turbo_frame: "drawer" } do %>
+                  <i class="bi bi-people"></i>
+                  <span>Users</span>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        <% end %>
         <div class="header-buttons d-flex align-items-center">
           <button
             class="btn btn-header-action"
             type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#mockrOffcanvas"
-            aria-controls="mockrOffcanvas"
-            data-tooltip="Settings"
-            data-tooltip-placement="bottom"
+            data-bs-toggle="collapse"
+            data-bs-target="#settingsPanel"
+            aria-expanded="false"
+            aria-controls="settingsPanel"
+            data-bs-tooltip="Settings"
+            data-bs-placement="bottom"
           >
             <i class="bi bi-gear"></i>
           </button>
-          <% if current_user.manager? %>
-            <a href="<%= avo_path %>" data-turbo="false" class="btn btn-header-action" data-bs-toggle="tooltip" data-bs-title="Manage" data-bs-placement="bottom">
-              <i class="bi bi-sliders"></i>
-            </a>
-          <% end %>
           <span class="header-divider"></span>
           <%= link_to(logout_path, class: "btn btn-header-action", data: { bs_toggle: "tooltip", bs_title: "Logout", bs_placement: "bottom" }) do %>
             <i class="bi bi-box-arrow-right"></i>
@@ -84,67 +102,42 @@
       </div>
     </header>
 
-    <main class="mt-4">
-      <%= turbo_frame_tag "clients", src: clients_path %>
-    </main>
-  </div>
-</div>
-
-<div
-  class="offcanvas offcanvas-start"
-  tabindex="-1"
-  id="mockrOffcanvas"
->
-  <div class="offcanvas-header">
-    <%= image_tag("mockr.svg", height: 28) %>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="offcanvas"
-      aria-label="Close"
-    ></button>
-  </div>
-  <div class="offcanvas-body d-flex flex-column">
-    <div class="flex-grow-1">
-      <p class="text-muted small">
-        Mockr is a simple tool for creating mock API endpoints and responses.
-        Search and browse all available endpoints, or use the Manage panel to create new ones.
-      </p>
-      
-      <% if ENV.fetch("GITHUB_ORGANIZATION", nil).present? %>
-        <div class="alert alert-info-subtle d-flex align-items-start" role="alert">
-          <i class="bi bi-info-circle me-2 mt-1"></i>
-          <div>
-            <strong>Organization Restriction</strong><br>
-            <small>Only members of <code><%= ENV.fetch("GITHUB_ORGANIZATION") %></code> can access this application.</small>
+    <div class="collapse settings-panel" id="settingsPanel">
+      <div class="settings-panel-content">
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="settings-section">
+              <h6 class="settings-section-title">
+                <i class="bi bi-info-circle me-2"></i>About
+              </h6>
+              <p class="text-muted small mb-0">
+                Mockr is a simple tool for creating mock API endpoints and responses.
+                Search and browse all available endpoints, or use the Manage panel to create new ones.
+                <% if ENV.fetch("GITHUB_ORGANIZATION", nil).present? %>
+                  Restricted to <code><%= ENV.fetch("GITHUB_ORGANIZATION") %></code> members.
+                <% end %>
+                <a href="https://github.com/ricardobucho/mockr" target="_blank" class="settings-github-link" data-bs-toggle="tooltip" data-bs-title="View on GitHub"><i class="bi bi-github"></i></a>
+              </p>
+            </div>
           </div>
-        </div>
-      <% end %>
-      
-      <div class="card mt-3">
-        <div class="card-header py-2">
-          <small><i class="bi bi-key me-1"></i> API Token</small>
-        </div>
-        <div class="card-body py-2">
-          <p class="text-muted small mb-2">
-            Use this token in the <code>Authorization</code> header.
-          </p>
-          <%= render "user/regenerate_token" %>
+          
+          <div class="col-md-6">
+            <div class="settings-section">
+              <h6 class="settings-section-title">
+                <i class="bi bi-key me-2"></i>API Token
+              </h6>
+              <p class="text-muted small mb-2">
+                Use this token in the <code>Authorization</code> header.
+              </p>
+              <%= render "user/regenerate_token" %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    
-    <div class="offcanvas-footer pt-3 mt-3 border-top d-flex justify-content-center">
-      <a
-        href="https://github.com/ricardobucho/mockr"
-        target="_blank"
-        class="btn btn-header-action"
-        data-bs-toggle="tooltip"
-        data-bs-title="View on GitHub"
-        data-bs-placement="top"
-      >
-        <i class="bi bi-github"></i>
-      </a>
-    </div>
+
+    <main class="mt-4">
+      <%= turbo_frame_tag "clients", src: clients_path %>
+    </main>
   </div>
 </div>

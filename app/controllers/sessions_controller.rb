@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[index create failure]
+  skip_before_action :authenticate_user!, only: %i[index create failure dev_login]
+  skip_before_action :validate_session!, only: %i[index create failure dev_login]
 
   def index
     redirect_to root_path if current_user
@@ -27,6 +28,15 @@ class SessionsController < ApplicationController
   end
 
   def failure
+    redirect_to root_path
+  end
+
+  # Development-only: direct login bypass
+  def dev_login
+    return head(:not_found) unless Rails.env.development?
+
+    user = User.first
+    session[:user_id] = user.id
     redirect_to root_path
   end
 

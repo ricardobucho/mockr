@@ -10,7 +10,8 @@ class DashboardController < ApplicationController
       Client.
         includes(requests: %i[indices responses]).
         references(requests: %i[indices responses]).
-        merge(clients_search_sql)
+        merge(clients_search_sql).
+        order(:name)
 
     @searching = query.present?
 

@@ -1,0 +1,138 @@
+// =============================================================================
+// Code Editor Styles (CodeMirror)
+// =============================================================================
+
+// Import CodeMirror base styles (from node_modules via sass --load-path)
+@use "codemirror/lib/codemirror.css";
+@use "codemirror/theme/material-darker.css";
+
+// -----------------------------------------------------------------------------
+// Code Editor Wrapper
+// -----------------------------------------------------------------------------
+
+.code-editor-wrapper {
+  border: 1px solid var(--mockr-border);
+  border-radius: 0.375rem;
+  overflow: hidden;
+  background-color: var(--mockr-surface);
+
+  &.is-invalid {
+    border-color: #dc3545;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// CodeMirror Customizations
+// -----------------------------------------------------------------------------
+
+.CodeMirror {
+  font-family: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Mono", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Consolas", "Courier New", monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  background-color: var(--mockr-surface);
+  color: var(--mockr-text);
+}
+
+// Light mode adjustments
+.CodeMirror {
+  .CodeMirror-gutters {
+    background-color: var(--bs-gray-50);
+    border-right: 1px solid var(--mockr-border);
+  }
+
+  .CodeMirror-linenumber {
+    color: var(--bs-gray-500);
+  }
+
+  .CodeMirror-activeline-background {
+    background-color: var(--bs-gray-50);
+  }
+
+  .CodeMirror-cursor {
+    border-left-color: var(--mockr-text);
+  }
+
+  .CodeMirror-selected {
+    background-color: rgba(80, 100, 168, 0.2);
+  }
+}
+
+// Dark mode adjustments
+[data-bs-theme="dark"] {
+  .code-editor-wrapper {
+    border-color: var(--mockr-border);
+  }
+
+  .CodeMirror {
+    background-color: #1e293b;
+    color: #e2e8f0;
+
+    .CodeMirror-gutters {
+      background-color: #0f172a;
+      border-right-color: var(--mockr-border);
+    }
+
+    .CodeMirror-linenumber {
+      color: #64748b;
+    }
+
+    .CodeMirror-activeline-background {
+      background-color: #334155;
+    }
+
+    .CodeMirror-cursor {
+      border-left-color: #f1f5f9;
+    }
+
+    .CodeMirror-selected {
+      background-color: rgba(80, 100, 168, 0.4);
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Syntax Highlighting - Light Theme
+// -----------------------------------------------------------------------------
+
+.cm-s-default {
+  .cm-string {
+    color: #16a34a;
+  }
+
+  .cm-number {
+    color: #2563eb;
+  }
+
+  .cm-keyword {
+    color: #7c3aed;
+  }
+
+  .cm-atom {
+    color: #dc2626;
+  }
+
+  .cm-property {
+    color: #0891b2;
+  }
+
+  .cm-tag {
+    color: #dc2626;
+  }
+
+  .cm-attribute {
+    color: #7c3aed;
+  }
+
+  .cm-comment {
+    color: #64748b;
+    font-style: italic;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Hidden textarea (original form field)
+// -----------------------------------------------------------------------------
+
+.code-editor-textarea {
+  display: none;
+}

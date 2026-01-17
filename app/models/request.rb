@@ -5,8 +5,8 @@ class Request < ApplicationRecord
 
   belongs_to :client
 
-  has_many :indices, dependent: :nullify
-  has_many :responses, dependent: :destroy
+  has_many :indices, -> { order(:name) }, dependent: :nullify
+  has_many :responses, -> { order(:name) }, dependent: :destroy
   has_many :logs, dependent: :destroy
 
   enum method: {

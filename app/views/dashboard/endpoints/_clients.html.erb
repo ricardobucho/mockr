@@ -1,29 +1,34 @@
 <turbo-frame id="clients">
-  <% if @clients.any? %>
-    <div class="client-selector mb-4">
+  <% clients = local_assigns[:clients] || @clients %>
+  <% searching = local_assigns[:searching] || @searching %>
+  
+  <% if clients.any? %>
+    <div class="client-selector mb-4" data-controller="client-tabs">
       <i class="bi bi-ui-radios-grid client-selector-icon" data-bs-toggle="tooltip" data-bs-title="Clients" data-bs-placement="top"></i>
       <ul class="nav nav-pills" id="pills-clients" role="tablist">
-          <% @clients.each.with_index do |client, index| %>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link <%= index == 0 ? "active" : "" %>"
-                id="pills-<%= client.id %>-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#pills-<%= client.id %>"
-                type="button"
-                role="tab"
-                aria-controls="pills-<%= client.id %>"
-                aria-selected="<%= index == 0 %>"
-              >
-                <%= client.name %>
-              </button>
-            </li>
-          <% end %>
-        </ul>
+        <% clients.each.with_index do |client, index| %>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link <%= index == 0 ? "active" : "" %>"
+              id="pills-<%= client.id %>-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#pills-<%= client.id %>"
+              data-client-tabs-target="tab"
+              type="button"
+              role="tab"
+              aria-controls="pills-<%= client.id %>"
+              aria-selected="<%= index == 0 %>"
+            >
+              <%= client.name %>
+            </button>
+          </li>
+        <% end %>
+
+      </ul>
     </div>
 
     <div class="tab-content" id="pills-clientDetails">
-      <% @clients.each.with_index do |client, index| %>
+      <% clients.each.with_index do |client, index| %>
         <div
           class="tab-pane fade <%= index == 0 ? "show active" : "" %>"
           id="pills-<%= client.id %>"
@@ -41,7 +46,7 @@
               %>
             <% end %>
 
-            <% if client.requests.none? && !@searching %>
+            <% if client.requests.none? && !searching %>
               <div class="col">
                 <div class="empty-state">
                   <i class="bi bi-inbox empty-state-icon"></i>
@@ -56,7 +61,7 @@
     </div>
   <% end %>
 
-  <% if @clients.none? && @searching %>
+  <% if clients.none? && searching %>
     <div class="empty-state">
       <i class="bi bi-search empty-state-icon"></i>
       <div class="empty-state-title">No results found</div>
@@ -64,7 +69,7 @@
     </div>
   <% end %>
 
-  <% if @clients.none? && !@searching %>
+  <% if clients.none? && !searching %>
     <div class="empty-state">
       <i class="bi bi-layers empty-state-icon"></i>
       <div class="empty-state-title">No clients yet</div>

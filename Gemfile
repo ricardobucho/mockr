@@ -5,7 +5,6 @@ source "https://rubygems.org"
 ruby "3.3.6"
 
 gem "acts_as_paranoid"
-gem "avo"
 gem "aws-sdk-s3"
 gem "bootsnap"
 gem "dotenv-rails"
@@ -34,6 +33,10 @@ gem "cssbundling-rails", "~> 1.4"
 gem "jsbundling-rails", "~> 1.3"
 gem "stimulus-rails", "~> 1.3"
 gem "turbo-rails", "~> 2.0"
+
+gem "action_policy"
+gem "simple_form"
+gem "view_component"
 
 group :development, :test do
   gem "database_cleaner"

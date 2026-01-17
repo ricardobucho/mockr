@@ -1,0 +1,13 @@
+<% if params[:stacked].present? %>
+  <%= turbo_frame_tag "drawer-stacked" do %>
+    <%= render Manage::StackedDrawerComponent.new(title: "Edit Response", subtitle: @response.name) do %>
+      <%= render "form", response: @response, request: @request, stacked: true %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= turbo_frame_tag "drawer" do %>
+    <%= render Manage::DrawerComponent.new(title: "Edit Response", subtitle: @response.name) do %>
+      <%= render "form", response: @response, request: @request, stacked: false %>
+    <% end %>
+  <% end %>
+<% end %>

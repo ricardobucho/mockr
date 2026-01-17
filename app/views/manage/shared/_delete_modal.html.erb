@@ -1,0 +1,20 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Delete <%= resource_name %>?</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <p class="mb-0">Are you sure you want to delete <strong><%= resource_name %></strong>? This action cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-action-secondary" data-bs-dismiss="modal">Cancel</button>
+      <%= button_to delete_url, 
+            method: :delete, 
+            class: "btn btn-action-danger",
+            form: { data: { turbo_frame: "_top" } } do %>
+        Delete
+      <% end %>
+    </div>
+  </div>
+<% end %>

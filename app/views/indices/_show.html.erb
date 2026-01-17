@@ -8,6 +8,9 @@
       <span class="fw-medium"><%= @index.name %></span>
     </div>
     
-    <pre class="code-display"><code data-controller="highlight" class="language-html"><%= @index.template %></code></pre>
+    <%= render Manage::Fields::CodeViewerComponent.new(
+      code: @index.template,
+      language: :erb
+    ) %>
   <% end %>
 <% end %>
