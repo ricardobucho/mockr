@@ -1,13 +1,25 @@
 <div class="container-fluid app-container">
-  <div class="mx-auto px-4 py-3">
+  <div class="mx-auto px-4">
     <header class="app-header d-flex align-items-center">
-      <div class="header-left">
+      <div class="header-left d-flex align-items-center gap-3" data-controller="theme">
         <a href="/">
           <%= image_tag("mockr.svg", class: "logo") %>
         </a>
+        <button
+          class="theme-switch theme-switch-sm"
+          type="button"
+          data-action="click->theme#toggle"
+          aria-label="Toggle theme"
+        >
+          <span class="theme-switch-track">
+            <i class="bi bi-sun-fill theme-switch-icon theme-switch-icon-light"></i>
+            <i class="bi bi-moon-fill theme-switch-icon theme-switch-icon-dark"></i>
+            <span class="theme-switch-thumb" data-theme-target="icon"></span>
+          </span>
+        </button>
       </div>
       
-      <div class="header-center">
+      <div class="header-center d-flex align-items-center">
         <%=
           form_tag(
             clients_path,

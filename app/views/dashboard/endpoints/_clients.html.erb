@@ -1,7 +1,7 @@
 <turbo-frame id="clients">
   <% if @clients.any? %>
     <div class="client-selector mb-4">
-      <i class="bi bi-ui-radios-grid client-selector-icon"></i>
+      <i class="bi bi-ui-radios-grid client-selector-icon" data-bs-toggle="tooltip" data-bs-title="Clients" data-bs-placement="top"></i>
       <ul class="nav nav-pills" id="pills-clients" role="tablist">
           <% @clients.each.with_index do |client, index| %>
             <li class="nav-item" role="presentation">

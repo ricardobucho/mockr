@@ -15,3 +15,6 @@ application.register("modal", ModalController)
 
 import SearchFormController from "./search_form_controller"
 application.register("search-form", SearchFormController)
+
+import ThemeController from "./theme_controller"
+application.register("theme", ThemeController)
