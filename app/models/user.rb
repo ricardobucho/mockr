@@ -3,6 +3,11 @@
 class User < ApplicationRecord
   acts_as_paranoid
 
+  PROVIDER_ICONS = {
+    "github" => "github",
+    "okta" => "shield-lock"
+  }.freeze
+
   enum role: {
     "User" => "user",
     "Manager" => "manager",
@@ -55,9 +60,10 @@ class User < ApplicationRecord
   def manager? = self.class.roles[role] == "manager"
 
   def oauth_expired?
-    oauth_token.blank? || (
-      oauth_expires_at.present? &&
-      oauth_expires_at < Time.now
-    )
+    oauth_expires_at.present? && oauth_expires_at < Time.current
+  end
+
+  def provider_icon
+    PROVIDER_ICONS[provider] || "person-circle"
   end
 end

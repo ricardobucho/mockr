@@ -28,6 +28,7 @@ module Authentication
     return if current_user.blank?
     return unless current_user.oauth_expired?
 
+    Rails.logger.warn "[AUTH] Session expired for user #{current_user.id}: expires_at=#{current_user.oauth_expires_at}"
     destroy_session!
   end
 
@@ -47,7 +48,7 @@ module Authentication
       if ENV.fetch("GITHUB_CLIENT_ID", nil).present?
         array << {
           name: "github",
-          icon: "github",
+          icon: User::PROVIDER_ICONS["github"],
           title: "GitHub",
         }
       end
@@ -55,7 +56,7 @@ module Authentication
       if ENV.fetch("OKTA_CLIENT_ID", nil).present?
         array << {
           name: "okta",
-          icon: "record-circle",
+          icon: User::PROVIDER_ICONS["okta"],
           title: "Okta",
         }
       end
@@ -71,9 +72,6 @@ module Authentication
   def current_user_icon
     return if current_user.blank?
 
-    return "github" if current_user.provider == "github"
-    return "record-circle" if current_user.provider == "okta"
-
-    "circle"
+    current_user.provider_icon
   end
 end

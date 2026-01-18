@@ -66,12 +66,6 @@ export default class extends Controller {
     document.body.classList.add("drawer-open")
     this.backdropTarget.classList.add("open")
     this.panelTarget.classList.add("open")
-    
-    // Focus first input in drawer after animation
-    setTimeout(() => {
-      const firstInput = this.panelTarget.querySelector("input:not([type='hidden']), select, textarea")
-      if (firstInput) firstInput.focus()
-    }, 300)
   }
 
   close() {
@@ -88,12 +82,6 @@ export default class extends Controller {
 
   openStacked() {
     this.stackedPanelTarget.classList.add("open")
-    
-    // Focus first input in stacked drawer after animation
-    setTimeout(() => {
-      const firstInput = this.stackedPanelTarget.querySelector("input:not([type='hidden']), select, textarea")
-      if (firstInput) firstInput.focus()
-    }, 300)
   }
 
   closeStacked() {

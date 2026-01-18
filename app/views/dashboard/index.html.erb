@@ -64,7 +64,8 @@
             <button 
               class="btn btn-header-manage" 
               type="button" 
-              data-bs-toggle="dropdown" 
+              data-bs-toggle="dropdown"
+              data-bs-display="static"
               aria-expanded="false"
             >
               <i class="bi bi-sliders2"></i>
@@ -95,7 +96,7 @@
             <i class="bi bi-gear"></i>
           </button>
           <span class="header-divider"></span>
-          <%= link_to(logout_path, class: "btn btn-header-action", data: { bs_toggle: "tooltip", bs_title: "Logout", bs_placement: "bottom" }) do %>
+          <%= link_to(logout_path, class: "btn btn-header-action", data: { turbo: false, bs_toggle: "tooltip", bs_title: "Logout", bs_placement: "bottom" }) do %>
             <i class="bi bi-box-arrow-right"></i>
           <% end %>
         </div>

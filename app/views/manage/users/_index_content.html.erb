@@ -4,7 +4,7 @@
       <div class="user-list-item">
         <div class="user-list-item-info">
           <div class="user-list-item-avatar">
-            <i class="bi bi-<%= user.provider == 'github' ? 'github' : 'person-circle' %>"></i>
+            <i class="bi bi-<%= user.provider_icon %>"></i>
           </div>
           <div class="user-list-item-details">
             <span class="user-list-item-name"><%= user.provider_username %></span>
@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="user-list-item-actions">
-          <span class="user-list-item-badge <%= user.manager? ? 'bg-primary text-white' : 'bg-secondary text-white' %>">
+          <span class="user-list-item-badge <%= user.manager? ? 'badge-outline-primary' : 'badge-outline-secondary' %>">
             <%= user.role %>
           </span>
           <%= link_to edit_manage_user_path(user), class: "btn btn-sm btn-outline-secondary", data: { turbo_frame: "drawer-stacked" } do %>

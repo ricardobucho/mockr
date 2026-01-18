@@ -18,7 +18,7 @@ module Manage
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              render_toast("Response '#{@response.name}' created successfully"),
+              render_toast("Response <strong>#{ERB::Util.html_escape(@response.name)}</strong> created successfully"),
               turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) }),
               close_stacked_drawer
             ]
@@ -42,7 +42,7 @@ module Manage
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              render_toast("Response '#{@response.name}' updated successfully"),
+              render_toast("Response <strong>#{ERB::Util.html_escape(@response.name)}</strong> updated successfully"),
               turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) })
             ]
           end
@@ -66,7 +66,7 @@ module Manage
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            render_toast("Response '#{response_name}' deleted successfully"),
+            render_toast("Response <strong>#{ERB::Util.html_escape(response_name)}</strong> deleted successfully"),
             turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) }),
             close_modal,
             close_stacked_drawer,

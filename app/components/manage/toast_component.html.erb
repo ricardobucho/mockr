@@ -8,7 +8,7 @@
   <div class="toast-icon">
     <i class="bi bi-<%= icon_name %>"></i>
   </div>
-  <div class="toast-message"><%= message %></div>
+  <div class="toast-message"><%= message.html_safe %></div>
   <button type="button" class="toast-close" data-action="toast#dismiss" aria-label="Close">
     <i class="bi bi-x"></i>
   </button>

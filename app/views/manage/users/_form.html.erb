@@ -4,21 +4,21 @@
       <h3 class="drawer-section-title">User Information</h3>
       
       <div class="mb-3">
-        <label class="form-label">Provider</label>
-        <div class="form-control-plaintext">
-          <i class="bi bi-<%= user.provider == 'github' ? 'github' : 'record-circle' %> me-1"></i>
+        <div class="form-label">Provider</div>
+        <div>
+          <i class="bi bi-<%= user.provider_icon %> me-1"></i>
           <%= user.provider.capitalize %>
         </div>
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Username</label>
-        <div class="form-control-plaintext"><%= user.provider_username %></div>
+        <div class="form-label">Username</div>
+        <div><%= user.provider_username %></div>
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Email</label>
-        <div class="form-control-plaintext"><%= user.provider_email %></div>
+        <div class="form-label">Email</div>
+        <div><%= user.provider_email %></div>
       </div>
     </div>
 

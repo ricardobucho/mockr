@@ -358,6 +358,20 @@ body.drawer-open {
 }
 
 // -----------------------------------------------------------------------------
+// Form Labels within Drawer
+// -----------------------------------------------------------------------------
+
+.drawer-form-body .form-label,
+.drawer-form-body label.form-label,
+.drawer-body .form-label,
+.drawer-body label.form-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--mockr-text-muted);
+  margin-bottom: 0.375rem;
+}
+
+// -----------------------------------------------------------------------------
 // Nested Resource List in Drawer
 // -----------------------------------------------------------------------------
 
@@ -535,6 +549,30 @@ body.drawer-open {
   border-radius: 0.25rem;
   text-transform: uppercase;
   letter-spacing: 0.025em;
+
+  &.badge-outline-primary {
+    background-color: transparent;
+    border: 1px solid var(--bs-primary);
+    color: var(--bs-primary);
+  }
+
+  &.badge-outline-secondary {
+    background-color: transparent;
+    border: 1px solid var(--bs-gray-400);
+    color: var(--bs-gray-600);
+  }
+}
+
+[data-bs-theme="dark"] .user-list-item-badge {
+  &.badge-outline-primary {
+    border-color: #8b9dc3;
+    color: #c4cdec;
+  }
+
+  &.badge-outline-secondary {
+    border-color: #64748b;
+    color: #94a3b8;
+  }
 }
 
 // -----------------------------------------------------------------------------

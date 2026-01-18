@@ -21,7 +21,7 @@ module Manage
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              render_toast("User '#{@user.provider_username}' updated successfully"),
+              render_toast("User <strong>#{ERB::Util.html_escape(@user.provider_username)}</strong> updated successfully"),
               turbo_stream.update("drawer", partial: "manage/users/drawer_content", locals: { users: @users }),
               close_stacked_drawer
             ]

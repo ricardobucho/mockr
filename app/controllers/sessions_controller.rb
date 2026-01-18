@@ -22,6 +22,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    Rails.logger.warn "[AUTH] Logout requested - referrer: #{request.referrer}, user: #{current_user&.id}"
     return redirect_to(login_path) unless current_user
 
     destroy_session!
