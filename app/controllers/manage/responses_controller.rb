@@ -69,8 +69,7 @@ module Manage
             render_toast("Response <strong>#{ERB::Util.html_escape(response_name)}</strong> deleted successfully"),
             turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) }),
             close_modal,
-            close_stacked_drawer,
-            close_drawer
+            close_stacked_drawer
           ]
         end
         format.html { redirect_to root_path, notice: "Response deleted successfully" }

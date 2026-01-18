@@ -1,4 +1,5 @@
-<% if params[:stacked].present? %>
+<% stacked = turbo_frame_request_id == "drawer-stacked" || params[:stacked].present? %>
+<% if stacked %>
   <%= turbo_frame_tag "drawer-stacked" do %>
     <%= render Manage::StackedDrawerComponent.new(title: "Edit Index", subtitle: @index.name) do %>
       <%= render "form", index: @index, request: @request, stacked: true %>

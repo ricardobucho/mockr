@@ -3,17 +3,17 @@
   <div class="drawer-form-body">
     <div class="drawer-section">
       <h3 class="drawer-section-title">Basic Information</h3>
-      
-      <%= f.input :name, required: true, placeholder: "e.g., Success Response" %>
-      <%= f.input :description, as: :text, input_html: { rows: 2 }, placeholder: "Optional description" %>
+
+      <%= f.input :name, required: true, placeholder: "Example Response" %>
+      <%= f.input :description, as: :text, input_html: { rows: 2 } %>
     </div>
 
     <div class="drawer-section">
       <h3 class="drawer-section-title">Response Configuration</h3>
-      
+
       <div class="row">
         <div class="col-md-4">
-          <%= f.input :status, as: :integer, required: true, placeholder: "200" %>
+          <%= f.input :status, as: :integer, required: true, placeholder: "200", hint: "The HTTP status code" %>
         </div>
         <div class="col-md-4">
           <%= f.input :format, collection: Response.formats.keys, required: true, prompt: "Select format" %>
@@ -27,20 +27,19 @@
     <div class="drawer-section">
       <h3 class="drawer-section-title">Conditions</h3>
       <p class="text-muted small mb-3">Match request parameters to return this response. Leave empty to use as default.</p>
-      
+
       <%= render Manage::Fields::KeyValueComponent.new(
         form: f,
         attribute: :conditions,
         label: nil,
         key_label: "Parameter",
-        value_label: "Value",
-        help_text: "e.g., status=active, user_id=123"
+        value_label: "Value"
       ) %>
     </div>
 
     <div class="drawer-section">
       <h3 class="drawer-section-title">Headers</h3>
-      
+
       <%= render Manage::Fields::KeyValueComponent.new(
         form: f,
         attribute: :headers,
@@ -52,7 +51,7 @@
 
     <div class="drawer-section">
       <h3 class="drawer-section-title">Response Body</h3>
-      
+
       <%= render Manage::Fields::CodeEditorComponent.new(
         form: f,
         attribute: :body,

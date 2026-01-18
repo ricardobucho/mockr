@@ -3,26 +3,26 @@
   <div class="drawer-form-body">
     <div class="drawer-section">
       <h3 class="drawer-section-title">Basic Information</h3>
-      
-      <%= f.input :name, required: true, placeholder: "e.g., Users Index" %>
-      <%= f.input :description, as: :text, input_html: { rows: 2 }, placeholder: "Optional description" %>
+
+      <%= f.input :name, required: true, placeholder: "Example Index" %>
+      <%= f.input :description, as: :text, input_html: { rows: 2 } %>
     </div>
 
     <div class="drawer-section">
-      <h3 class="drawer-section-title">External API Endpoint</h3>
-      
+      <h3 class="drawer-section-title">Index Configuration</h3>
+
       <div class="row">
         <div class="col-md-3">
           <%= f.input :method, collection: Request.methods.keys, required: true, prompt: "Select method" %>
         </div>
         <div class="col-md-9">
-          <%= f.input :path, required: true, placeholder: "https://api.example.com/users", hint: "Full URL of the external API to fetch data from." %>
+          <%= f.input :path, required: true, placeholder: "/example", hint: "Path relative to client slug. Returns responses as an array." %>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-6">
-          <%= f.input :status, as: :integer, required: true, placeholder: "200", hint: "Expected success status code." %>
+          <%= f.input :status, as: :integer, required: true, placeholder: "200", hint: "The HTTP status code" %>
         </div>
         <div class="col-md-6">
           <%= f.input :throttle, as: :integer, placeholder: "0", hint: "Delay in milliseconds." %>
@@ -33,7 +33,7 @@
     <div class="drawer-section">
       <h3 class="drawer-section-title">Request Headers</h3>
       <p class="text-muted small mb-3">Headers to send with the external API request.</p>
-      
+
       <%= render Manage::Fields::KeyValueComponent.new(
         form: f,
         attribute: :headers,
@@ -49,7 +49,7 @@
         ERB template to transform the API response. Use <code>&lt;%= data %&gt;</code> to access the response.
         Supports JSONPath with <code>&lt;%= JsonPath.on(data, '$.users[*].name') %&gt;</code>.
       </p>
-      
+
       <%= render Manage::Fields::CodeEditorComponent.new(
         form: f,
         attribute: :template,

@@ -761,6 +761,18 @@ body {
       color: var(--bs-primary) !important;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
     }
+
+    &.nav-link-create {
+      color: var(--bs-gray-500);
+      border: 1px dashed var(--bs-gray-400);
+      margin-left: 0.25rem;
+
+      &:hover {
+        color: var(--bs-primary);
+        border-color: var(--bs-primary);
+        background-color: rgba(80, 100, 168, 0.05);
+      }
+    }
   }
 
   .nav-pills {
@@ -808,6 +820,116 @@ body {
       color: #c4cdec !important;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
     }
+
+    &.nav-link-create {
+      color: #64748b;
+      border-color: #475569;
+
+      &:hover {
+        color: #c4cdec;
+        border-color: #c4cdec;
+        background-color: rgba(196, 205, 236, 0.1);
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Create Block Button (full-width dashed)
+// -----------------------------------------------------------------------------
+
+.btn-create-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--bs-gray-500);
+  background-color: transparent;
+  border: 1px dashed var(--bs-gray-400);
+  border-radius: 0.375rem;
+  text-decoration: none;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    background-color: rgba(80, 100, 168, 0.05);
+  }
+}
+
+[data-bs-theme="dark"] .btn-create-block {
+  color: #64748b;
+  border-color: #475569;
+
+  &:hover {
+    color: #c4cdec;
+    border-color: #c4cdec;
+    background-color: rgba(196, 205, 236, 0.1);
+  }
+}
+
+.btn-create-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--bs-gray-500);
+  background-color: transparent;
+  border: 1px dashed var(--bs-gray-400);
+  border-radius: 50rem;
+  text-decoration: none;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    background-color: rgba(80, 100, 168, 0.05);
+  }
+}
+
+[data-bs-theme="dark"] .btn-create-pill {
+  color: #64748b;
+  border-color: #475569;
+
+  &:hover {
+    color: #c4cdec;
+    border-color: #c4cdec;
+    background-color: rgba(196, 205, 236, 0.1);
+  }
+}
+
+.btn-create {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--bs-gray-500);
+  background-color: transparent;
+  border: 1px dashed var(--bs-gray-400);
+  border-radius: 0.25rem;
+  text-decoration: none;
+  transition: all 0.15s ease;
+
+  &:hover {
+    color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    background-color: rgba(80, 100, 168, 0.05);
+  }
+}
+
+[data-bs-theme="dark"] .btn-create {
+  color: #64748b;
+  border-color: #475569;
+
+  &:hover {
+    color: #c4cdec;
+    border-color: #c4cdec;
+    background-color: rgba(196, 205, 236, 0.1);
   }
 }
 

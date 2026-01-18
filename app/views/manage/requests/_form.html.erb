@@ -3,15 +3,15 @@
     <div class="drawer-section">
       <h3 class="drawer-section-title">Basic Information</h3>
       
-      <%= f.input :name, required: true, placeholder: "e.g., Get User Profile" %>
-      <%= f.input :description, as: :text, input_html: { rows: 2 }, placeholder: "Optional description" %>
+      <%= f.input :name, required: true, placeholder: "Example Request" %>
+      <%= f.input :description, as: :text, input_html: { rows: 2 } %>
     </div>
 
     <div class="drawer-section">
       <h3 class="drawer-section-title">Endpoint</h3>
       
       <%= f.input :method, collection: Request.methods.keys, required: true, prompt: "Select method" %>
-      <%= f.input :path, required: true, placeholder: "/users/:id", hint: "Path relative to client slug. Supports :param placeholders." %>
+      <%= f.input :path, required: true, placeholder: "/example/:id", hint: "Path relative to client slug. Supports :param placeholders." %>
     </div>
 
     <% if request.persisted? %>
