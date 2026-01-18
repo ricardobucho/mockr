@@ -4,9 +4,7 @@
       <div class="drawer-header-left">
         <div class="drawer-title-group">
           <h2 class="drawer-title">Request Logs</h2>
-          <span class="drawer-subtitle">
-            <%= @request.client.name %> / <%= @request.name %>
-          </span>
+          <span class="drawer-subtitle"><%= @request.name %></span>
         </div>
       </div>
       <button type="button" class="drawer-close-btn" data-action="drawer#close">
@@ -25,9 +23,11 @@
         <div class="d-flex flex-column gap-3">
           <% @logs.each do |log| %>
             <div class="log-entry">
-              <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
-                <span class="text-mono small text-muted">#<%= log["id"] %></span>
-                <span class="small text-muted"><%= log["created_at_formatted"] %></span>
+              <div class="log-entry-header">
+                <span class="log-entry-id">#<%= log["id"] %></span>
+                <span class="log-entry-time" data-bs-toggle="tooltip" data-bs-title="<%= log["created_at_formatted"] %>">
+                  <i class="bi bi-clock"></i> <%= log["created_at_ago"] %> ago
+                </span>
               </div>
               
               <div class="row g-3">
@@ -63,7 +63,7 @@
                   <div class="small fw-medium text-muted mb-1">Response</div>
                   <div class="d-flex flex-wrap gap-2 small">
                     <span class="badge badge-condition"><%= log["response_name"] %></span>
-                    <span class="badge badge-condition">Status: <%= log["response_status"] %></span>
+                    <span class="badge badge-condition"><%= log["response_status"] %></span>
                     <% if log["response_throttle"].to_i > 0 %>
                       <span class="badge badge-condition">Throttle: <%= log["response_throttle"] %>ms</span>
                     <% end %>
