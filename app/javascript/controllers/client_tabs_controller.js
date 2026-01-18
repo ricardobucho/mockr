@@ -4,7 +4,7 @@ import * as bootstrap from "bootstrap"
 const STORAGE_KEY = "mockr_active_client_id"
 
 export default class extends Controller {
-  static targets = ["tab", "pane"]
+  static targets = ["tab"]
 
   connect() {
     this.restoreActiveTab()
@@ -18,9 +18,17 @@ export default class extends Controller {
         const clientId = this.extractClientId(event.target)
         if (clientId) {
           this.saveActiveTab(clientId)
+          this.updateAddRequestButton(clientId)
         }
       })
     })
+  }
+
+  updateAddRequestButton(clientId) {
+    const btn = document.querySelector('[data-client-tabs-target="addRequestBtn"]')
+    if (btn) {
+      btn.href = `/manage/clients/${clientId}/requests/new`
+    }
   }
 
   restoreActiveTab() {
@@ -32,6 +40,7 @@ export default class extends Controller {
       // Use Bootstrap's tab API to switch
       const bsTab = new bootstrap.Tab(tab)
       bsTab.show()
+      this.updateAddRequestButton(savedClientId)
     }
   }
 
@@ -40,7 +49,10 @@ export default class extends Controller {
   }
 
   extractClientId(tabElement) {
-    // Extract client ID from the tab's data-bs-target="#pills-{id}"
+    // Get client ID from data attribute or extract from target
+    const clientId = tabElement.dataset.clientId
+    if (clientId) return clientId
+    
     const target = tabElement.getAttribute("data-bs-target")
     if (target) {
       const match = target.match(/pills-(\d+)/)

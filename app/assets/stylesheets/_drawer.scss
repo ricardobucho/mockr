@@ -191,7 +191,7 @@ body.drawer-open {
   flex-shrink: 0;
 
   &:hover {
-    background-color: var(--bs-gray-100);
+    background-color: #e2e8f0;
     color: var(--mockr-text);
   }
 
@@ -203,7 +203,7 @@ body.drawer-open {
 [data-bs-theme="dark"] {
   .drawer-close-btn:hover,
   .drawer-back-btn:hover {
-    background-color: var(--bs-gray-200);
+    background-color: #1e293b;
   }
 }
 

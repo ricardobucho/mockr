@@ -14,6 +14,12 @@ export default class extends Controller {
     
     // Also listen for turbo:load for initial page loads
     document.addEventListener("turbo:load", this.handleTurboLoad.bind(this));
+    
+    // Enable tooltips after turbo streams (form submissions that return streams)
+    document.addEventListener("turbo:before-stream-render", (event) => {
+      // Schedule tooltip init after the stream render completes
+      setTimeout(() => this.enableTooltips(), 100);
+    });
   }
 
   handleTurboLoad() {

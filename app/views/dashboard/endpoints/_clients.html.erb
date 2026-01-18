@@ -3,28 +3,42 @@
   <% searching = local_assigns[:searching] || @searching %>
   
   <% if clients.any? %>
-    <div class="client-selector mb-4" data-controller="client-tabs">
-      <i class="bi bi-ui-radios-grid client-selector-icon" data-bs-toggle="tooltip" data-bs-title="Clients" data-bs-placement="top"></i>
-      <ul class="nav nav-pills" id="pills-clients" role="tablist">
-        <% clients.each.with_index do |client, index| %>
-          <li class="nav-item" role="presentation">
-            <button
-              class="nav-link <%= index == 0 ? "active" : "" %>"
-              id="pills-<%= client.id %>-tab"
-              data-bs-toggle="pill"
-              data-bs-target="#pills-<%= client.id %>"
-              data-client-tabs-target="tab"
-              type="button"
-              role="tab"
-              aria-controls="pills-<%= client.id %>"
-              aria-selected="<%= index == 0 %>"
-            >
-              <%= client.name %>
-            </button>
-          </li>
-        <% end %>
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <div class="client-selector" data-controller="client-tabs">
+        <i class="bi bi-ui-radios-grid client-selector-icon" data-bs-toggle="tooltip" data-bs-title="Clients" data-bs-placement="top"></i>
+        <ul class="nav nav-pills" id="pills-clients" role="tablist">
+          <% clients.each.with_index do |client, index| %>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link <%= index == 0 ? "active" : "" %>"
+                id="pills-<%= client.id %>-tab"
+                data-bs-toggle="pill"
+                data-bs-target="#pills-<%= client.id %>"
+                data-client-tabs-target="tab"
+                data-client-id="<%= client.id %>"
+                type="button"
+                role="tab"
+                aria-controls="pills-<%= client.id %>"
+                aria-selected="<%= index == 0 %>"
+              >
+                <%= client.name %>
+              </button>
+            </li>
+          <% end %>
+        </ul>
+      </div>
 
-      </ul>
+      <% if current_user.manager? %>
+        <div class="btn-group btn-group-sm" role="group">
+          <%= link_to new_manage_client_path, class: "btn btn-action btn-outline-secondary", data: { turbo_frame: "drawer", bs_toggle: "tooltip", bs_title: "Add Client" } do %>
+            <i class="bi bi-ui-radios-grid"></i>
+          <% end %>
+          <% first_client = clients.first %>
+          <%= link_to new_manage_client_request_path(first_client), class: "btn btn-action btn-outline-secondary", data: { turbo_frame: "drawer", bs_toggle: "tooltip", bs_title: "Add Request", client_tabs_target: "addRequestBtn" } do %>
+            <i class="bi bi-signpost-split"></i>
+          <% end %>
+        </div>
+      <% end %>
     </div>
 
     <div class="tab-content" id="pills-clientDetails">
@@ -36,7 +50,7 @@
           aria-labelledby="pills-<%= client.id %>-tab"
         >
           <div class="row row-cols-1 g-3">
-            <% client.requests.each do |request| %>
+            <% client.requests.sort_by(&:name).each do |request| %>
               <%=
                 render(
                   "dashboard/endpoints/request",

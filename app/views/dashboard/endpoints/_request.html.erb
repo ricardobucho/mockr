@@ -8,6 +8,14 @@
         </div>
         <div class="d-flex align-items-center gap-1">
           <% if current_user.manager? %>
+            <div class="btn-group btn-group-sm me-1" role="group">
+              <%= link_to new_manage_request_index_path(request), class: "btn btn-action btn-outline-secondary", data: { turbo_frame: "drawer", bs_toggle: "tooltip", bs_title: "Add Index" } do %>
+                <i class="bi bi-collection"></i>
+              <% end %>
+              <%= link_to new_manage_request_response_path(request), class: "btn btn-action btn-outline-secondary", data: { turbo_frame: "drawer", bs_toggle: "tooltip", bs_title: "Add Response" } do %>
+                <i class="bi bi-file-earmark-code"></i>
+              <% end %>
+            </div>
             <%= link_to edit_manage_request_path(request), class: "btn btn-action btn-outline-secondary", data: { turbo_frame: "drawer", bs_toggle: "tooltip", bs_title: "Edit" } do %>
               <i class="bi bi-pencil"></i>
             <% end %>
