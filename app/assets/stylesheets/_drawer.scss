@@ -57,7 +57,7 @@ body.drawer-open {
   bottom: 0;
   width: 85%;
   max-width: 900px;
-  background-color: var(--mockr-surface);
+  background-color: #f8fafc;
   box-shadow: none;
   transform: translateX(100%);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -73,6 +73,10 @@ body.drawer-open {
     pointer-events: auto;
     visibility: visible;
   }
+}
+
+[data-bs-theme="dark"] .drawer-panel {
+  background-color: #0f172a;
 }
 
 [data-bs-theme="dark"] .drawer-panel.open {
@@ -123,8 +127,12 @@ body.drawer-open {
   justify-content: space-between;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--mockr-border);
-  background-color: var(--mockr-surface);
+  background-color: #f8fafc;
   flex-shrink: 0;
+}
+
+[data-bs-theme="dark"] .drawer-header {
+  background-color: #0f172a;
 }
 
 .drawer-header-left {
@@ -249,7 +257,7 @@ body.drawer-open {
   justify-content: space-between;
   padding: 1rem 1.5rem;
   border-top: 1px solid var(--mockr-border);
-  background-color: var(--bs-gray-50);
+  background-color: #f8fafc;
   flex-shrink: 0;
 }
 
@@ -369,6 +377,12 @@ body.drawer-open {
   font-weight: 500;
   color: var(--mockr-text-muted);
   margin-bottom: 0.375rem;
+}
+
+// View-only field values (e.g., in show drawers)
+.drawer-body .form-label + div,
+.drawer-form-body .form-label + div:not(.form-control):not(.key-value-editor):not(.code-editor-wrapper) {
+  color: var(--mockr-text);
 }
 
 // -----------------------------------------------------------------------------

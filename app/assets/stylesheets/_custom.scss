@@ -3,6 +3,20 @@
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Light Mode Variables (default)
+// -----------------------------------------------------------------------------
+
+:root,
+[data-bs-theme="light"] {
+  --mockr-surface: white;
+  --mockr-surface-elevated: white;
+  --mockr-border: #e2e8f0;
+  --mockr-border-light: #f1f5f9;
+  --mockr-text: #1e293b;
+  --mockr-text-muted: #64748b;
+}
+
+// -----------------------------------------------------------------------------
 // Dark Mode Variables
 // -----------------------------------------------------------------------------
 
@@ -35,17 +49,6 @@
 
   // Adjust Bootstrap border color
   --bs-border-color: #334155;
-}
-
-// Light mode variables (explicit)
-[data-bs-theme="light"],
-:root {
-  --mockr-surface: white;
-  --mockr-surface-elevated: white;
-  --mockr-border: #e2e8f0;
-  --mockr-border-light: #f1f5f9;
-  --mockr-text: #1e293b;
-  --mockr-text-muted: #64748b;
 }
 
 // -----------------------------------------------------------------------------
@@ -922,11 +925,12 @@ body {
 [data-bs-theme="dark"] .btn-action-primary {
   background-color: rgba(83, 100, 166, 0.15) !important;
   border-color: rgba(83, 100, 166, 0.25) !important;
+  color: #a8b8db !important;
 
   &:hover {
     background-color: rgba(83, 100, 166, 0.25) !important;
     border-color: rgba(83, 100, 166, 0.45) !important;
-    color: #c4cdec !important; // Lighter primary for dark mode
+    color: #c4cdec !important;
   }
 }
 
@@ -1659,5 +1663,16 @@ body {
   // Text utilities
   .text-muted {
     color: #94a3b8 !important;
+  }
+
+  // Form hint text
+  .form-text {
+    color: #64748b;
+  }
+
+  // Select dropdown options
+  .form-select option {
+    background-color: #1e293b;
+    color: #f1f5f9;
   }
 }
