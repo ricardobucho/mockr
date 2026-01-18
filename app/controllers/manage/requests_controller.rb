@@ -6,7 +6,7 @@ module Manage
     before_action :set_client, only: %i[new create]
 
     def new
-      @request = @client.requests.new
+      @request = @client.requests.new(method: "GET")
       authorize! @request
     end
 

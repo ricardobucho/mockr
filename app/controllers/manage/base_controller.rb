@@ -26,6 +26,14 @@ module Manage
       turbo_stream.update("modal", "")
     end
 
+    def refresh_parent_drawer(request)
+      turbo_stream.replace("drawer", partial: "manage/requests/edit_drawer", locals: { request: request })
+    end
+
+    def from_stacked_drawer?
+      turbo_frame_request_id == "drawer-stacked"
+    end
+
     def render_delete_modal(resource, delete_path)
       render partial: "manage/shared/delete_modal", locals: {
         resource_name: resource.respond_to?(:name) ? resource.name : resource.class.name,

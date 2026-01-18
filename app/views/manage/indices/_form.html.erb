@@ -10,19 +10,22 @@
 
     <div class="drawer-section">
       <h3 class="drawer-section-title">Index Configuration</h3>
+      <p class="text-muted small mb-3">
+        The path to this index endpoint is relative to the client but the response items used to process the aggregated array response will be taken from the parent request.
+      </p>
 
       <div class="row">
         <div class="col-md-3">
-          <%= f.input :method, collection: Request.methods.keys, required: true, prompt: "Select method" %>
+          <%= f.input :method, collection: Request.methods.keys, required: true %>
         </div>
         <div class="col-md-9">
-          <%= f.input :path, required: true, placeholder: "/example", hint: "Path relative to client slug. Returns responses as an array." %>
+          <%= f.input :path, required: true, placeholder: "/example" %>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-6">
-          <%= f.input :status, as: :integer, required: true, placeholder: "200", hint: "The HTTP status code" %>
+          <%= f.input :status, as: :integer, required: true, placeholder: "200", hint: "The HTTP status code." %>
         </div>
         <div class="col-md-6">
           <%= f.input :throttle, as: :integer, placeholder: "0", hint: "Delay in milliseconds." %>
@@ -46,17 +49,18 @@
     <div class="drawer-section">
       <h3 class="drawer-section-title">Response Template</h3>
       <p class="text-muted small mb-3">
-        ERB template to transform the API response. Use <code>&lt;%= data %&gt;</code> to access the response.
-        Supports JSONPath with <code>&lt;%= JsonPath.on(data, '$.users[*].name') %&gt;</code>.
+        JSON template rendered for each response. The <code>response</code> variable is a hash containing the response body.
+        Use <code>&lt;%= response.to_json %&gt;</code> to output the full response, or build a custom JSON object with the help of
+        <code>&lt;%= JsonPath.on(response, '$.key') %&gt;</code> to extract specific values.
+        Template must produce valid JSON or the item will be skipped.
       </p>
 
       <%= render Manage::Fields::CodeEditorComponent.new(
         form: f,
         attribute: :template,
         label: nil,
-        language: :erb,
-        height: "400px",
-        help_text: "Leave empty to return the raw API response."
+        language: :json,
+        height: "400px"
       ) %>
     </div>
   </div>

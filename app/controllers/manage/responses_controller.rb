@@ -17,11 +17,13 @@ module Manage
       if @response.save
         respond_to do |format|
           format.turbo_stream do
-            render turbo_stream: [
+            streams = [
               render_toast("Response <strong>#{ERB::Util.html_escape(@response.name)}</strong> created successfully"),
               turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) }),
               close_stacked_drawer
             ]
+            streams << refresh_parent_drawer(@request) if from_stacked_drawer?
+            render turbo_stream: streams
           end
           format.html { redirect_to root_path, notice: "Response created successfully" }
         end
@@ -37,14 +39,17 @@ module Manage
 
     def update
       authorize! @response
+      @request = @response.request
 
       if @response.update(response_params)
         respond_to do |format|
           format.turbo_stream do
-            render turbo_stream: [
+            streams = [
               render_toast("Response <strong>#{ERB::Util.html_escape(@response.name)}</strong> updated successfully"),
               turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) })
             ]
+            streams << refresh_parent_drawer(@request) if from_stacked_drawer?
+            render turbo_stream: streams
           end
           format.html { redirect_to root_path, notice: "Response updated successfully" }
         end
@@ -61,16 +66,19 @@ module Manage
     def destroy
       authorize! @response
       response_name = @response.name
+      @request = @response.request
       @response.destroy
 
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: [
+          streams = [
             render_toast("Response <strong>#{ERB::Util.html_escape(response_name)}</strong> deleted successfully"),
             turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) }),
             close_modal,
             close_stacked_drawer
           ]
+          streams << refresh_parent_drawer(@request) if from_stacked_drawer?
+          render turbo_stream: streams
         end
         format.html { redirect_to root_path, notice: "Response deleted successfully" }
       end

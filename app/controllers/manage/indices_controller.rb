@@ -6,7 +6,7 @@ module Manage
     before_action :set_request, only: %i[new create]
 
     def new
-      @index = @request.indices.new(status: 200, method: "GET")
+      @index = @request.indices.new(status: 200, method: "GET", template: "<%= response.to_json %>")
       authorize! @index
     end
 
@@ -17,11 +17,13 @@ module Manage
       if @index.save
         respond_to do |format|
           format.turbo_stream do
-            render turbo_stream: [
+            streams = [
               render_toast("Index <strong>#{ERB::Util.html_escape(@index.name)}</strong> created successfully"),
               turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) }),
               close_stacked_drawer
             ]
+            streams << refresh_parent_drawer(@request) if from_stacked_drawer?
+            render turbo_stream: streams
           end
           format.html { redirect_to root_path, notice: "Index created successfully" }
         end
@@ -37,14 +39,17 @@ module Manage
 
     def update
       authorize! @index
+      @request = @index.request
 
       if @index.update(index_params)
         respond_to do |format|
           format.turbo_stream do
-            render turbo_stream: [
+            streams = [
               render_toast("Index <strong>#{ERB::Util.html_escape(@index.name)}</strong> updated successfully"),
               turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) })
             ]
+            streams << refresh_parent_drawer(@request) if from_stacked_drawer?
+            render turbo_stream: streams
           end
           format.html { redirect_to root_path, notice: "Index updated successfully" }
         end
@@ -61,16 +66,19 @@ module Manage
     def destroy
       authorize! @index
       index_name = @index.name
+      @request = @index.request
       @index.destroy
 
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: [
+          streams = [
             render_toast("Index <strong>#{ERB::Util.html_escape(index_name)}</strong> deleted successfully"),
             turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) }),
             close_modal,
             close_stacked_drawer
           ]
+          streams << refresh_parent_drawer(@request) if from_stacked_drawer?
+          render turbo_stream: streams
         end
         format.html { redirect_to root_path, notice: "Index deleted successfully" }
       end

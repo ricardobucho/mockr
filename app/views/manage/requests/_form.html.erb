@@ -2,22 +2,25 @@
   <div class="drawer-form-body">
     <div class="drawer-section">
       <h3 class="drawer-section-title">Basic Information</h3>
-      
+
       <%= f.input :name, required: true, placeholder: "Example Request" %>
       <%= f.input :description, as: :text, input_html: { rows: 2 } %>
     </div>
 
     <div class="drawer-section">
       <h3 class="drawer-section-title">Endpoint</h3>
-      
-      <%= f.input :method, collection: Request.methods.keys, required: true, prompt: "Select method" %>
-      <%= f.input :path, required: true, placeholder: "/example/:id", hint: "Path relative to client slug. Supports :param placeholders." %>
+
+      <%= f.input :method, collection: Request.methods.keys, required: true %>
+      <%= f.input :path, required: true, placeholder: "/example/:id" %>
     </div>
 
     <% if request.persisted? %>
       <div class="drawer-section">
         <h3 class="drawer-section-title">Responses</h3>
-        
+        <p class="text-muted small mb-3">
+          Mock responses returned when this endpoint is called. Use conditions to return different responses based on request parameters.
+        </p>
+
         <div class="drawer-tag-cloud">
           <% if request.responses.any? %>
             <% request.responses.order(:name).each do |response| %>
@@ -38,7 +41,10 @@
 
       <div class="drawer-section">
         <h3 class="drawer-section-title">Indices</h3>
-        
+        <p class="text-muted small mb-3">
+          Index endpoints return all responses as a JSON array. Useful for list/search endpoints that aggregate multiple response items.
+        </p>
+
         <div class="drawer-tag-cloud">
           <% if request.indices.any? %>
             <% request.indices.order(:name).each do |index| %>

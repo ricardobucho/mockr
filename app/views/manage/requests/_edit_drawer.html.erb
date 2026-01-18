@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "drawer" do %>
+  <%= render Manage::DrawerComponent.new(title: "Edit Request", subtitle: request.name) do %>
+    <%= render "manage/requests/form", request: request, client: request.client %>
+  <% end %>
+<% end %>

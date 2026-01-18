@@ -13,13 +13,13 @@
 
       <div class="row">
         <div class="col-md-4">
-          <%= f.input :status, as: :integer, required: true, placeholder: "200", hint: "The HTTP status code" %>
+          <%= f.input :status, as: :integer, required: true, placeholder: "200", hint: "The HTTP status code." %>
         </div>
         <div class="col-md-4">
-          <%= f.input :format, collection: Response.formats.keys, required: true, prompt: "Select format" %>
+          <%= f.input :format, collection: Response.formats.keys, required: true %>
         </div>
         <div class="col-md-4">
-          <%= f.input :throttle, as: :integer, placeholder: "0", hint: "Delay in milliseconds" %>
+          <%= f.input :throttle, as: :integer, placeholder: "0", hint: "Delay in milliseconds." %>
         </div>
       </div>
     </div>
