@@ -17,16 +17,14 @@
 @use './components/logs';
 @use './components/tokens';
 @use './components/empty-states';
+@use './components/drawer';
+@use './components/toast';
+@use './components/code_editor';
+@use './components/key_value';
+@use './components/editor';
 
 // Pages
 @use './pages/login';
 
 // Utilities & Overrides
 @use './utilities';
-
-// Existing component files (to be migrated later)
-@use './editor';
-@use './drawer';
-@use './toast';
-@use './code_editor';
-@use './key_value';

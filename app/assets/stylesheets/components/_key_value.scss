@@ -2,7 +2,7 @@
 // Key-Value Editor Styles
 // =============================================================================
 
-@use 'variables' as *;
+@use '../variables' as *;
 
 .key-value-editor {
   border: 1px solid var(--mockr-border);

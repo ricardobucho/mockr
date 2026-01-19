@@ -2,7 +2,7 @@
 // CodeMirror Viewer Styles (for read-only code display in modals)
 // -----------------------------------------------------------------------------
 
-@use 'variables' as *;
+@use '../variables' as *;
 
 // Code viewer in modals - add border since it doesn't have a wrapper
 .modal-body [data-controller="code-viewer"] .CodeMirror {

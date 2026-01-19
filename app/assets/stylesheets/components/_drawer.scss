@@ -2,7 +2,7 @@
 // Drawer Component Styles
 // =============================================================================
 
-@use 'variables' as *;
+@use '../variables' as *;
 
 // Prevent body scroll when drawer is open
 body.drawer-open {

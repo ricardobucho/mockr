@@ -2,7 +2,7 @@
 // Code Editor Styles (CodeMirror)
 // =============================================================================
 
-@use 'variables' as *;
+@use '../variables' as *;
 
 // Import CodeMirror base styles (from node_modules via sass --load-path)
 @use "codemirror/lib/codemirror.css";
