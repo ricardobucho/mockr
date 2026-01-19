@@ -15,7 +15,7 @@
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "codemirror": "^5.65.16",
-    "esbuild": "^0.24.2",
+    "esbuild": "^0.25.0",
     "prismjs": "^1.29.0",
     "sass": "^1.83.1",
     "sortablejs": "^1.15.2"
