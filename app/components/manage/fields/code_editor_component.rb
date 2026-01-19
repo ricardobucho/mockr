@@ -7,12 +7,14 @@ module Manage
         json: "application/json",
         html: "text/html",
         xml: "application/xml",
-        erb: "application/x-erb"
+        erb: "application/x-erb",
       }.freeze
 
       attr_reader :form, :attribute, :label, :language, :help_text, :required, :height
 
-      def initialize(form:, attribute:, label: :default, language: :json, help_text: nil, required: false, height: "300px")
+      def initialize(form:, attribute:, label: :default, language: :json, help_text: nil, required: false,
+                     height: "300px")
+        super()
         @form = form
         @attribute = attribute
         @label = label == :default ? attribute.to_s.humanize : label

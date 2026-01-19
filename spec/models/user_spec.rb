@@ -2,48 +2,48 @@
 
 require "rails_helper"
 
-RSpec.describe User, type: :model do
-  subject { FactoryBot.build(:user) }
+RSpec.describe User do
+  subject(:user) { build(:user) }
 
   describe "attributes" do
-    it { should respond_to(:name) }
-    it { should respond_to(:email) }
+    it { is_expected.to respond_to(:name) }
+    it { is_expected.to respond_to(:email) }
   end
 
   describe "validations" do
-    it { should validate_presence_of(:token) }
-    it { should validate_presence_of(:provider) }
-    it { should validate_presence_of(:provider_uid) }
-    it { should validate_presence_of(:provider_email) }
-    it { should validate_presence_of(:role) }
+    it { is_expected.to validate_presence_of(:token) }
+    it { is_expected.to validate_presence_of(:provider) }
+    it { is_expected.to validate_presence_of(:provider_uid) }
+    it { is_expected.to validate_presence_of(:provider_email) }
+    it { is_expected.to validate_presence_of(:role) }
 
-    it { should validate_uniqueness_of(:token) }
-    it { should validate_uniqueness_of(:provider_uid).scoped_to(:provider) }
-    it { should validate_uniqueness_of(:provider_email).scoped_to(:provider) }
+    it { is_expected.to validate_uniqueness_of(:token) }
+    it { is_expected.to validate_uniqueness_of(:provider_uid).scoped_to(:provider) }
+    it { is_expected.to validate_uniqueness_of(:provider_email).scoped_to(:provider) }
   end
 
   describe "instance methods" do
     describe "#manager?" do
-      it "should return true if the user is an manager" do
-        subject.role = User.roles["Manager"]
-        expect(subject.manager?).to be_truthy
+      it "returns true if the user is an manager" do
+        user.role = described_class.roles["Manager"]
+        expect(user).to be_manager
       end
 
-      it "should return false if the user is not an manager" do
-        subject.role = User.roles["User"]
-        expect(subject.manager?).to be_falsey
+      it "returns false if the user is not an manager" do
+        user.role = described_class.roles["User"]
+        expect(user).not_to be_manager
       end
     end
 
     describe "#user?" do
-      it "should return true if the user is a user" do
-        subject.role = User.roles["User"]
-        expect(subject.user?).to be_truthy
+      it "returns true if the user is a user" do
+        user.role = described_class.roles["User"]
+        expect(user).to be_user
       end
 
-      it "should return false if the user is not a user" do
-        subject.role = User.roles["Manager"]
-        expect(subject.user?).to be_falsey
+      it "returns false if the user is not a user" do
+        user.role = described_class.roles["Manager"]
+        expect(user).not_to be_user
       end
     end
   end

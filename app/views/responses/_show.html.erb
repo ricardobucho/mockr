@@ -3,9 +3,9 @@
     <div class="drawer-header">
       <div class="drawer-header-left">
         <div class="drawer-title-group">
-          <h2 class="drawer-title"><%= @response.name %></h2>
+          <h2 class="drawer-title"><%= response.name %></h2>
           <span class="drawer-subtitle">
-            <%= @response.request.client.name %> / <%= @response.request.name %>
+            <%= response.request.client.name %> / <%= response.request.name %>
           </span>
         </div>
       </div>
@@ -18,10 +18,10 @@
       <div class="drawer-section">
         <h3 class="drawer-section-title">Basic Information</h3>
         
-        <% if @response.description.present? %>
+        <% if response.description.present? %>
           <div class="mb-3">
             <div class="form-label">Description</div>
-            <div><%= @response.description %></div>
+            <div><%= response.description %></div>
           </div>
         <% end %>
       </div>
@@ -32,35 +32,35 @@
         <div class="row g-3 mb-3">
           <div class="col-md-4">
             <div class="form-label">Status</div>
-            <div><%= @response.status %></div>
+            <div><%= response.status %></div>
           </div>
           <div class="col-md-4">
             <div class="form-label">Format</div>
-            <div><%= @response.format %></div>
+            <div><%= response.format %></div>
           </div>
           <div class="col-md-4">
             <div class="form-label">Throttle</div>
-            <div><%= @response.throttle.to_i > 0 ? "#{@response.throttle}ms" : "None" %></div>
+            <div><%= response.throttle.to_i > 0 ? "#{response.throttle}ms" : "None" %></div>
           </div>
         </div>
       </div>
 
-      <% if @response.conditions.present? && @response.conditions.any? %>
+      <% if response.conditions.present? && response.conditions.any? %>
         <div class="drawer-section">
           <h3 class="drawer-section-title">Conditions</h3>
           <div class="d-flex flex-wrap gap-1">
-            <% @response.conditions.each do |key, value| %>
+            <% response.conditions.each do |key, value| %>
               <span class="badge badge-condition"><%= key %>: <%= value %></span>
             <% end %>
           </div>
         </div>
       <% end %>
 
-      <% if @response.headers.present? && @response.headers.any? %>
+      <% if response.headers.present? && response.headers.any? %>
         <div class="drawer-section">
           <h3 class="drawer-section-title">Headers</h3>
           <div class="d-flex flex-wrap gap-1">
-            <% @response.headers.each do |key, value| %>
+            <% response.headers.each do |key, value| %>
               <span class="badge badge-condition"><%= key %>: <%= value %></span>
             <% end %>
           </div>
@@ -71,8 +71,8 @@
         <h3 class="drawer-section-title">Response Body</h3>
         
         <%= render Manage::Fields::CodeViewerComponent.new(
-          code: @response.body,
-          language: @response.format
+          code: response.body,
+          language: response.format
         ) %>
       </div>
     </div>

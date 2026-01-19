@@ -1,9 +1,12 @@
 inherit_from:
   - https://raw.githubusercontent.com/thoughtbot/guides/main/ruby/.rubocop.yml
 
-require:
+plugins:
   - rubocop-rails
   - rubocop-performance
+  - rubocop-factory_bot
+  - rubocop-rspec
+  - rubocop-rspec_rails
 
 AllCops:
   TargetRubyVersion: 3.3
@@ -31,3 +34,17 @@ Metrics/PerceivedComplexity:
 
 Style/FrozenStringLiteralComment:
   Enabled: true
+
+# RSpec cops - reasonable limits for real-world tests
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+RSpec/ExampleLength:
+  Max: 15
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+RSpec/AnyInstance:
+  Exclude:
+    - "spec/rails_helper.rb"  # Global stubs for external dependencies

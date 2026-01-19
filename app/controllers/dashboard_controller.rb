@@ -6,16 +6,13 @@ class DashboardController < ApplicationController
   def index; end
 
   def clients
-    @clients =
-      Client.
-        includes(requests: %i[indices responses]).
-        references(requests: %i[indices responses]).
-        merge(clients_search_sql).
-        order(:name)
+    clients = Client.
+      includes(requests: %i[indices responses]).
+      references(requests: %i[indices responses]).
+      merge(clients_search_sql).
+      order(:name)
 
-    @searching = query.present?
-
-    render "dashboard/endpoints/_clients"
+    render "dashboard/endpoints/_clients", locals: { clients: clients, searching: query.present? }
   end
 
   private

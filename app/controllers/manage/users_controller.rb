@@ -20,16 +20,17 @@ module Manage
         @users = User.order(:provider_username)
         respond_to do |format|
           format.turbo_stream do
+            username = ERB::Util.html_escape(@user.provider_username)
             render turbo_stream: [
-              render_toast("User <strong>#{ERB::Util.html_escape(@user.provider_username)}</strong> updated successfully"),
+              render_toast("User <strong>#{username}</strong> updated successfully"),
               turbo_stream.update("drawer", partial: "manage/users/drawer_content", locals: { users: @users }),
-              close_stacked_drawer
+              close_stacked_drawer,
             ]
           end
-          format.html { redirect_to manage_users_path, notice: "User updated successfully" }
+          format.html { redirect_to manage_users_path, notice: t("flash.manage.users.updated") }
         end
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 

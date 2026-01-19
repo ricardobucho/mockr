@@ -7,7 +7,7 @@ class Response < ApplicationRecord
 
   belongs_to :request
 
-  enum format: {
+  enum :format, {
     "JSON" => "json",
     "HTML" => "html",
     "XML" => "xml",

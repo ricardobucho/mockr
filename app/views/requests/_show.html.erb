@@ -4,7 +4,7 @@
       <div class="drawer-header-left">
         <div class="drawer-title-group">
           <h2 class="drawer-title">Request Logs</h2>
-          <span class="drawer-subtitle"><%= @request.name %></span>
+          <span class="drawer-subtitle"><%= request.name %></span>
         </div>
       </div>
       <button type="button" class="drawer-close-btn" data-action="drawer#close">
@@ -13,7 +13,7 @@
     </div>
 
     <div class="drawer-body">
-      <% if @logs.empty? %>
+      <% if logs.empty? %>
         <div class="empty-state py-4">
           <i class="bi bi-journal-x empty-state-icon"></i>
           <div class="empty-state-title">No logs yet</div>
@@ -21,7 +21,7 @@
         </div>
       <% else %>
         <div class="d-flex flex-column gap-3">
-          <% @logs.each do |log| %>
+          <% logs.each do |log| %>
             <div class="log-entry">
               <div class="log-entry-header">
                 <span class="log-entry-id">#<%= log["id"] %></span>

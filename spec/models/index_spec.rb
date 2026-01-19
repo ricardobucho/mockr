@@ -2,16 +2,16 @@
 
 require "rails_helper"
 
-RSpec.describe Index, type: :model do
-  subject { FactoryBot.build(:index) }
+RSpec.describe Index do
+  subject { build(:index) }
 
   describe "associations" do
-    it { should belong_to(:request) }
+    it { is_expected.to belong_to(:request) }
   end
 
   describe "validations" do
-    it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:method) }
-    it { should validate_presence_of(:path) }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:method) }
+    it { is_expected.to validate_presence_of(:path) }
   end
 end

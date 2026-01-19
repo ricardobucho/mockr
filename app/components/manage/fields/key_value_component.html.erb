@@ -35,17 +35,19 @@
             class="key-value-input key-value-key-input" 
             value="<%= key %>"
             placeholder="<%= key_label %>"
+            autocomplete="off"
             data-key-value-target="keyInput"
             data-action="input->key-value#updateHiddenField"
-          />
+          >
           <input 
             type="text" 
             class="key-value-input key-value-value-input" 
             value="<%= value %>"
             placeholder="<%= value_label %>"
+            autocomplete="off"
             data-key-value-target="valueInput"
             data-action="input->key-value#updateHiddenField"
-          />
+          >
           <button 
             type="button" 
             class="key-value-delete-btn"
@@ -70,7 +72,7 @@
       id="<%= field_id %>"
       value="<%= current_value.to_json %>"
       data-key-value-target="hiddenField"
-    />
+    >
 
     <template data-key-value-target="rowTemplate">
       <div class="key-value-row" data-key-value-target="row">
@@ -81,16 +83,18 @@
           type="text" 
           class="key-value-input key-value-key-input" 
           placeholder="<%= key_label %>"
+          autocomplete="off"
           data-key-value-target="keyInput"
           data-action="input->key-value#updateHiddenField"
-        />
+        >
         <input 
           type="text" 
           class="key-value-input key-value-value-input" 
           placeholder="<%= value_label %>"
+          autocomplete="off"
           data-key-value-target="valueInput"
           data-action="input->key-value#updateHiddenField"
-        />
+        >
         <button 
           type="button" 
           class="key-value-delete-btn"

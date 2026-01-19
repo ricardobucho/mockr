@@ -37,8 +37,16 @@ module Manage
     def render_delete_modal(resource, delete_path)
       render partial: "manage/shared/delete_modal", locals: {
         resource_name: resource.respond_to?(:name) ? resource.name : resource.class.name,
-        delete_url: delete_path
+        delete_url: delete_path,
       }
+    end
+
+    def refresh_clients_list
+      turbo_stream.replace(
+        "clients",
+        partial: "dashboard/endpoints/clients",
+        locals: { clients: Client.includes(requests: %i[responses indices]).order(:name) },
+      )
     end
   end
 end

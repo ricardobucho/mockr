@@ -9,6 +9,10 @@ module Manage
       authorize! @client
     end
 
+    def edit
+      authorize! @client
+    end
+
     def create
       @client = Client.new(client_params)
       authorize! @client
@@ -18,19 +22,15 @@ module Manage
           format.turbo_stream do
             render turbo_stream: [
               render_toast("Client <strong>#{ERB::Util.html_escape(@client.name)}</strong> created successfully"),
-              turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) }),
-              close_drawer
+              refresh_clients_list,
+              close_drawer,
             ]
           end
-          format.html { redirect_to root_path, notice: "Client created successfully" }
+          format.html { redirect_to root_path, notice: t("flash.manage.clients.created") }
         end
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
-    end
-
-    def edit
-      authorize! @client
     end
 
     def update
@@ -41,13 +41,13 @@ module Manage
           format.turbo_stream do
             render turbo_stream: [
               render_toast("Client <strong>#{ERB::Util.html_escape(@client.name)}</strong> updated successfully"),
-              turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) })
+              refresh_clients_list,
             ]
           end
-          format.html { redirect_to root_path, notice: "Client updated successfully" }
+          format.html { redirect_to root_path, notice: t("flash.manage.clients.updated") }
         end
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 
@@ -65,12 +65,12 @@ module Manage
         format.turbo_stream do
           render turbo_stream: [
             render_toast("Client <strong>#{ERB::Util.html_escape(client_name)}</strong> deleted successfully"),
-            turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) }),
+            refresh_clients_list,
             close_modal,
-            close_drawer
+            close_drawer,
           ]
         end
-        format.html { redirect_to root_path, notice: "Client deleted successfully" }
+        format.html { redirect_to root_path, notice: t("flash.manage.clients.deleted") }
       end
     end
 

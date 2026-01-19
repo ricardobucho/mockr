@@ -5,6 +5,7 @@ module Manage
     attr_reader :title, :subtitle, :back_url
 
     def initialize(title:, subtitle: nil, back_url: nil)
+      super()
       @title = title
       @subtitle = subtitle
       @back_url = back_url

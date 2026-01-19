@@ -5,10 +5,10 @@ class User < ApplicationRecord
 
   PROVIDER_ICONS = {
     "github" => "github",
-    "okta" => "shield-lock"
+    "okta" => "shield-lock",
   }.freeze
 
-  enum role: {
+  enum :role, {
     "User" => "user",
     "Manager" => "manager",
   }

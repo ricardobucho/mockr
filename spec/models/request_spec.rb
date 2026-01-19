@@ -2,18 +2,18 @@
 
 require "rails_helper"
 
-RSpec.describe Request, type: :model do
-  subject { FactoryBot.build(:request) }
+RSpec.describe Request do
+  subject { build(:request) }
 
   describe "associations" do
-    it { should belong_to(:client) }
-    it { should have_many(:logs).dependent(:destroy) }
-    it { should have_many(:responses).dependent(:destroy) }
+    it { is_expected.to belong_to(:client) }
+    it { is_expected.to have_many(:logs).dependent(:destroy) }
+    it { is_expected.to have_many(:responses).dependent(:destroy) }
   end
 
   describe "validations" do
-    it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:method) }
-    it { should validate_presence_of(:path) }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:method) }
+    it { is_expected.to validate_presence_of(:path) }
   end
 end

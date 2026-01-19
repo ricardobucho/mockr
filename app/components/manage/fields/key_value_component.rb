@@ -5,7 +5,9 @@ module Manage
     class KeyValueComponent < ViewComponent::Base
       attr_reader :form, :attribute, :label, :key_label, :value_label, :help_text, :required
 
-      def initialize(form:, attribute:, label: :default, key_label: "Key", value_label: "Value", help_text: nil, required: false)
+      def initialize(form:, attribute:, label: :default, key_label: "Key", value_label: "Value", help_text: nil,
+                     required: false)
+        super()
         @form = form
         @attribute = attribute
         @label = label == :default ? attribute.to_s.humanize : label

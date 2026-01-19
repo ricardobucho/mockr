@@ -10,6 +10,11 @@ module Manage
       authorize! @index
     end
 
+    def edit
+      authorize! @index
+      @request = @index.request
+    end
+
     def create
       @index = @request.indices.new(index_params)
       authorize! @index
@@ -19,22 +24,17 @@ module Manage
           format.turbo_stream do
             streams = [
               render_toast("Index <strong>#{ERB::Util.html_escape(@index.name)}</strong> created successfully"),
-              turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) }),
-              close_stacked_drawer
+              refresh_clients_list,
+              close_stacked_drawer,
             ]
             streams << refresh_parent_drawer(@request) if from_stacked_drawer?
             render turbo_stream: streams
           end
-          format.html { redirect_to root_path, notice: "Index created successfully" }
+          format.html { redirect_to root_path, notice: t("flash.manage.indices.created") }
         end
       else
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_content
       end
-    end
-
-    def edit
-      authorize! @index
-      @request = @index.request
     end
 
     def update
@@ -46,15 +46,15 @@ module Manage
           format.turbo_stream do
             streams = [
               render_toast("Index <strong>#{ERB::Util.html_escape(@index.name)}</strong> updated successfully"),
-              turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) })
+              refresh_clients_list,
             ]
             streams << refresh_parent_drawer(@request) if from_stacked_drawer?
             render turbo_stream: streams
           end
-          format.html { redirect_to root_path, notice: "Index updated successfully" }
+          format.html { redirect_to root_path, notice: t("flash.manage.indices.updated") }
         end
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
 
@@ -73,14 +73,14 @@ module Manage
         format.turbo_stream do
           streams = [
             render_toast("Index <strong>#{ERB::Util.html_escape(index_name)}</strong> deleted successfully"),
-            turbo_stream.replace("clients", partial: "dashboard/endpoints/clients", locals: { clients: Client.includes(requests: [:responses, :indices]).order(:name) }),
+            refresh_clients_list,
             close_modal,
-            close_stacked_drawer
+            close_stacked_drawer,
           ]
           streams << refresh_parent_drawer(@request) if from_stacked_drawer?
           render turbo_stream: streams
         end
-        format.html { redirect_to root_path, notice: "Index deleted successfully" }
+        format.html { redirect_to root_path, notice: t("flash.manage.indices.deleted") }
       end
     end
 
@@ -95,15 +95,20 @@ module Manage
     end
 
     def index_params
-      permitted = params.require(:index).permit(:name, :description, :method, :path, :status, :throttle, :template, :headers, :properties)
-      
+      permitted = params.require(:index).permit(:name, :description, :method, :path, :status, :throttle, :template,
+                                                :headers, :properties)
+
       # Parse JSON strings for JSONB fields
       %i[headers properties].each do |field|
         if permitted[field].is_a?(String)
-          permitted[field] = JSON.parse(permitted[field]) rescue {}
+          permitted[field] = begin
+            JSON.parse(permitted[field])
+          rescue StandardError
+            {}
+          end
         end
       end
-      
+
       permitted
     end
   end

@@ -1,7 +1,6 @@
 <turbo-frame id="clients">
-  <% clients = local_assigns[:clients] || @clients %>
-  <% searching = local_assigns[:searching] || @searching %>
-  
+  <% searching = local_assigns.fetch(:searching, false) %>
+
   <% if clients.any? %>
     <div class="d-flex align-items-center justify-content-between mb-4" data-controller="client-tabs">
       <div class="client-selector">

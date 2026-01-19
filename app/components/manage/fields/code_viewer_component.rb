@@ -7,12 +7,13 @@ module Manage
         json: "application/json",
         html: "text/html",
         xml: "application/xml",
-        erb: "htmlmixed"
+        erb: "htmlmixed",
       }.freeze
 
       attr_reader :code, :language, :height
 
       def initialize(code:, language: :json, height: "auto")
+        super()
         @code = code || ""
         @language = language.to_sym
         @height = height

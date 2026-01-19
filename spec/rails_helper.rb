@@ -79,12 +79,15 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  # Include FactoryBot methods
+  config.include FactoryBot::Syntax::Methods
+
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation, except: %w[ar_internal_metadata])
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each) do
+  config.before do
     allow_any_instance_of(Response).to receive(:upload_response!).and_return(nil)
     allow_any_instance_of(Response).to receive(:body).and_return("{}")
   end

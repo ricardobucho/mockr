@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
 
     unless OrganizationManager.new(user).member?
       session[:user_id] = nil
-      return redirect_to login_path, alert: "You must be a member of the organization to access this application."
+      return redirect_to login_path, alert: t("flash.sessions.organization_required")
     end
 
     session[:user_id] = user.id
@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    Rails.logger.warn "[AUTH] Logout requested - referrer: #{request.referrer}, user: #{current_user&.id}"
+    Rails.logger.warn "[AUTH] Logout requested - referrer: #{request.referer}, user: #{current_user&.id}"
     return redirect_to(login_path) unless current_user
 
     destroy_session!

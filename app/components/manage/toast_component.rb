@@ -6,12 +6,13 @@ module Manage
       success: { icon: "check-circle-fill", class: "toast-success" },
       error: { icon: "exclamation-circle-fill", class: "toast-error" },
       warning: { icon: "exclamation-triangle-fill", class: "toast-warning" },
-      info: { icon: "info-circle-fill", class: "toast-info" }
+      info: { icon: "info-circle-fill", class: "toast-info" },
     }.freeze
 
     attr_reader :message, :type
 
     def initialize(message:, type: :success)
+      super()
       @message = message
       @type = type.to_sym
     end
