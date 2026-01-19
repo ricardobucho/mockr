@@ -23,7 +23,7 @@ module Manage
         respond_to do |format|
           format.turbo_stream do
             streams = [
-              render_toast("Index <strong>#{ERB::Util.html_escape(@index.name)}</strong> created successfully"),
+              render_toast(resource_type: "Index", resource_name: @index.name, action: :created),
               refresh_clients_list,
               close_stacked_drawer,
             ]
@@ -45,7 +45,7 @@ module Manage
         respond_to do |format|
           format.turbo_stream do
             streams = [
-              render_toast("Index <strong>#{ERB::Util.html_escape(@index.name)}</strong> updated successfully"),
+              render_toast(resource_type: "Index", resource_name: @index.name, action: :updated),
               refresh_clients_list,
             ]
             streams << refresh_parent_drawer(@request) if from_stacked_drawer?
@@ -72,7 +72,7 @@ module Manage
       respond_to do |format|
         format.turbo_stream do
           streams = [
-            render_toast("Index <strong>#{ERB::Util.html_escape(index_name)}</strong> deleted successfully"),
+            render_toast(resource_type: "Index", resource_name: index_name, action: :deleted),
             refresh_clients_list,
             close_modal,
             close_stacked_drawer,

@@ -23,7 +23,7 @@ module Manage
         respond_to do |format|
           format.turbo_stream do
             streams = [
-              render_toast("Response <strong>#{ERB::Util.html_escape(@response.name)}</strong> created successfully"),
+              render_toast(resource_type: "Response", resource_name: @response.name, action: :created),
               refresh_clients_list,
               close_stacked_drawer,
             ]
@@ -45,7 +45,7 @@ module Manage
         respond_to do |format|
           format.turbo_stream do
             streams = [
-              render_toast("Response <strong>#{ERB::Util.html_escape(@response.name)}</strong> updated successfully"),
+              render_toast(resource_type: "Response", resource_name: @response.name, action: :updated),
               refresh_clients_list,
             ]
             streams << refresh_parent_drawer(@request) if from_stacked_drawer?
@@ -72,7 +72,7 @@ module Manage
       respond_to do |format|
         format.turbo_stream do
           streams = [
-            render_toast("Response <strong>#{ERB::Util.html_escape(response_name)}</strong> deleted successfully"),
+            render_toast(resource_type: "Response", resource_name: response_name, action: :deleted),
             refresh_clients_list,
             close_modal,
             close_stacked_drawer,

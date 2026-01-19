@@ -21,7 +21,7 @@ module Manage
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              render_toast("Client <strong>#{ERB::Util.html_escape(@client.name)}</strong> created successfully"),
+              render_toast(resource_type: "Client", resource_name: @client.name, action: :created),
               refresh_clients_list,
               close_drawer,
             ]
@@ -40,7 +40,7 @@ module Manage
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-              render_toast("Client <strong>#{ERB::Util.html_escape(@client.name)}</strong> updated successfully"),
+              render_toast(resource_type: "Client", resource_name: @client.name, action: :updated),
               refresh_clients_list,
             ]
           end
@@ -64,7 +64,7 @@ module Manage
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            render_toast("Client <strong>#{ERB::Util.html_escape(client_name)}</strong> deleted successfully"),
+            render_toast(resource_type: "Client", resource_name: client_name, action: :deleted),
             refresh_clients_list,
             close_modal,
             close_drawer,

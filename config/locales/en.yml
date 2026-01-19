@@ -4,6 +4,7 @@
 
 en:
   flash:
+    unauthorized: "You are not authorized to perform this action."
     sessions:
       organization_required: "You must be a member of the organization to access this application."
     manage:

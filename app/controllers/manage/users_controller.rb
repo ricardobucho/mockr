@@ -20,9 +20,8 @@ module Manage
         @users = User.order(:provider_username)
         respond_to do |format|
           format.turbo_stream do
-            username = ERB::Util.html_escape(@user.provider_username)
             render turbo_stream: [
-              render_toast("User <strong>#{username}</strong> updated successfully"),
+              render_toast(resource_type: "User", resource_name: @user.provider_username, action: :updated),
               turbo_stream.update("drawer", partial: "manage/users/drawer_content", locals: { users: @users }),
               close_stacked_drawer,
             ]

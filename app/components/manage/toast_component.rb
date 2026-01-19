@@ -9,12 +9,24 @@ module Manage
       info: { icon: "info-circle-fill", class: "toast-info" },
     }.freeze
 
-    attr_reader :message, :type
+    ACTIONS = {
+      created: "created successfully",
+      updated: "updated successfully",
+      deleted: "deleted successfully",
+    }.freeze
 
-    def initialize(message:, type: :success)
+    attr_reader :type, :message, :resource_type, :resource_name, :action
+
+    # Two usage patterns:
+    # 1. Simple: ToastComponent.new(message: "Something happened")
+    # 2. Structured: ToastComponent.new(resource_type: "Client", resource_name: "Acme", action: :created)
+    def initialize(type: :success, message: nil, resource_type: nil, resource_name: nil, action: nil)
       super()
-      @message = message
       @type = type.to_sym
+      @message = message
+      @resource_type = resource_type
+      @resource_name = resource_name
+      @action = action&.to_sym
     end
 
     def toast_class
@@ -23,6 +35,14 @@ module Manage
 
     def icon_name
       TYPES.dig(type, :icon) || TYPES[:info][:icon]
+    end
+
+    def structured?
+      resource_type.present? && action.present?
+    end
+
+    def action_text
+      ACTIONS[action] || action.to_s
     end
   end
 end

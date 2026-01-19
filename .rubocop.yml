@@ -48,3 +48,4 @@ RSpec/MultipleExpectations:
 RSpec/AnyInstance:
   Exclude:
     - "spec/rails_helper.rb"  # Global stubs for external dependencies
+    - "spec/requests/**/*"    # Request specs need to stub current_user

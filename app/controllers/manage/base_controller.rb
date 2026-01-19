@@ -8,10 +8,29 @@ module Manage
 
     layout false
 
+    rescue_from ActionPolicy::Unauthorized, with: :handle_unauthorized
+
     private
 
-    def render_toast(message, type: :success)
-      turbo_stream.prepend("toast-container", Manage::ToastComponent.new(message: message, type: type))
+    def handle_unauthorized
+      respond_to do |format|
+        format.html { redirect_to root_path, alert: t("flash.unauthorized") }
+        format.turbo_stream { head :forbidden }
+        format.json { render json: { error: "Unauthorized" }, status: :forbidden }
+      end
+    end
+
+    def render_toast(message = nil, type: :success, resource_type: nil, resource_name: nil, action: nil)
+      turbo_stream.prepend(
+        "toast-container",
+        Manage::ToastComponent.new(
+          message: message,
+          type: type,
+          resource_type: resource_type,
+          resource_name: resource_name,
+          action: action,
+        ),
+      )
     end
 
     def close_drawer
