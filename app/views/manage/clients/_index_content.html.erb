@@ -1,10 +1,4 @@
 <div class="drawer-body">
-  <div class="drawer-section-header">
-    <%= link_to new_manage_client_path, class: "btn btn-action-primary", data: { turbo_frame: "drawer-stacked" } do %>
-      <i class="bi bi-plus-lg me-1"></i>New Client
-    <% end %>
-  </div>
-
   <div class="client-list">
     <% clients.each do |client| %>
       <div class="client-list-item">
@@ -14,7 +8,7 @@
           </div>
           <div class="client-list-item-details">
             <span class="client-list-item-name"><%= client.name %></span>
-            <span class="client-list-item-slug">/<%= client.slug %></span>
+            <span class="client-list-item-slug"><%= client.slug %></span>
           </div>
         </div>
         <div class="client-list-item-actions">
@@ -32,7 +26,7 @@
               <%= client.responses.size %>
             </span>
           </div>
-          <%= link_to edit_manage_client_path(client), class: "btn btn-sm btn-outline-secondary", data: { turbo_frame: "drawer-stacked" } do %>
+          <%= link_to edit_manage_client_path(client), class: "btn btn-sm btn-outline-secondary", data: { turbo_frame: "drawer" } do %>
             <i class="bi bi-pencil"></i>
           <% end %>
         </div>

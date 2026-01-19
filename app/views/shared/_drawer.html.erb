@@ -5,11 +5,6 @@
     data-action="click->drawer#backdropClick"
   ></div>
   
-  <div class="drawer-panel" data-drawer-target="panel">
-    <%= turbo_frame_tag "drawer" %>
-  </div>
-  
-  <div class="drawer-panel drawer-panel-stacked" data-drawer-target="stackedPanel">
-    <%= turbo_frame_tag "drawer-stacked" %>
-  </div>
+  <%# Panels are created dynamically by the controller %>
+  <div class="drawer-panels" data-drawer-target="container"></div>
 </div>

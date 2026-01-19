@@ -15,7 +15,7 @@
           <span class="user-list-item-badge <%= user.manager? ? 'badge-outline-primary' : 'badge-outline-secondary' %>">
             <%= user.role %>
           </span>
-          <%= link_to edit_manage_user_path(user), class: "btn btn-sm btn-outline-secondary", data: { turbo_frame: "drawer-stacked" } do %>
+          <%= link_to edit_manage_user_path(user), class: "btn btn-sm btn-outline-secondary", data: { turbo_frame: "drawer" } do %>
             <i class="bi bi-pencil"></i>
           <% end %>
         </div>

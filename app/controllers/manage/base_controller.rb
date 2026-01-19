@@ -33,29 +33,13 @@ module Manage
       )
     end
 
+    # Triggers back navigation (pops URL stack) or closes drawer if at root
     def close_drawer
       turbo_stream.update("drawer", "")
     end
 
-    def close_stacked_drawer
-      turbo_stream.update("drawer-stacked", "")
-    end
-
     def close_modal
       turbo_stream.update("modal", "")
-    end
-
-    def refresh_parent_drawer(request)
-      turbo_stream.replace("drawer", partial: "manage/requests/edit_drawer", locals: { request: request })
-    end
-
-    def refresh_clients_drawer
-      turbo_stream.update("drawer", partial: "manage/clients/drawer_content",
-                                    locals: { clients: Client.includes(requests: %i[indices responses]).order(:name) })
-    end
-
-    def from_stacked_drawer?
-      turbo_frame_request_id == "drawer-stacked"
     end
 
     def render_delete_modal(resource, delete_path)

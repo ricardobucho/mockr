@@ -2,18 +2,14 @@
 
 module Manage
   class DrawerComponent < ViewComponent::Base
-    attr_reader :title, :subtitle, :back_url, :back_frame
+    renders_one :header_actions
 
-    def initialize(title:, subtitle: nil, back_url: nil, back_frame: nil)
+    attr_reader :title, :subtitle
+
+    def initialize(title:, subtitle: nil)
       super()
       @title = title
       @subtitle = subtitle
-      @back_url = back_url
-      @back_frame = back_frame
-    end
-
-    def back_link?
-      back_url.present?
     end
   end
 end

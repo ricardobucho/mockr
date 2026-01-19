@@ -22,13 +22,11 @@ module Manage
       if @index.save
         respond_to do |format|
           format.turbo_stream do
-            streams = [
+            render turbo_stream: [
               render_toast(resource_type: "Index", resource_name: @index.name, action: :created),
               refresh_clients_list,
-              close_stacked_drawer,
+              close_drawer,
             ]
-            streams << refresh_parent_drawer(@request) if from_stacked_drawer?
-            render turbo_stream: streams
           end
           format.html { redirect_to root_path, notice: t("flash.manage.indices.created") }
         end
@@ -39,17 +37,15 @@ module Manage
 
     def update
       authorize! @index
-      @request = @index.request
 
       if @index.update(index_params)
         respond_to do |format|
           format.turbo_stream do
-            streams = [
+            render turbo_stream: [
               render_toast(resource_type: "Index", resource_name: @index.name, action: :updated),
               refresh_clients_list,
+              close_drawer,
             ]
-            streams << refresh_parent_drawer(@request) if from_stacked_drawer?
-            render turbo_stream: streams
           end
           format.html { redirect_to root_path, notice: t("flash.manage.indices.updated") }
         end
@@ -66,19 +62,16 @@ module Manage
     def destroy
       authorize! @index
       index_name = @index.name
-      @request = @index.request
       @index.destroy
 
       respond_to do |format|
         format.turbo_stream do
-          streams = [
+          render turbo_stream: [
             render_toast(resource_type: "Index", resource_name: index_name, action: :deleted),
             refresh_clients_list,
             close_modal,
-            close_stacked_drawer,
+            close_drawer,
           ]
-          streams << refresh_parent_drawer(@request) if from_stacked_drawer?
-          render turbo_stream: streams
         end
         format.html { redirect_to root_path, notice: t("flash.manage.indices.deleted") }
       end

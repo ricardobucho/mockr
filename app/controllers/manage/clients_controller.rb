@@ -25,17 +25,11 @@ module Manage
       if @client.save
         respond_to do |format|
           format.turbo_stream do
-            streams = [
+            render turbo_stream: [
               render_toast(resource_type: "Client", resource_name: @client.name, action: :created),
               refresh_clients_list,
+              close_drawer,
             ]
-            if from_stacked_drawer?
-              streams << refresh_clients_drawer
-              streams << close_stacked_drawer
-            else
-              streams << close_drawer
-            end
-            render turbo_stream: streams
           end
           format.html { redirect_to root_path, notice: t("flash.manage.clients.created") }
         end
@@ -50,13 +44,11 @@ module Manage
       if @client.update(client_params)
         respond_to do |format|
           format.turbo_stream do
-            streams = [
+            render turbo_stream: [
               render_toast(resource_type: "Client", resource_name: @client.name, action: :updated),
               refresh_clients_list,
+              close_drawer,
             ]
-            streams << refresh_clients_drawer if from_stacked_drawer?
-            streams << close_stacked_drawer if from_stacked_drawer?
-            render turbo_stream: streams
           end
           format.html { redirect_to root_path, notice: t("flash.manage.clients.updated") }
         end
@@ -77,18 +69,12 @@ module Manage
 
       respond_to do |format|
         format.turbo_stream do
-          streams = [
+          render turbo_stream: [
             render_toast(resource_type: "Client", resource_name: client_name, action: :deleted),
             refresh_clients_list,
             close_modal,
+            close_drawer,
           ]
-          if from_stacked_drawer?
-            streams << refresh_clients_drawer
-            streams << close_stacked_drawer
-          else
-            streams << close_drawer
-          end
-          render turbo_stream: streams
         end
         format.html { redirect_to root_path, notice: t("flash.manage.clients.deleted") }
       end

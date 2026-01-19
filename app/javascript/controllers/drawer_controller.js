@@ -1,106 +1,203 @@
 import { Controller } from "@hotwired/stimulus"
 
+/**
+ * Drawer Controller - Multi-panel stacking architecture
+ * 
+ * Each navigation creates a new panel instance. Panels stack visually
+ * with the turbo frame moving between them. Back reveals previous panel
+ * and re-fetches for fresh data.
+ */
 export default class extends Controller {
-  static targets = ["backdrop", "panel", "stackedPanel"]
+  static targets = ["backdrop", "container"]
 
   connect() {
-    // Listen for turbo frame loads to open drawer
-    this.element.addEventListener("turbo:frame-load", this.handleFrameLoad.bind(this))
+    this.panels = []      // Array of panel DOM elements
+    this.urlStack = []    // URLs for back navigation
+    this.currentUrl = null
     
-    // Listen for turbo stream updates that might clear frames
+    // Create the turbo frame element (moves between panels)
+    this.frame = document.createElement('turbo-frame')
+    this.frame.id = 'drawer'
+    this.frame.innerHTML = this.loadingHTML()
+    
+    document.addEventListener("click", this.handleClick.bind(this))
+    this.frame.addEventListener("turbo:frame-load", this.handleFrameLoad.bind(this))
     document.addEventListener("turbo:before-stream-render", this.handleStreamRender.bind(this))
-    
-    // Listen for escape key
     document.addEventListener("keydown", this.handleKeydown.bind(this))
   }
 
   disconnect() {
+    document.removeEventListener("click", this.handleClick.bind(this))
     document.removeEventListener("keydown", this.handleKeydown.bind(this))
     document.removeEventListener("turbo:before-stream-render", this.handleStreamRender.bind(this))
   }
 
-  handleFrameLoad(event) {
-    const frameId = event.target.id
+  handleClick(event) {
+    const link = event.target.closest('a[data-turbo-frame="drawer"]')
+    if (!link) return
     
-    if (frameId === "drawer" && event.target.innerHTML.trim() !== "") {
-      this.open()
-    } else if (frameId === "drawer-stacked" && event.target.innerHTML.trim() !== "") {
-      this.openStacked()
-    }
+    event.preventDefault()
+    this.navigateTo(link.href)
+  }
+
+  handleFrameLoad(event) {
+    if (event.target.id !== "drawer") return
+    // Frame loaded - panel is already open and animated
   }
 
   handleStreamRender(event) {
     const stream = event.target
-    const action = stream.getAttribute("action")
-    const target = stream.getAttribute("target")
+    if (stream.getAttribute("target") !== "drawer") return
     
-    // Check if we're clearing/updating a drawer frame with empty content
-    if (action === "update" && target === "drawer-stacked") {
+    if (stream.getAttribute("action") === "update") {
       const template = stream.querySelector("template")
-      const content = template ? template.innerHTML.trim() : ""
-      if (content === "") {
-        this.closeStacked()
-        event.preventDefault() // Don't render empty content, we'll handle it
-      }
-    } else if (action === "update" && target === "drawer") {
-      const template = stream.querySelector("template")
-      const content = template ? template.innerHTML.trim() : ""
-      if (content === "") {
-        this.close()
+      if (template && template.innerHTML.trim() === "") {
         event.preventDefault()
+        this.back()
       }
     }
   }
 
   handleKeydown(event) {
-    if (event.key === "Escape") {
-      if (this.hasStackedPanelTarget && this.stackedPanelTarget.classList.contains("open")) {
-        this.closeStacked()
-      } else if (this.hasPanelTarget && this.panelTarget.classList.contains("open")) {
-        this.close()
-      }
+    if (event.key === "Escape" && this.isOpen()) {
+      event.preventDefault()
+      this.back()
     }
   }
 
-  open() {
-    document.body.classList.add("drawer-open")
-    this.backdropTarget.classList.add("open")
-    this.panelTarget.classList.add("open")
+  navigateTo(url) {
+    // If we have an active panel, stack it
+    if (this.panels.length > 0) {
+      this.stackCurrentPanel()
+      this.urlStack.push(this.currentUrl)
+    }
+    
+    // Create new panel with the frame
+    const panel = this.createPanel()
+    panel.appendChild(this.frame)
+    this.containerTarget.appendChild(panel)
+    this.panels.push(panel)
+    
+    // Load new content
+    this.currentUrl = url
+    this.frame.src = url
+    
+    // Open drawer and animate panel in
+    // Double rAF ensures browser renders initial off-screen state before animating
+    this.openDrawer()
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        panel.classList.add('open')
+        this.updatePanelDepths()
+      })
+    })
+  }
+
+  stackCurrentPanel() {
+    const panel = this.activePanel
+    if (!panel) return
+    
+    // Clone frame content to static HTML
+    const content = this.frame.innerHTML
+    panel.innerHTML = content
+    panel.classList.add('stacked')
+  }
+
+  back() {
+    if (this.urlStack.length === 0) {
+      this.close()
+      return
+    }
+    
+    const previousUrl = this.urlStack.pop()
+    const closingPanel = this.panels.pop()
+    const revealedPanel = this.activePanel
+    
+    // Clear the revealed panel's static content before adding frame
+    revealedPanel.innerHTML = ''
+    
+    // Move frame to revealed panel and fetch fresh content
+    revealedPanel.appendChild(this.frame)
+    revealedPanel.classList.remove('stacked')
+    this.currentUrl = previousUrl
+    this.frame.src = previousUrl
+    
+    // Animate out closing panel
+    closingPanel.classList.remove('open')
+    closingPanel.classList.add('closing')
+    
+    this.updatePanelDepths()
+    
+    setTimeout(() => closingPanel.remove(), 300)
   }
 
   close() {
-    this.panelTarget.classList.remove("open")
+    // Animate all panels out
+    this.panels.forEach(panel => {
+      panel.classList.remove('open')
+      panel.classList.add('closing')
+    })
+    
     this.backdropTarget.classList.remove("open")
     document.body.classList.remove("drawer-open")
     
-    // Clear the frame content after animation
     setTimeout(() => {
-      const frame = document.getElementById("drawer")
-      if (frame) frame.innerHTML = ""
+      this.panels.forEach(panel => panel.remove())
+      this.panels = []
+      this.urlStack = []
+      this.currentUrl = null
+      this.frame.innerHTML = this.loadingHTML()
+      this.frame.removeAttribute("src")
     }, 300)
   }
 
-  openStacked() {
-    this.stackedPanelTarget.classList.add("open")
+  createPanel() {
+    const panel = document.createElement('div')
+    panel.className = 'drawer-panel'
+    return panel
   }
 
-  closeStacked() {
-    this.stackedPanelTarget.classList.remove("open")
+  updatePanelDepths() {
+    this.panels.forEach((panel, index) => {
+      // Depth = index: 0 = backmost (widest), higher = frontmost (narrower)
+      panel.dataset.depth = index
+    })
     
-    // Clear the stacked frame content after animation
-    setTimeout(() => {
-      const frame = document.getElementById("drawer-stacked")
-      if (frame) frame.innerHTML = ""
-    }, 300)
+    // Update back button visibility on active panel
+    if (this.activePanel) {
+      this.activePanel.dataset.hasHistory = this.urlStack.length > 0
+    }
   }
 
-  closeAll() {
-    this.closeStacked()
-    setTimeout(() => this.close(), 100)
+  get activePanel() {
+    return this.panels[this.panels.length - 1]
   }
 
-  // Prevent closing on backdrop click (per user requirement)
+  openDrawer() {
+    document.body.classList.add("drawer-open")
+    this.backdropTarget.classList.add("open")
+  }
+
+  isOpen() {
+    return this.panels.length > 0
+  }
+
   backdropClick(event) {
-    // Do nothing - user requested that clicking outside should NOT close
+    // Do nothing - user requested no close on backdrop click
+  }
+
+  loadingHTML() {
+    return `
+      <div class="drawer-loading">
+        <div class="drawer-loading-header">
+          <div class="skeleton skeleton-text" style="width: 200px; height: 24px;"></div>
+        </div>
+        <div class="drawer-loading-body">
+          <div class="skeleton skeleton-text" style="width: 100%; height: 16px; margin-bottom: 12px;"></div>
+          <div class="skeleton skeleton-text" style="width: 80%; height: 16px; margin-bottom: 12px;"></div>
+          <div class="skeleton skeleton-text" style="width: 60%; height: 16px;"></div>
+        </div>
+      </div>
+    `
   }
 }

@@ -18,15 +18,15 @@
         <div class="drawer-tag-cloud">
           <% if client.requests.any? %>
             <% client.requests.order(:name).each do |request| %>
-              <span class="drawer-tag drawer-tag-readonly">
-                <span class="drawer-tag-status"><%= request.method %></span>
+              <%= link_to edit_manage_request_path(request), class: "drawer-tag", data: { turbo_frame: "drawer" } do %>
                 <span><%= request.name %></span>
-              </span>
+                <span class="drawer-tag-status"><%= request.method %></span>
+              <% end %>
             <% end %>
           <% else %>
             <span class="drawer-tag-empty">No requests yet</span>
           <% end %>
-          <%= link_to new_manage_client_request_path(client), class: "drawer-tag-add", data: { turbo_frame: "drawer-stacked" } do %>
+          <%= link_to new_manage_client_request_path(client), class: "drawer-tag-add", data: { turbo_frame: "drawer" } do %>
             <i class="bi bi-plus"></i>
             <span>Add</span>
           <% end %>
@@ -45,7 +45,7 @@
       <% end %>
     </div>
     <div class="drawer-form-actions">
-      <button type="button" class="btn btn-action-secondary" data-action="drawer#close">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#back">
         Cancel
       </button>
       <%= f.submit client.persisted? ? "Save Changes" : "Create Client", class: "btn btn-action-primary" %>
