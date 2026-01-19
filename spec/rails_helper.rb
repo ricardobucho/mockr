@@ -7,9 +7,7 @@ SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
 
 # SimpleCov
 if ENV.fetch("REPORT_COVERAGE", false)
-  SimpleCov.start "rails" do
-    add_filter "controllers/avo"
-  end
+  SimpleCov.start "rails"
 end
 
 require "spec_helper"
