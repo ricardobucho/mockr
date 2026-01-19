@@ -1,34 +1,35 @@
 // Bootstrap Overrides - Modern & Clean Theme (matching Avo)
 @use 'sass:color';
+@use 'variables' as *;
 
-// Color palette - matching Avo branding
-$primary: #5064A8;
-$primary-100: #C4CDEC;
-$primary-400: #399EE5;
-$primary-600: #066BB2;
+// Color palette - using centralized variables
+$primary: $primary;
+$primary-100: $primary-light;
+$primary-400: #399EE5;  // TODO: Add to variables if needed
+$primary-600: #066BB2;  // TODO: Add to variables if needed
 
-$secondary: #6c757d;
-$info: #399EE5;
-$success: #10b981;
-$warning: #f59e0b;
-$danger: #ef4444;
+$secondary: $secondary;
+$info: $info;
+$success: $success;
+$warning: $warning;
+$danger: $danger;  // Now uses #dc3545 (standardized)
 
-$light: #f8fafc;
-$dark: #1e293b;
+$light: $slate-50;
+$dark: $slate-800;
 
 // App background - very light blue
-$body-bg: #f8fafc;
+$body-bg: $slate-50;
 
-// Gray scale - softer, more modern
-$gray-100: #f8fafc;
-$gray-200: #f1f5f9;
-$gray-300: #e2e8f0;
-$gray-400: #cbd5e1;
-$gray-500: #94a3b8;
-$gray-600: #64748b;
-$gray-700: #475569;
-$gray-800: #334155;
-$gray-900: #1e293b;
+// Gray scale - using slate variables
+$gray-100: $slate-50;
+$gray-200: $slate-100;
+$gray-300: $slate-200;
+$gray-400: $slate-300;
+$gray-500: $slate-400;
+$gray-600: $slate-500;
+$gray-700: $slate-600;
+$gray-800: $slate-700;
+$gray-900: $slate-800;
 
 // Typography - tighter, more modern
 $font-family-sans-serif: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -38,17 +39,17 @@ $font-size-lg: 1.0625rem;   // 17px
 $line-height-base: 1.5;
 $headings-font-weight: 600;
 
-// Border radius - subtle, matching Avo
-$border-radius: 0.375rem;
-$border-radius-sm: 0.25rem;
-$border-radius-lg: 0.5rem;
-$border-radius-xl: 0.75rem;
-$border-radius-pill: 50rem;
+// Border radius - subtle, matching Avo (using centralized tokens)
+$border-radius: $radius;
+$border-radius-sm: $radius-sm;
+$border-radius-lg: $radius-md;
+$border-radius-xl: $radius-lg;
+$border-radius-pill: $radius-pill;
 
 // Shadows - minimal
 $box-shadow-sm: none;
 $box-shadow: none;
-$box-shadow-lg: 0 4px 12px 0 rgb(0 0 0 / 0.08);
+$box-shadow-lg: 0 4px 12px 0 $black-10;
 
 // Inputs & buttons
 $input-btn-padding-y: 0.5rem;
@@ -57,24 +58,24 @@ $input-btn-padding-y-sm: 0.375rem;
 $input-btn-padding-x-sm: 0.75rem;
 $input-btn-focus-width: 0.2rem;
 $input-btn-focus-color-opacity: 0.2;
-$input-btn-focus-color: rgba($primary, $input-btn-focus-color-opacity);
+$input-btn-focus-color: $primary-20;
 $input-focus-border-color: $primary;
 
 // Buttons
 $btn-font-weight: 500;
 $btn-box-shadow: none;
-$btn-focus-box-shadow: 0 0 0 $input-btn-focus-width $input-btn-focus-color;
+$btn-focus-box-shadow: 0 0 0 $input-btn-focus-width $primary-20;
 
 // Cards - clean, bordered
 $card-spacer-y: 1rem;
 $card-spacer-x: 1.25rem;
 $card-border-width: 1px;
-$card-border-color: $gray-300;
+$card-border-color: $slate-200;  // Light border
 $card-border-radius: $border-radius-lg;
 $card-box-shadow: none;
 $card-cap-padding-y: 0.875rem;
 $card-cap-padding-x: 1.25rem;
-$card-cap-bg: $gray-100;
+$card-cap-bg: $slate-50;  // Light surface
 
 // Modals
 $modal-content-border-radius: $border-radius-lg;
@@ -103,7 +104,7 @@ $link-decoration: none;
 $link-hover-decoration: none;
 
 // Transitions
-$transition-base: all 0.15s ease-in-out;
+$transition-base: all $transition-fast;
 
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';

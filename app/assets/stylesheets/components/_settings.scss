@@ -1,0 +1,69 @@
+// =============================================================================
+// Settings Component
+// =============================================================================
+
+@use '../variables' as *;
+
+// -----------------------------------------------------------------------------
+// Settings Panel (inline expansion)
+// -----------------------------------------------------------------------------
+
+.settings-panel {
+  background-color: var(--bs-gray-100);
+  border-bottom: 1px solid var(--bs-gray-300);
+}
+
+.settings-panel-content {
+  padding: 1.5rem 0;
+}
+
+.settings-github-link {
+  color: var(--bs-gray-500);
+  margin-left: 0.25rem;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: var(--bs-gray-700);
+  }
+}
+
+.settings-section {
+  background-color: $white;
+  border: 1px solid var(--bs-gray-300);
+  border-radius: $radius-md;
+  padding: 1rem 1.25rem;
+  height: 100%;
+}
+
+.settings-section-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--bs-gray-700);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+[data-bs-theme="dark"] {
+  .settings-panel {
+    background-color: $slate-900;
+    border-color: $slate-700;
+  }
+
+  .settings-github-link {
+    color: $slate-400;
+
+    &:hover {
+      color: $slate-100;
+    }
+  }
+
+  .settings-section {
+    background-color: $slate-800;
+    border-color: $slate-700;
+  }
+
+  .settings-section-title {
+    color: $slate-200;
+  }
+}

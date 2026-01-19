@@ -1,6 +1,31 @@
+// =============================================================================
+// Mockr Application Styles
+// =============================================================================
+
+// Core
 @use './bootstrap';
+@use './base';
+
+// Components
+@use './components/header';
+@use './components/cards';
+@use './components/badges';
+@use './components/buttons';
+@use './components/pills';
+@use './components/modals';
+@use './components/settings';
+@use './components/logs';
+@use './components/tokens';
+@use './components/empty-states';
+
+// Pages
+@use './pages/login';
+
+// Utilities & Overrides
+@use './utilities';
+
+// Existing component files (to be migrated later)
 @use './editor';
-@use './custom';
 @use './drawer';
 @use './toast';
 @use './code_editor';

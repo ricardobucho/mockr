@@ -1,0 +1,175 @@
+// =============================================================================
+// _base.scss - CSS Custom Properties & Base Styles
+// =============================================================================
+// 
+// This file defines runtime theming via CSS custom properties and base styles.
+// All values are derived from _variables.scss.
+//
+// =============================================================================
+
+@use 'variables' as *;
+
+// -----------------------------------------------------------------------------
+// Light Mode Variables (default)
+// -----------------------------------------------------------------------------
+
+:root,
+[data-bs-theme="light"] {
+  // Surfaces
+  --mockr-bg: #{$light-bg};
+  --mockr-surface: #{$light-surface};
+  
+  // Borders
+  --mockr-border: #{$light-border};
+  --mockr-border-light: #{$light-border-light};
+  
+  // Text
+  --mockr-text: #{$light-text};
+  --mockr-text-muted: #{$light-text-muted};
+  --mockr-text-subtle: #{$light-text-subtle};
+  
+  // Semantic colors
+  --mockr-primary: #{$primary};
+  --mockr-danger: #{$danger};
+  --mockr-success: #{$success};
+  --mockr-warning: #{$warning};
+  --mockr-info: #{$info};
+}
+
+// -----------------------------------------------------------------------------
+// Dark Mode Variables
+// -----------------------------------------------------------------------------
+
+[data-bs-theme="dark"] {
+  // Core backgrounds (Bootstrap overrides)
+  --bs-body-bg: #{$dark-bg};
+  --bs-body-color: #{$dark-text};
+
+  // Gray scale (inverted for dark mode)
+  --bs-gray-50: #{$slate-800};
+  --bs-gray-100: #{$slate-800};
+  --bs-gray-200: #{$slate-700};
+  --bs-gray-300: #{$slate-600};
+  --bs-gray-400: #{$slate-500};
+  --bs-gray-500: #{$slate-400};
+  --bs-gray-600: #{$slate-300};
+  --bs-gray-700: #{$slate-200};
+  --bs-gray-800: #{$slate-100};
+  --bs-gray-900: #{$slate-50};
+
+  // Surfaces
+  --mockr-bg: #{$dark-bg};
+  --mockr-surface: #{$dark-surface};
+  
+  // Borders
+  --mockr-border: #{$dark-border};
+  --mockr-border-light: #{$dark-border-light};
+
+  // Text
+  --mockr-text: #{$dark-text};
+  --mockr-text-muted: #{$dark-text-muted};
+  --mockr-text-subtle: #{$dark-text-subtle};
+  
+  // Semantic colors (same in dark mode)
+  --mockr-primary: #{$primary};
+  --mockr-danger: #{$danger};
+  --mockr-success: #{$success};
+  --mockr-warning: #{$warning};
+  --mockr-info: #{$info};
+
+  // Bootstrap border override
+  --bs-border-color: #{$dark-border};
+}
+
+// -----------------------------------------------------------------------------
+// Focus Style Reset - Remove Bootstrap's focus/active states
+// -----------------------------------------------------------------------------
+
+:root {
+  --bs-focus-ring-width: 0;
+  --bs-focus-ring-opacity: 0;
+  --bs-focus-ring-color: transparent;
+}
+
+// -----------------------------------------------------------------------------
+// Remove Bootstrap's valid state styling (green borders/icons)
+// -----------------------------------------------------------------------------
+
+.form-control.is-valid,
+.form-select.is-valid,
+.form-check-input.is-valid {
+  border-color: var(--bs-border-color) !important;
+  background-image: none !important;
+  
+  &:focus {
+    border-color: var(--bs-primary) !important;
+    box-shadow: none !important;
+  }
+}
+
+.was-validated .form-control:valid,
+.was-validated .form-select:valid,
+.was-validated .form-check-input:valid {
+  border-color: var(--bs-border-color) !important;
+  background-image: none !important;
+}
+
+// Remove focus ring/outline on all interactive elements
+*:focus,
+*:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+// Force buttons to return to normal state when not actively hovered
+.btn:not(:hover) {
+  color: revert-layer;
+  background-color: revert-layer;
+  border-color: revert-layer;
+}
+
+// Disable ALL button active/focus state styling
+.btn:focus,
+.btn:focus-visible,
+.btn.focus,
+.btn:active:focus,
+.btn:active.focus,
+.btn.active:focus,
+.btn.active.focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+// Override active state to match hover state (no darkening)
+.btn {
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: var(--bs-btn-hover-bg);
+  --bs-btn-active-border-color: var(--bs-btn-hover-border-color);
+  --bs-btn-active-shadow: none;
+}
+
+// Reset to normal when dragged off (not hovering)
+.btn:active:not(:hover),
+.btn.active:not(:hover) {
+  color: var(--bs-btn-color) !important;
+  background-color: var(--bs-btn-bg) !important;
+  border-color: var(--bs-btn-border-color) !important;
+}
+
+// -----------------------------------------------------------------------------
+// Base & Layout
+// -----------------------------------------------------------------------------
+
+body {
+  background-color: $light-bg;
+  min-height: 100vh;
+}
+
+[data-bs-theme="dark"] body {
+  background-color: $dark-bg;
+}
+
+.app-container {
+  max-width: 1600px;
+  padding-bottom: 6rem;
+}

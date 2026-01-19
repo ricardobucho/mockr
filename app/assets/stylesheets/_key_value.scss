@@ -2,14 +2,16 @@
 // Key-Value Editor Styles
 // =============================================================================
 
+@use 'variables' as *;
+
 .key-value-editor {
   border: 1px solid var(--mockr-border);
-  border-radius: 0.375rem;
+  border-radius: $radius;
   overflow: hidden;
   background-color: var(--mockr-surface);
 
   &.is-invalid {
-    border-color: #dc3545;
+    border-color: $danger;
   }
 }
 
@@ -55,11 +57,11 @@
   height: 28px;
   padding: 0;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: $radius-sm;
   background-color: transparent;
   color: var(--mockr-text-muted);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color $transition-fast, color $transition-fast;
 
   &:hover {
     background-color: var(--bs-gray-200);
@@ -144,8 +146,8 @@
   color: var(--mockr-text);
   background-color: var(--mockr-surface);
   border: 1px solid var(--mockr-border);
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease;
+  border-radius: $radius-sm;
+  transition: border-color $transition-fast;
 
   &:focus {
     outline: none;
@@ -179,16 +181,16 @@
   height: 28px;
   padding: 0;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: $radius-sm;
   background-color: transparent;
   color: var(--mockr-text-muted);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color $transition-fast, color $transition-fast;
   flex-shrink: 0;
 
   &:hover {
-    background-color: rgba(220, 53, 69, 0.1);
-    color: #dc3545;
+    background-color: $danger-10;
+    color: $danger;
   }
 
   i {

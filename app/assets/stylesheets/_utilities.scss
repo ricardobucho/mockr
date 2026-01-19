@@ -1,0 +1,183 @@
+// =============================================================================
+// Utilities & Overrides
+// =============================================================================
+
+@use 'variables' as *;
+
+// -----------------------------------------------------------------------------
+// Alerts
+// -----------------------------------------------------------------------------
+
+.alert {
+  border-radius: $radius-md;
+  font-size: 0.875rem;
+
+  &.alert-info-subtle {
+    background-color: $alert-info-bg;
+    border-color: $alert-info-border;
+    color: $alert-info-text;
+  }
+}
+
+[data-bs-theme="dark"] .alert.alert-info-subtle {
+  background-color: $alert-info-bg-dark;
+  border-color: $alert-info-border-dark;
+  color: $alert-info-text-dark;
+}
+
+// -----------------------------------------------------------------------------
+// Lists
+// -----------------------------------------------------------------------------
+
+.list-group-item {
+  border-color: var(--bs-gray-200);
+  padding: 0.875rem 1rem;
+
+  &:first-child {
+    border-top-left-radius: $radius-md;
+    border-top-right-radius: $radius-md;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: $radius-md;
+    border-bottom-right-radius: $radius-md;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Tooltips
+// -----------------------------------------------------------------------------
+
+.tooltip {
+  .tooltip-arrow {
+    display: none;
+  }
+
+  .tooltip-inner {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.625rem;
+    border-radius: $radius-sm;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Utility Classes
+// -----------------------------------------------------------------------------
+
+.text-mono {
+  font-family: $font-family-mono;
+}
+
+.bg-subtle {
+  background-color: var(--bs-gray-50);
+}
+
+[data-bs-theme="dark"] .bg-subtle {
+  background-color: $slate-900;
+}
+
+// -----------------------------------------------------------------------------
+// Dark Mode - Cards & Bootstrap Overrides
+// -----------------------------------------------------------------------------
+
+[data-bs-theme="dark"] {
+  // General card styling
+  .card {
+    background-color: $slate-800;
+    border-color: $slate-700;
+
+    .card-header {
+      background-color: $slate-900;
+      border-color: $slate-700;
+    }
+
+    .card-footer {
+      background-color: $slate-900;
+      border-color: $slate-700;
+    }
+  }
+
+  // List groups
+  .list-group-item {
+    background-color: $slate-800;
+    border-color: $slate-700;
+    color: $slate-100;
+  }
+
+  // Form controls
+  .form-control,
+  .form-select {
+    background-color: $slate-800;
+    border-color: $slate-700;
+    color: $slate-100;
+
+    &:focus {
+      background-color: $slate-800;
+      border-color: var(--bs-primary);
+      color: $slate-100;
+    }
+
+    &::placeholder {
+      color: $slate-500;
+    }
+  }
+
+  // Buttons
+  .btn-outline-secondary {
+    border-color: $slate-600;
+    color: $slate-400;
+
+    &:hover {
+      background-color: $slate-700;
+      border-color: $slate-600;
+      color: $slate-100;
+    }
+  }
+
+  // Code elements
+  code {
+    background-color: $slate-700;
+    color: $icon-code-pink;
+  }
+
+  // Dropdowns
+  .dropdown-menu {
+    background-color: $slate-800;
+    border-color: $slate-700;
+
+    .dropdown-item {
+      color: $slate-100;
+
+      &:hover,
+      &:focus {
+        background-color: $slate-700;
+        color: $slate-100;
+      }
+    }
+
+    .dropdown-divider {
+      border-color: $slate-700;
+    }
+  }
+
+  // Close button
+  .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+  }
+
+  // Text utilities
+  .text-muted {
+    color: $slate-400 !important;
+  }
+
+  // Form hint text
+  .form-text {
+    color: $slate-500;
+  }
+
+  // Select dropdown options
+  .form-select option {
+    background-color: $slate-800;
+    color: $slate-100;
+  }
+}

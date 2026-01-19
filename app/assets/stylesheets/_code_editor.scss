@@ -2,6 +2,8 @@
 // Code Editor Styles (CodeMirror)
 // =============================================================================
 
+@use 'variables' as *;
+
 // Import CodeMirror base styles (from node_modules via sass --load-path)
 @use "codemirror/lib/codemirror.css";
 @use "codemirror/theme/material-darker.css";
@@ -12,12 +14,12 @@
 
 .code-editor-wrapper {
   border: 1px solid var(--mockr-border);
-  border-radius: 0.375rem;
+  border-radius: $radius;
   overflow: hidden;
   background-color: var(--mockr-surface);
 
   &.is-invalid {
-    border-color: #dc3545;
+    border-color: $danger;
   }
 }
 
@@ -26,7 +28,7 @@
 // -----------------------------------------------------------------------------
 
 .CodeMirror {
-  font-family: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Mono", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Consolas", "Courier New", monospace;
+  font-family: $font-family-mono;
   font-size: 0.8125rem;
   line-height: 1.5;
   background-color: var(--mockr-surface);
@@ -53,7 +55,7 @@
   }
 
   .CodeMirror-selected {
-    background-color: rgba(80, 100, 168, 0.2);
+    background-color: $primary-20;
   }
 }
 
@@ -64,28 +66,28 @@
   }
 
   .CodeMirror {
-    background-color: #1e293b;
-    color: #e2e8f0;
+    background-color: $slate-800;
+    color: $slate-200;
 
     .CodeMirror-gutters {
-      background-color: #0f172a;
+      background-color: $slate-900;
       border-right-color: var(--mockr-border);
     }
 
     .CodeMirror-linenumber {
-      color: #64748b;
+      color: $slate-500;
     }
 
     .CodeMirror-activeline-background {
-      background-color: #334155;
+      background-color: $slate-700;
     }
 
     .CodeMirror-cursor {
-      border-left-color: #f1f5f9;
+      border-left-color: $slate-100;
     }
 
     .CodeMirror-selected {
-      background-color: rgba(80, 100, 168, 0.4);
+      background-color: $primary-40;
     }
   }
 }
@@ -96,35 +98,35 @@
 
 .cm-s-default {
   .cm-string {
-    color: #16a34a;
+    color: $syntax-string;
   }
 
   .cm-number {
-    color: #2563eb;
+    color: $syntax-number;
   }
 
   .cm-keyword {
-    color: #7c3aed;
+    color: $syntax-keyword;
   }
 
   .cm-atom {
-    color: #dc2626;
+    color: $syntax-atom;
   }
 
   .cm-property {
-    color: #0891b2;
+    color: $syntax-property;
   }
 
   .cm-tag {
-    color: #dc2626;
+    color: $syntax-tag;
   }
 
   .cm-attribute {
-    color: #7c3aed;
+    color: $syntax-attribute;
   }
 
   .cm-comment {
-    color: #64748b;
+    color: $syntax-comment;
     font-style: italic;
   }
 }

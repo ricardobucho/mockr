@@ -2,12 +2,14 @@
 // CodeMirror Viewer Styles (for read-only code display in modals)
 // -----------------------------------------------------------------------------
 
+@use 'variables' as *;
+
 // Code viewer in modals - add border since it doesn't have a wrapper
 .modal-body [data-controller="code-viewer"] .CodeMirror {
   border: 1px solid var(--bs-gray-300);
-  border-radius: 0.375rem;
+  border-radius: $radius;
 }
 
 [data-bs-theme="dark"] .modal-body [data-controller="code-viewer"] .CodeMirror {
-  border-color: #334155;
+  border-color: $slate-700;
 }
