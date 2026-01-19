@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "drawer" do %>
-  <%= render Manage::DrawerComponent.new(title: "Edit Index", subtitle: @index.name) do %>
+  <%= render Manage::DrawerComponent.new(title: t("manage.indices.edit.title"), subtitle: @index.name) do %>
     <%= render "form", index: @index, request: @request %>
   <% end %>
 <% end %>

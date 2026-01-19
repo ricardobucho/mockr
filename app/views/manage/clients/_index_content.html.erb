@@ -13,15 +13,15 @@
         </div>
         <div class="client-list-item-actions">
           <div class="client-list-item-stats">
-            <span class="client-list-item-stat" data-bs-toggle="tooltip" data-bs-title="Requests">
+            <span class="client-list-item-stat" data-bs-toggle="tooltip" data-bs-title="<%= t("manage.tooltips.requests") %>">
               <i class="bi bi-signpost-split"></i>
               <%= client.requests.size %>
             </span>
-            <span class="client-list-item-stat" data-bs-toggle="tooltip" data-bs-title="Indices">
+            <span class="client-list-item-stat" data-bs-toggle="tooltip" data-bs-title="<%= t("manage.tooltips.indices") %>">
               <i class="bi bi-collection"></i>
               <%= client.indices.size %>
             </span>
-            <span class="client-list-item-stat" data-bs-toggle="tooltip" data-bs-title="Responses">
+            <span class="client-list-item-stat" data-bs-toggle="tooltip" data-bs-title="<%= t("manage.tooltips.responses") %>">
               <i class="bi bi-file-earmark-code"></i>
               <%= client.responses.size %>
             </span>
@@ -35,7 +35,7 @@
 
     <% if clients.empty? %>
       <div class="drawer-nested-empty">
-        No clients found.
+        <%= t("manage.clients.index.empty") %>
       </div>
     <% end %>
   </div>
