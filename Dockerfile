@@ -17,7 +17,7 @@ RUN apt-get update -qq \
 # Install Node.js using NVM
 COPY .nvmrc ./
 ENV NVM_VERSION v${NVM_VERSION:-0.39.3}
-ENV NODE_VERSION v${NODE_VERSION:-20.18.1}
+ENV NODE_VERSION v${NODE_VERSION:-22.22.0}
 ENV NVM_DIR /usr/local/nvm
 RUN mkdir $NVM_DIR
 
