@@ -23,7 +23,6 @@ module Manage
             render turbo_stream: [
               render_toast(resource_type: "User", resource_name: @user.provider_username, action: :updated),
               turbo_stream.update("drawer", partial: "manage/users/drawer_content", locals: { users: @users }),
-              close_stacked_drawer,
             ]
           end
           format.html { redirect_to manage_users_path, notice: t("flash.manage.users.updated") }

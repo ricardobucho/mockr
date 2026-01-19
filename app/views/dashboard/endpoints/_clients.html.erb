@@ -28,15 +28,10 @@
       </div>
 
       <% if current_user.manager? %>
-        <div class="d-flex gap-2">
-          <%= link_to new_manage_client_path, class: "btn-create", data: { turbo_frame: "drawer" } do %>
-            <i class="bi bi-plus-lg me-1"></i>Client
-          <% end %>
-          <% first_client = clients.first %>
-          <%= link_to new_manage_client_request_path(first_client), class: "btn-create", data: { turbo_frame: "drawer", client_tabs_target: "addRequestBtn" } do %>
-            <i class="bi bi-plus-lg me-1"></i>Request
-          <% end %>
-        </div>
+        <% first_client = clients.first %>
+        <%= link_to new_manage_client_request_path(first_client), class: "btn-create", data: { turbo_frame: "drawer", client_tabs_target: "addRequestBtn" } do %>
+          <i class="bi bi-plus-lg me-1"></i>Request
+        <% end %>
       <% end %>
     </div>
 
@@ -62,7 +57,7 @@
             <% if client.requests.none? && !searching %>
               <div class="col">
                 <div class="empty-state">
-                  <i class="bi bi-inbox empty-state-icon"></i>
+                  <i class="bi bi-signpost-split empty-state-icon"></i>
                   <div class="empty-state-title">No requests yet</div>
                   <p>There are no requests for this client.</p>
                 </div>
@@ -84,9 +79,14 @@
 
   <% if clients.none? && !searching %>
     <div class="empty-state">
-      <i class="bi bi-layers empty-state-icon"></i>
+      <i class="bi bi-ui-radios-grid empty-state-icon"></i>
       <div class="empty-state-title">No clients yet</div>
       <p>Create your first client to get started.</p>
+      <% if current_user.manager? %>
+        <%= link_to new_manage_client_path, class: "empty-state-action", data: { turbo_frame: "drawer" } do %>
+          <i class="bi bi-plus-lg"></i>Add Client
+        <% end %>
+      <% end %>
     </div>
   <% end %>
 </turbo-frame>

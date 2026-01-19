@@ -4,6 +4,11 @@ module Manage
   class ClientsController < BaseController
     before_action :set_client, only: %i[edit update destroy delete]
 
+    def index
+      @clients = Client.includes(requests: %i[indices responses]).order(:name)
+      authorize! Client
+    end
+
     def new
       @client = Client.new
       authorize! @client
@@ -42,6 +47,7 @@ module Manage
             render turbo_stream: [
               render_toast(resource_type: "Client", resource_name: @client.name, action: :updated),
               refresh_clients_list,
+              close_drawer,
             ]
           end
           format.html { redirect_to root_path, notice: t("flash.manage.clients.updated") }

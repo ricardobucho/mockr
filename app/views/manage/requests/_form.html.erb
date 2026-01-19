@@ -24,7 +24,7 @@
         <div class="drawer-tag-cloud">
           <% if request.responses.any? %>
             <% request.responses.order(:name).each do |response| %>
-              <%= link_to edit_manage_response_path(response, stacked: true), class: "drawer-tag", data: { turbo_frame: "drawer-stacked" } do %>
+              <%= link_to edit_manage_response_path(response), class: "drawer-tag", data: { turbo_frame: "drawer" } do %>
                 <span><%= response.name %></span>
                 <span class="drawer-tag-status"><%= response.status %></span>
               <% end %>
@@ -32,7 +32,7 @@
           <% else %>
             <span class="drawer-tag-empty">No responses yet</span>
           <% end %>
-          <%= link_to new_manage_request_response_path(request), class: "drawer-tag-add", data: { turbo_frame: "drawer-stacked" } do %>
+          <%= link_to new_manage_request_response_path(request), class: "drawer-tag-add", data: { turbo_frame: "drawer" } do %>
             <i class="bi bi-plus"></i>
             <span>Add</span>
           <% end %>
@@ -48,7 +48,7 @@
         <div class="drawer-tag-cloud">
           <% if request.indices.any? %>
             <% request.indices.order(:name).each do |index| %>
-              <%= link_to edit_manage_index_path(index, stacked: true), class: "drawer-tag", data: { turbo_frame: "drawer-stacked" } do %>
+              <%= link_to edit_manage_index_path(index), class: "drawer-tag", data: { turbo_frame: "drawer" } do %>
                 <span><%= index.name %></span>
                 <span class="drawer-tag-status"><%= index.method %></span>
               <% end %>
@@ -56,7 +56,7 @@
           <% else %>
             <span class="drawer-tag-empty">No indices yet</span>
           <% end %>
-          <%= link_to new_manage_request_index_path(request), class: "drawer-tag-add", data: { turbo_frame: "drawer-stacked" } do %>
+          <%= link_to new_manage_request_index_path(request), class: "drawer-tag-add", data: { turbo_frame: "drawer" } do %>
             <i class="bi bi-plus"></i>
             <span>Add</span>
           <% end %>
@@ -75,7 +75,7 @@
       <% end %>
     </div>
     <div class="drawer-form-actions">
-      <button type="button" class="btn btn-action-secondary" data-action="drawer#close">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#back">
         Cancel
       </button>
       <%= f.submit request.persisted? ? "Save Changes" : "Create Request", class: "btn btn-action-primary" %>

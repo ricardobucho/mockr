@@ -22,13 +22,11 @@ module Manage
       if @response.save
         respond_to do |format|
           format.turbo_stream do
-            streams = [
+            render turbo_stream: [
               render_toast(resource_type: "Response", resource_name: @response.name, action: :created),
               refresh_clients_list,
-              close_stacked_drawer,
+              close_drawer,
             ]
-            streams << refresh_parent_drawer(@request) if from_stacked_drawer?
-            render turbo_stream: streams
           end
           format.html { redirect_to root_path, notice: t("flash.manage.responses.created") }
         end
@@ -39,17 +37,15 @@ module Manage
 
     def update
       authorize! @response
-      @request = @response.request
 
       if @response.update(response_params)
         respond_to do |format|
           format.turbo_stream do
-            streams = [
+            render turbo_stream: [
               render_toast(resource_type: "Response", resource_name: @response.name, action: :updated),
               refresh_clients_list,
+              close_drawer,
             ]
-            streams << refresh_parent_drawer(@request) if from_stacked_drawer?
-            render turbo_stream: streams
           end
           format.html { redirect_to root_path, notice: t("flash.manage.responses.updated") }
         end
@@ -66,19 +62,16 @@ module Manage
     def destroy
       authorize! @response
       response_name = @response.name
-      @request = @response.request
       @response.destroy
 
       respond_to do |format|
         format.turbo_stream do
-          streams = [
+          render turbo_stream: [
             render_toast(resource_type: "Response", resource_name: response_name, action: :deleted),
             refresh_clients_list,
             close_modal,
-            close_stacked_drawer,
+            close_drawer,
           ]
-          streams << refresh_parent_drawer(@request) if from_stacked_drawer?
-          render turbo_stream: streams
         end
         format.html { redirect_to root_path, notice: t("flash.manage.responses.deleted") }
       end

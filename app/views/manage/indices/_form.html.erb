@@ -1,4 +1,3 @@
-<% stacked = local_assigns.fetch(:stacked, false) %>
 <%= simple_form_for index, url: index.persisted? ? manage_index_path(index) : manage_request_indices_path(request), html: { class: "drawer-form" } do |f| %>
   <div class="drawer-form-body">
     <div class="drawer-section">
@@ -75,7 +74,7 @@
       <% end %>
     </div>
     <div class="drawer-form-actions">
-      <button type="button" class="btn btn-action-secondary" data-action="drawer#<%= stacked ? 'closeStacked' : 'close' %>">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#back">
         Cancel
       </button>
       <%= f.submit index.persisted? ? "Save Changes" : "Create Index", class: "btn btn-action-primary" %>

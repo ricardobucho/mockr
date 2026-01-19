@@ -33,3 +33,47 @@
     color: $slate-400;
   }
 }
+
+// -----------------------------------------------------------------------------
+// Empty State Action Button
+// -----------------------------------------------------------------------------
+
+.empty-state-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--bs-gray-600);
+  background-color: var(--bs-gray-300);
+  border: none;
+  border-radius: $radius;
+  text-decoration: none;
+  box-shadow: 0 1px 2px $black-5;
+  transition: all $transition-fast;
+
+  &:hover,
+  &:active {
+    color: $primary;
+    background-color: $primary-15;
+  }
+
+  i {
+    font-size: 0.875rem;
+  }
+}
+
+[data-bs-theme="dark"] .empty-state-action {
+  color: $slate-300;
+  background-color: $slate-600;
+  box-shadow: 0 1px 2px $black-30;
+
+  &:hover,
+  &:active {
+    color: $primary-light;
+    background-color: $primary-20;
+  }
+}

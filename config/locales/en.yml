@@ -26,3 +26,37 @@ en:
         deleted: "Response deleted successfully"
       users:
         updated: "User updated successfully"
+  manage:
+    common:
+      new: "New"
+      edit: "Edit"
+      save: "Save"
+      cancel: "Cancel"
+      delete: "Delete"
+    tooltips:
+      requests: "Requests"
+      indices: "Indices"
+      responses: "Responses"
+    clients:
+      index:
+        title: "Manage Clients"
+        empty: "Create your first client to see it here."
+      new:
+        title: "New Client"
+      edit:
+        title: "Edit Client"
+    requests:
+      new:
+        title: "New Request"
+      edit:
+        title: "Edit Request"
+    indices:
+      new:
+        title: "New Index"
+      edit:
+        title: "Edit Index"
+    responses:
+      new:
+        title: "New Response"
+      edit:
+        title: "Edit Response"

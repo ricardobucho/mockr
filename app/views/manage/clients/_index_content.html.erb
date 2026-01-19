@@ -1,0 +1,42 @@
+<div class="drawer-body">
+  <div class="client-list">
+    <% clients.each do |client| %>
+      <div class="client-list-item">
+        <div class="client-list-item-info">
+          <div class="client-list-item-icon">
+            <i class="bi bi-ui-radios-grid"></i>
+          </div>
+          <div class="client-list-item-details">
+            <span class="client-list-item-name"><%= client.name %></span>
+            <span class="client-list-item-slug"><%= client.slug %></span>
+          </div>
+        </div>
+        <div class="client-list-item-actions">
+          <div class="client-list-item-stats">
+            <span class="client-list-item-stat" data-bs-toggle="tooltip" data-bs-title="<%= t("manage.tooltips.requests") %>">
+              <i class="bi bi-signpost-split"></i>
+              <%= client.requests.size %>
+            </span>
+            <span class="client-list-item-stat" data-bs-toggle="tooltip" data-bs-title="<%= t("manage.tooltips.indices") %>">
+              <i class="bi bi-collection"></i>
+              <%= client.indices.size %>
+            </span>
+            <span class="client-list-item-stat" data-bs-toggle="tooltip" data-bs-title="<%= t("manage.tooltips.responses") %>">
+              <i class="bi bi-file-earmark-code"></i>
+              <%= client.responses.size %>
+            </span>
+          </div>
+          <%= link_to edit_manage_client_path(client), class: "btn btn-sm btn-outline-secondary", data: { turbo_frame: "drawer" } do %>
+            <i class="bi bi-pencil"></i>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if clients.empty? %>
+      <div class="drawer-nested-empty">
+        <%= t("manage.clients.index.empty") %>
+      </div>
+    <% end %>
+  </div>
+</div>

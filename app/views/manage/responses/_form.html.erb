@@ -1,4 +1,3 @@
-<% stacked = local_assigns.fetch(:stacked, false) %>
 <%= simple_form_for response, url: response.persisted? ? manage_response_path(response) : manage_request_responses_path(request), html: { class: "drawer-form" } do |f| %>
   <div class="drawer-form-body">
     <div class="drawer-section">
@@ -73,7 +72,7 @@
       <% end %>
     </div>
     <div class="drawer-form-actions">
-      <button type="button" class="btn btn-action-secondary" data-action="drawer#<%= stacked ? 'closeStacked' : 'close' %>">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#back">
         Cancel
       </button>
       <%= f.submit response.persisted? ? "Save Changes" : "Create Response", class: "btn btn-action-primary" %>

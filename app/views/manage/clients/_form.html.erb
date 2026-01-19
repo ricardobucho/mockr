@@ -7,6 +7,32 @@
       <%= f.input :slug, required: true, placeholder: "example-api", hint: "URL-friendly identifier. Used in endpoint paths." %>
       <%= f.input :description, as: :text, input_html: { rows: 3 } %>
     </div>
+
+    <% if client.persisted? %>
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Requests</h3>
+        <p class="text-muted small mb-3">
+          API endpoints for this client. Each request can have multiple responses and indices.
+        </p>
+
+        <div class="drawer-tag-cloud">
+          <% if client.requests.any? %>
+            <% client.requests.order(:name).each do |request| %>
+              <%= link_to edit_manage_request_path(request), class: "drawer-tag", data: { turbo_frame: "drawer" } do %>
+                <span><%= request.name %></span>
+                <span class="drawer-tag-status"><%= request.method %></span>
+              <% end %>
+            <% end %>
+          <% else %>
+            <span class="drawer-tag-empty">No requests yet</span>
+          <% end %>
+          <%= link_to new_manage_client_request_path(client), class: "drawer-tag-add", data: { turbo_frame: "drawer" } do %>
+            <i class="bi bi-plus"></i>
+            <span>Add</span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <div class="drawer-form-footer">
@@ -19,7 +45,7 @@
       <% end %>
     </div>
     <div class="drawer-form-actions">
-      <button type="button" class="btn btn-action-secondary" data-action="drawer#close">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#back">
         Cancel
       </button>
       <%= f.submit client.persisted? ? "Save Changes" : "Create Client", class: "btn btn-action-primary" %>

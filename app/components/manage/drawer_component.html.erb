@@ -1,11 +1,9 @@
 <div class="drawer-content">
   <div class="drawer-header">
     <div class="drawer-header-left">
-      <% if back_link? %>
-        <%= link_to back_url, class: "drawer-back-btn", data: { turbo_frame: back_frame || "drawer" } do %>
-          <i class="bi bi-arrow-left"></i>
-        <% end %>
-      <% end %>
+      <button type="button" class="drawer-back-btn" data-action="drawer#back">
+        <i class="bi bi-arrow-left"></i>
+      </button>
       <div class="drawer-title-group">
         <h2 class="drawer-title"><%= title %></h2>
         <% if subtitle.present? %>
@@ -13,9 +11,14 @@
         <% end %>
       </div>
     </div>
-    <button type="button" class="drawer-close-btn" data-action="drawer#close">
-      <i class="bi bi-x-lg"></i>
-    </button>
+    <div class="drawer-header-right">
+      <% if header_actions? %>
+        <%= header_actions %>
+      <% end %>
+      <button type="button" class="drawer-close-btn" data-action="drawer#close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
   </div>
   <%= content %>
 </div>

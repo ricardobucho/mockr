@@ -235,7 +235,7 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.8125rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem 0.625rem;
     border-radius: $radius-sm;
     color: var(--bs-gray-600);
     transition: all $transition-fast;
@@ -251,7 +251,7 @@
     }
 
     i {
-      font-size: 1rem;
+      font-size: 0.75rem;
       color: var(--bs-gray-500);
     }
   }

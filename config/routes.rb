@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   # Manage namespace for admin CRUD operations
   namespace :manage do
-    resources :clients, only: %i[new create edit update destroy] do
+    resources :clients, only: %i[index new create edit update destroy] do
       member { get :delete }
       resources :requests, only: %i[new create]
     end

@@ -75,6 +75,12 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
+                <%= link_to manage_clients_path, class: "dropdown-item", data: { turbo_frame: "drawer" } do %>
+                  <i class="bi bi-ui-radios-grid"></i>
+                  <span>Clients</span>
+                <% end %>
+              </li>
+              <li>
                 <%= link_to manage_users_path, class: "dropdown-item", data: { turbo_frame: "drawer" } do %>
                   <i class="bi bi-people"></i>
                   <span>Users</span>
