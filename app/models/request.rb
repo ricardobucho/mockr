@@ -5,7 +5,7 @@ class Request < ApplicationRecord
 
   belongs_to :client
 
-  has_many :indices, -> { order(:name) }, dependent: :nullify, inverse_of: :request
+  has_many :indices, -> { order(:name) }, dependent: :destroy, inverse_of: :request
   has_many :responses, -> { order(:name) }, dependent: :destroy, inverse_of: :request
   has_many :logs, dependent: :destroy
 

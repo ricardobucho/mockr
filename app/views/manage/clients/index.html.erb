@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "drawer" do %>
+  <%= render Manage::DrawerComponent.new(title: "Manage Clients") do %>
+    <%= render "index_content", clients: @clients %>
+  <% end %>
+<% end %>

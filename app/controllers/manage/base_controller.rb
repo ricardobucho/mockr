@@ -49,6 +49,11 @@ module Manage
       turbo_stream.replace("drawer", partial: "manage/requests/edit_drawer", locals: { request: request })
     end
 
+    def refresh_clients_drawer
+      turbo_stream.update("drawer", partial: "manage/clients/drawer_content",
+                                    locals: { clients: Client.includes(requests: %i[indices responses]).order(:name) })
+    end
+
     def from_stacked_drawer?
       turbo_frame_request_id == "drawer-stacked"
     end

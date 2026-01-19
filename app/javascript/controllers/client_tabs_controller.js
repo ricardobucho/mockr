@@ -25,9 +25,9 @@ export default class extends Controller {
   }
 
   updateAddRequestButton(clientId) {
-    const btn = document.querySelector('[data-client-tabs-target="addRequestBtn"]')
-    if (btn) {
-      btn.href = `/manage/clients/${clientId}/requests/new`
+    const addRequestBtn = document.querySelector('[data-client-tabs-target="addRequestBtn"]')
+    if (addRequestBtn) {
+      addRequestBtn.href = `/manage/clients/${clientId}/requests/new`
     }
   }
 

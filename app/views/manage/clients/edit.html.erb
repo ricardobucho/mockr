@@ -1,5 +1,13 @@
-<%= turbo_frame_tag "drawer" do %>
-  <%= render Manage::DrawerComponent.new(title: "Edit Client", subtitle: @client.name) do %>
-    <%= render "form", client: @client %>
+<% if turbo_frame_request_id == "drawer-stacked" %>
+  <%= turbo_frame_tag "drawer-stacked" do %>
+    <%= render Manage::StackedDrawerComponent.new(title: "Edit Client", subtitle: @client.name) do %>
+      <%= render "form", client: @client %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= turbo_frame_tag "drawer" do %>
+    <%= render Manage::DrawerComponent.new(title: "Edit Client", subtitle: @client.name) do %>
+      <%= render "form", client: @client %>
+    <% end %>
   <% end %>
 <% end %>
