@@ -5,7 +5,7 @@ class Index < ApplicationRecord
 
   belongs_to :request
 
-  enum method: Request.methods
+  enum :method, Request.methods
 
   validates :name, presence: true
   validates :method, presence: true

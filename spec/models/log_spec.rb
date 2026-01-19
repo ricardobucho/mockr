@@ -2,10 +2,10 @@
 
 require "rails_helper"
 
-RSpec.describe Log, type: :model do
-  subject { FactoryBot.build(:log) }
+RSpec.describe Log do
+  subject { build(:log) }
 
   describe "associations" do
-    it { should belong_to(:request) }
+    it { is_expected.to belong_to(:request) }
   end
 end

@@ -47,3 +47,6 @@
 !/app/assets/builds/.keep
 
 /node_modules
+
+# Rubocop remote config cache
+.rubocop-remote-*

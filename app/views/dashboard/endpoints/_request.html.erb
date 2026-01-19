@@ -1,65 +1,40 @@
-<div class="col mb-3">
-  <div class="card">
+<div class="col">
+  <div class="card endpoint-card">
     <div class="card-header">
-      <div class="row">
-        <div class="col">
-          <i
-            class="bi bi-tags-fill me-1"
-            data-bs-toggle="tooltip"
-            data-bs-title="Request"
-          ></i>
-          <%= request.name %>
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-signpost-split text-muted"></i>
+          <span class="card-title"><%= request.name %></span>
         </div>
-        <div class="col-auto">
+        <div class="d-flex align-items-center gap-1">
           <% if current_user.manager? %>
-            <div class="btn-group align-middle" role="group">
-              <a
-                href="<%= avo.resources_request_path(request.id) %>"
-                class="btn btn-sm btn-outline-secondary"
-                target="_blank"
-                data-bs-toggle="tooltip"
-                data-bs-title="View in Manager"
-              >
-                <i class="bi bi-eye"></i>
-              </a>
-              <a
-                href="<%= avo.edit_resources_request_path(request.id) %>"
-                class="btn btn-sm btn-outline-secondary"
-                target="_blank"
-                data-bs-toggle="tooltip"
-                data-bs-title="Edit in Manager"
-              >
-                <i class="bi bi-pencil"></i>
-              </a>
-            </div>
+            <%= link_to edit_manage_request_path(request), class: "btn btn-action btn-outline-secondary", data: { turbo_frame: "drawer", bs_toggle: "tooltip", bs_title: "Edit" } do %>
+              <i class="bi bi-pencil"></i>
+            <% end %>
           <% end %>
-          <div class="btn-group align-middle" role="group">
-            <a
-              href="<%= show_request_path(request.id) %>"
-              class="btn btn-sm btn-success text-white"
-              data-bs-toggle="tooltip"
-              data-bs-title="Logs"
-              data-turbo-frame="modal"
-            >
-              <i class="bi bi-journals"></i>
-            </a>
-          </div>
+          <a
+            href="<%= show_request_path(request.id) %>"
+            class="btn btn-action btn-outline-secondary"
+            data-bs-toggle="tooltip"
+            data-bs-title="View Logs"
+            data-turbo-frame="drawer"
+          >
+            <i class="bi bi-clock-history"></i>
+          </a>
         </div>
       </div>
     </div>
     <div class="card-body">
-      <span class="badge bg-<%= method_class_map[request.method] %> align-middle">
-        <%= request.method %>
-      </span>
-      <span class="fst-italic align-middle">
+      <span class="method-badge method-<%= request.method.downcase %>"><%= request.method %></span>
+      <span class="endpoint-path ms-2">
         /<%= client.slug %><%= request.path unless request.path == "/" %>
       </span>
     </div>
-    <ul class="list-group list-group-flush">
-      <% if request.indices.any? %>
-        <li class="list-group-item pt-3 pb-0">
-          <div class="row row-cols-1 row-cols-xl-2">
-            <% request.indices.each do |index| %>
+    <% if request.indices.any? || request.responses.any? %>
+      <div class="card-body border-top bg-subtle pt-3">
+        <% if request.indices.any? %>
+          <div class="row row-cols-1 row-cols-xl-2 g-2 mb-<%= request.responses.any? ? 3 : 0 %>">
+            <% request.indices.sort_by(&:name).each do |index| %>
               <%=
                 render(
                   "dashboard/endpoints/index",
@@ -70,12 +45,10 @@
               %>
             <% end %>
           </div>
-        </li>
-      <% end %>
-      <% if request.responses.any? %>
-        <li class="list-group-item pt-3 pb-0">
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
-            <% request.responses.each do |response| %>
+        <% end %>
+        <% if request.responses.any? %>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-2">
+            <% request.responses.sort_by(&:name).each do |response| %>
               <%=
                 render(
                   "dashboard/endpoints/response",
@@ -86,8 +59,8 @@
               %>
             <% end %>
           </div>
-        </li>
-      <% end %>
-    </ul>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

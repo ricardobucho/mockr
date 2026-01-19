@@ -31,23 +31,28 @@ class EndpointsController < ActionController::Base
   private
 
   def user_token
-    request.headers["Authorization"]&.split(" ")&.last
+    request.headers["Authorization"]&.split&.last
   end
 
   def user
-    @user ||= User.find_by(token: user_token)
+    return @user if defined?(@user)
+
+    @user = User.find_by(token: user_token)
   end
 
   def client
-    @client ||= Client.find_by(slug: request.path_parameters[:client])
+    return @client if defined?(@client)
+
+    @client = Client.find_by(slug: request.path_parameters[:client])
   end
 
   def client_index
-    @client_index ||=
-      client.indices.find_by(
-        path: "/#{request.path_parameters[:path]}",
-        method: request.method.downcase,
-      )
+    return @client_index if defined?(@client_index)
+
+    @client_index = client.indices.find_by(
+      path: "/#{request.path_parameters[:path]}",
+      method: request.method.downcase,
+    )
   end
 
   def client_request

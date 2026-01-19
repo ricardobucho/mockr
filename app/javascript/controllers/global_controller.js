@@ -2,31 +2,48 @@ import { Controller } from "@hotwired/stimulus";
 import * as bootstrap from "bootstrap";
 
 export default class extends Controller {
-  static values = { tooltipNodes: { type: Array, default: [] } };
-
   connect() {
-    document.addEventListener(
-      "turbo:frame-load",
-      this.enableTooltips.bind(this)
-    );
+    // Enable tooltips on initial load (with small delay for turbo)
+    setTimeout(() => this.enableTooltips(), 100);
+    
+    // Enable tooltips when turbo frames load
+    document.addEventListener("turbo:frame-load", this.handleTurboLoad.bind(this));
+    
+    // Enable tooltips after turbo renders (for full page navigations)
+    document.addEventListener("turbo:render", this.handleTurboLoad.bind(this));
+    
+    // Also listen for turbo:load for initial page loads
+    document.addEventListener("turbo:load", this.handleTurboLoad.bind(this));
+    
+    // Enable tooltips after turbo streams (form submissions that return streams)
+    document.addEventListener("turbo:before-stream-render", (event) => {
+      // Schedule tooltip init after the stream render completes
+      setTimeout(() => this.enableTooltips(), 100);
+    });
+  }
+
+  handleTurboLoad() {
+    // Use setTimeout to ensure DOM is fully updated
+    setTimeout(() => this.enableTooltips(), 50);
   }
 
   enableTooltips() {
-    const documentTooltipNodes = document.querySelectorAll(
-      '[data-bs-toggle="tooltip"]'
-    );
-
-    const tooltipNodes = [...documentTooltipNodes].filter(
-      (tooltipNode) => !this.tooltipNodesValue.includes(tooltipNode)
-    );
-
-    this.tooltipNodesValue.push(...tooltipNodes);
-
-    tooltipNodes.map(
-      (tooltipNode) =>
-        new bootstrap.Tooltip(tooltipNode, {
-          trigger: "hover",
-        })
-    );
+    // Standard Bootstrap tooltips
+    const tooltipNodes = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipNodes.forEach((node) => {
+      if (bootstrap.Tooltip.getInstance(node)) return;
+      new bootstrap.Tooltip(node, { trigger: "hover" });
+    });
+    
+    // Custom tooltips for elements that already use data-bs-toggle for something else
+    const customTooltipNodes = document.querySelectorAll('[data-tooltip]');
+    customTooltipNodes.forEach((node) => {
+      if (bootstrap.Tooltip.getInstance(node)) return;
+      new bootstrap.Tooltip(node, {
+        trigger: "hover",
+        title: node.getAttribute("data-tooltip"),
+        placement: node.getAttribute("data-tooltip-placement") || "top",
+      });
+    });
   }
 }

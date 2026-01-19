@@ -1,0 +1,52 @@
+// =============================================================================
+// Modals Component
+// =============================================================================
+
+@use '../variables' as *;
+
+// -----------------------------------------------------------------------------
+// Modal Styling
+// -----------------------------------------------------------------------------
+
+.modal-content {
+  border: 1px solid var(--bs-gray-300);
+  border-radius: $radius-md;
+}
+
+.modal-header {
+  background-color: var(--bs-gray-50);
+  border-bottom: 1px solid var(--bs-gray-300);
+  border-radius: $radius-md $radius-md 0 0;
+
+  .modal-title {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  border-top: 1px solid var(--bs-gray-300);
+  background-color: var(--bs-gray-50);
+  border-radius: 0 0 $radius-md $radius-md;
+}
+
+[data-bs-theme="dark"] {
+  .modal-content {
+    background-color: $slate-800;
+    border-color: $slate-700;
+  }
+
+  .modal-header {
+    background-color: $slate-900;
+    border-color: $slate-700;
+  }
+
+  .modal-footer {
+    background-color: $slate-900;
+    border-color: $slate-700;
+  }
+}

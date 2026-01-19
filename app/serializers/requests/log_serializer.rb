@@ -7,6 +7,7 @@ module Requests
       :data,
       :created_at,
       :created_at_formatted,
+      :created_at_ago,
       :request_user_agent,
       :request_user_agent?,
       :request_ip,
@@ -30,6 +31,7 @@ module Requests
     )
 
     def created_at_formatted = object.created_at.strftime("%Y-%m-%d %H:%M:%S %Z")
+    def created_at_ago = ActionController::Base.helpers.time_ago_in_words(object.created_at)
 
     def request_user_agent = object.data.dig("request", "user_agent")
     def request_user_agent? = request_user_agent.present?

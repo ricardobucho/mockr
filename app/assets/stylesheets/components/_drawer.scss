@@ -1,0 +1,807 @@
+// =============================================================================
+// Drawer Component Styles
+// =============================================================================
+
+@use '../variables' as *;
+
+// Prevent body scroll when drawer is open
+body.drawer-open {
+  overflow: hidden;
+}
+
+// -----------------------------------------------------------------------------
+// Drawer Container
+// -----------------------------------------------------------------------------
+
+.drawer-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1050;
+  pointer-events: none;
+}
+
+// -----------------------------------------------------------------------------
+// Backdrop
+// -----------------------------------------------------------------------------
+
+.drawer-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $black-50;
+  opacity: 0;
+  transition: opacity $transition-slow;
+  pointer-events: none;
+
+  &.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+[data-bs-theme="dark"] .drawer-backdrop {
+  background-color: $black-70;
+}
+
+// -----------------------------------------------------------------------------
+// Drawer Panel
+// -----------------------------------------------------------------------------
+
+.drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: $drawer-width;
+  max-width: $drawer-max-width;
+  background-color: $light-bg;
+  box-shadow: none;
+  transform: translateX(100%);
+  transition: transform $transition-slow, box-shadow $transition-slow, visibility 0s linear 0.3s;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  visibility: hidden;
+
+  &.open {
+    transform: translateX(0);
+    box-shadow: -4px 0 24px $black-15;
+    pointer-events: auto;
+    visibility: visible;
+    transition: transform $transition-slow, box-shadow $transition-slow, visibility 0s linear 0s;
+  }
+}
+
+[data-bs-theme="dark"] .drawer-panel {
+  background-color: $dark-bg;
+}
+
+[data-bs-theme="dark"] .drawer-panel.open {
+  box-shadow: -4px 0 24px $black-40;
+}
+
+// Stacked drawer - slightly narrower with peek effect
+.drawer-panel-stacked {
+  width: calc(#{$drawer-width} - #{$drawer-stacked-offset});
+  max-width: calc(#{$drawer-max-width} - #{$drawer-stacked-offset});
+  z-index: 1;
+
+  &.open {
+    box-shadow: -8px 0 32px $black-20;
+  }
+}
+
+[data-bs-theme="dark"] .drawer-panel-stacked.open {
+  box-shadow: -8px 0 32px $black-50;
+}
+
+// -----------------------------------------------------------------------------
+// Drawer Content Structure
+// -----------------------------------------------------------------------------
+
+// Turbo frame must fill the drawer panel
+.drawer-panel > turbo-frame {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.drawer-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+// -----------------------------------------------------------------------------
+// Drawer Header
+// -----------------------------------------------------------------------------
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--mockr-border);
+  background-color: $light-bg;
+  flex-shrink: 0;
+}
+
+[data-bs-theme="dark"] .drawer-header {
+  background-color: $dark-bg;
+}
+
+.drawer-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.drawer-title-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.drawer-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--mockr-text);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawer-subtitle {
+  font-size: 0.8125rem;
+  color: var(--mockr-text-muted);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// -----------------------------------------------------------------------------
+// Drawer Buttons
+// -----------------------------------------------------------------------------
+
+.drawer-close-btn,
+.drawer-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: $radius;
+  background-color: transparent;
+  color: var(--mockr-text-muted);
+  cursor: pointer;
+  transition: background-color $transition-fast, color $transition-fast;
+  text-decoration: none;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: $slate-200;
+    color: var(--mockr-text);
+  }
+
+  i {
+    font-size: 1.125rem;
+  }
+}
+
+[data-bs-theme="dark"] {
+  .drawer-close-btn:hover,
+  .drawer-back-btn:hover {
+    background-color: $slate-800;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Drawer Body
+// -----------------------------------------------------------------------------
+
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+// -----------------------------------------------------------------------------
+// Drawer Footer (for form actions)
+// -----------------------------------------------------------------------------
+
+.drawer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--mockr-border);
+  background-color: var(--mockr-surface);
+  flex-shrink: 0;
+}
+
+// -----------------------------------------------------------------------------
+// Form Styles within Drawer
+// -----------------------------------------------------------------------------
+
+.drawer-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0; // Important for flex children to shrink
+  overflow: hidden;
+}
+
+.drawer-form-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 1.5rem;
+  min-height: 0; // Important for flex children to shrink
+}
+
+.drawer-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--mockr-border);
+  background-color: $light-bg;
+  flex-shrink: 0;
+}
+
+[data-bs-theme="dark"] .drawer-form-footer {
+  background-color: $dark-bg;
+}
+
+.drawer-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.drawer-form-actions-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+// -----------------------------------------------------------------------------
+// Drawer Button Styles
+// -----------------------------------------------------------------------------
+
+// Small buttons within drawer body (e.g., add buttons, edit, view in nested lists)
+.drawer-content,
+.drawer-form {
+  .btn-sm {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    transition: all 0.15s ease;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .btn-outline-primary {
+    background-color: transparent;
+    border-color: var(--mockr-border);
+    color: var(--bs-primary);
+
+    &:hover {
+      background-color: $primary-10;
+      border-color: var(--bs-primary);
+      color: var(--bs-primary);
+    }
+  }
+
+  .btn-outline-secondary {
+    background-color: transparent;
+    border-color: var(--mockr-border);
+    color: var(--mockr-text-muted);
+
+    &:hover {
+      background-color: var(--bs-gray-100);
+      border-color: var(--bs-gray-400);
+      color: var(--mockr-text);
+    }
+  }
+
+  .btn-outline-danger {
+    background-color: transparent;
+    border-color: var(--mockr-border);
+    color: var(--mockr-text-muted);
+
+    &:hover {
+      background-color: $danger-10;
+      border-color: $danger;
+      color: $danger;
+    }
+  }
+}
+
+[data-bs-theme="dark"] {
+  .drawer-content,
+  .drawer-form {
+    .btn-outline-secondary:hover {
+      background-color: var(--bs-gray-200);
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Section Dividers
+// -----------------------------------------------------------------------------
+
+.drawer-section {
+  margin-bottom: 1.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.drawer-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mockr-text-muted);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--mockr-border);
+}
+
+// -----------------------------------------------------------------------------
+// Form Labels within Drawer
+// -----------------------------------------------------------------------------
+
+.drawer-form-body .form-label,
+.drawer-form-body label.form-label,
+.drawer-body .form-label,
+.drawer-body label.form-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--mockr-text-muted);
+  margin-bottom: 0.375rem;
+}
+
+// Form inputs in drawer - slightly darker than drawer bg for contrast
+.drawer-panel .form-control,
+.drawer-panel .form-select {
+  background-color: $white;
+
+  &::placeholder {
+    color: var(--bs-gray-400);
+  }
+}
+
+[data-bs-theme="dark"] .drawer-panel .form-control,
+[data-bs-theme="dark"] .drawer-panel .form-select {
+  background-color: $slate-800;
+
+  &::placeholder {
+    color: $slate-600;
+  }
+}
+
+// View-only field values (e.g., in show drawers)
+.drawer-body .form-label + div,
+.drawer-form-body .form-label + div:not(.form-control):not(.key-value-editor):not(.code-editor-wrapper) {
+  color: var(--mockr-text);
+}
+
+// -----------------------------------------------------------------------------
+// Nested Resource List in Drawer
+// -----------------------------------------------------------------------------
+
+.drawer-nested-list {
+  border: 1px solid var(--mockr-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.drawer-nested-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background-color: var(--bs-gray-50);
+  border-bottom: 1px solid var(--mockr-border);
+}
+
+[data-bs-theme="dark"] .drawer-nested-header {
+  background-color: var(--bs-gray-100);
+}
+
+.drawer-nested-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--mockr-text);
+  margin: 0;
+}
+
+.drawer-nested-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--mockr-border);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: var(--bs-gray-50);
+  }
+}
+
+[data-bs-theme="dark"] .drawer-nested-item:hover {
+  background-color: var(--bs-gray-100);
+}
+
+.drawer-nested-item-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.drawer-nested-item-name {
+  font-weight: 500;
+  color: var(--mockr-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawer-nested-item-meta {
+  font-size: 0.8125rem;
+  color: var(--mockr-text-muted);
+}
+
+.drawer-nested-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.drawer-nested-empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--mockr-text-muted);
+  font-size: 0.875rem;
+}
+
+// -----------------------------------------------------------------------------
+// User List
+// -----------------------------------------------------------------------------
+
+.user-list {
+  border: 1px solid var(--mockr-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.user-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--mockr-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: var(--bs-gray-50);
+  }
+}
+
+[data-bs-theme="dark"] .user-list-item:hover {
+  background-color: var(--bs-gray-100);
+}
+
+.user-list-item-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.user-list-item-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--bs-gray-100);
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  i {
+    font-size: 1.125rem;
+    color: var(--mockr-text-muted);
+  }
+}
+
+[data-bs-theme="dark"] .user-list-item-avatar {
+  background-color: var(--bs-gray-200);
+}
+
+.user-list-item-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.user-list-item-name {
+  font-weight: 500;
+  color: var(--mockr-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-list-item-email {
+  font-size: 0.8125rem;
+  color: var(--mockr-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-list-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.user-list-item-badge {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+
+  &.badge-outline-primary {
+    background-color: transparent;
+    border: 1px solid var(--bs-primary);
+    color: var(--bs-primary);
+  }
+
+  &.badge-outline-secondary {
+    background-color: transparent;
+    border: 1px solid var(--bs-gray-400);
+    color: var(--bs-gray-600);
+  }
+}
+
+[data-bs-theme="dark"] .user-list-item-badge {
+  &.badge-outline-primary {
+    border-color: $primary-light;
+    color: $primary-light;
+  }
+
+  &.badge-outline-secondary {
+    border-color: $slate-500;
+    color: $slate-400;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Tag Cloud for Resources (Responses, Indices)
+// -----------------------------------------------------------------------------
+
+.drawer-tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: var(--bs-gray-50);
+  border: 1px solid var(--mockr-border);
+  border-radius: 0.5rem;
+  min-height: 3rem;
+}
+
+[data-bs-theme="dark"] .drawer-tag-cloud {
+  background-color: var(--bs-gray-100);
+}
+
+.drawer-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.625rem;
+  background-color: var(--mockr-surface);
+  border: 1px solid var(--mockr-border);
+  border-radius: $radius;
+  font-size: 0.8125rem;
+  color: var(--mockr-text);
+  text-decoration: none;
+  transition: all $transition-fast;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--bs-primary);
+    color: var(--bs-primary);
+    background-color: $primary-5;
+  }
+
+  .drawer-tag-status {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--mockr-text-muted);
+  }
+
+  .drawer-tag-method {
+    font-size: 0.625rem;
+    font-weight: 700;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.1875rem;
+    text-transform: uppercase;
+  }
+}
+
+.drawer-tag-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.625rem;
+  background-color: transparent;
+  border: 1px dashed var(--mockr-border);
+  border-radius: $radius;
+  font-size: 0.8125rem;
+  color: var(--mockr-text-muted);
+  text-decoration: none;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: var(--bs-primary);
+    color: var(--bs-primary);
+    background-color: $primary-5;
+  }
+
+  i {
+    font-size: 0.75rem;
+  }
+}
+
+.drawer-tag-empty {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: var(--mockr-text-muted);
+  font-size: 0.8125rem;
+  font-style: italic;
+}
+
+// -----------------------------------------------------------------------------
+// Delete Confirmation Modal (within drawer)
+// -----------------------------------------------------------------------------
+
+.delete-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $z-modal;
+  background-color: $black-50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity $transition-normal;
+
+  &.delete-modal-enter {
+    opacity: 1;
+  }
+
+  &.delete-modal-exit {
+    opacity: 0;
+  }
+}
+
+[data-bs-theme="dark"] .delete-modal-backdrop {
+  background-color: $black-70;
+}
+
+.delete-modal {
+  background-color: var(--mockr-surface);
+  border-radius: $radius-md;
+  box-shadow: 0 8px 32px $black-20;
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem;
+  transform: scale(0.95);
+  transition: transform $transition-normal;
+
+  .delete-modal-enter & {
+    transform: scale(1);
+  }
+
+  .delete-modal-exit & {
+    transform: scale(0.95);
+  }
+}
+
+.delete-modal-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--mockr-border);
+}
+
+.delete-modal-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--mockr-text);
+}
+
+.delete-modal-body {
+  padding: 1.25rem;
+
+  p {
+    margin: 0;
+    color: var(--mockr-text-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+
+    strong {
+      color: var(--mockr-text);
+    }
+  }
+}
+
+.delete-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--mockr-border);
+  background-color: var(--bs-gray-50);
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+[data-bs-theme="dark"] .delete-modal-footer {
+  background-color: var(--bs-gray-100);
+}
+
+// -----------------------------------------------------------------------------
+// Responsive Adjustments
+// -----------------------------------------------------------------------------
+
+@media (max-width: 768px) {
+  .drawer-panel {
+    width: 100%;
+    max-width: none;
+  }
+
+  .drawer-panel-stacked {
+    width: 100%;
+    max-width: none;
+  }
+}

@@ -2,15 +2,12 @@
 
 class RequestsController < ApplicationController
   def show
-    @request = request_record
+    logs = Panko::ArraySerializer.new(
+      log_records,
+      each_serializer: Requests::LogSerializer,
+    ).to_a
 
-    @logs =
-      Panko::ArraySerializer.new(
-        log_records,
-        each_serializer: Requests::LogSerializer,
-      ).to_a
-
-    render "_show"
+    render "_show", locals: { request: request_record, logs: logs }
   end
 
   private

@@ -2,8 +2,6 @@
 
 class IndicesController < ApplicationController
   def show
-    @index = Index.find(params[:id])
-
-    render "_show"
+    render "_show", locals: { index: Index.find(params[:id]) }
   end
 end

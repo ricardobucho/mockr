@@ -1,0 +1,278 @@
+// =============================================================================
+// Login Page
+// =============================================================================
+
+@use '../variables' as *;
+
+// -----------------------------------------------------------------------------
+// Login Layout
+// -----------------------------------------------------------------------------
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bs-gray-100);
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+// -----------------------------------------------------------------------------
+// Theme Switch
+// -----------------------------------------------------------------------------
+
+.theme-switch {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+.theme-switch-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 3.5rem;
+  height: 2rem;
+  background-color: var(--bs-gray-200);
+  border-radius: 1rem;
+  padding: 0.25rem;
+  position: relative;
+  transition: background-color $transition-normal;
+}
+
+.theme-switch-icon {
+  font-size: 0.75rem;
+  z-index: 1;
+  transition: opacity $transition-normal;
+  width: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-switch-icon-light {
+  color: $icon-sun;
+  opacity: 1;
+}
+
+.theme-switch-icon-dark {
+  color: var(--bs-gray-400);
+  opacity: 0.5;
+}
+
+.theme-switch-thumb {
+  position: absolute;
+  left: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: $white;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px $black-15;
+  transition: transform $transition-normal;
+}
+
+[data-bs-theme="dark"] {
+  .theme-switch-track {
+    background-color: $slate-700;
+  }
+  
+  .theme-switch-icon-light {
+    opacity: 0.5;
+    color: var(--bs-gray-500);
+  }
+  
+  .theme-switch-icon-dark {
+    color: $icon-moon;
+    opacity: 1;
+  }
+  
+  .theme-switch-thumb {
+    transform: translateX(1.5rem);
+    background-color: $slate-800;
+  }
+}
+
+// Smaller variant for header
+.theme-switch-sm {
+  .theme-switch-track {
+    width: 2.75rem;
+    height: 1.5rem;
+    padding: 0.1875rem;
+  }
+  
+  .theme-switch-icon {
+    font-size: 0.625rem;
+    width: 1.125rem;
+  }
+  
+  .theme-switch-thumb {
+    width: 1.125rem;
+    height: 1.125rem;
+    left: 0.1875rem;
+  }
+}
+
+[data-bs-theme="dark"] .theme-switch-sm {
+  .theme-switch-thumb {
+    transform: translateX(1.25rem);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Login Card
+// -----------------------------------------------------------------------------
+
+.login-card {
+  background: $white;
+  border-radius: $radius-md;
+  border: 1px solid var(--bs-gray-300);
+  padding: 3rem 3.5rem;
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+
+  .login-logo {
+    height: 56px;
+    margin-bottom: 2rem;
+  }
+
+  .login-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--bs-gray-800);
+    margin-bottom: 0.5rem;
+  }
+
+  .login-subtitle {
+    font-size: 0.875rem;
+    color: var(--bs-gray-500);
+    margin-bottom: 2rem;
+  }
+}
+
+[data-bs-theme="dark"] {
+  .login-page {
+    background: $slate-900;
+  }
+
+  .login-card {
+    background: $slate-800;
+    border-color: $slate-700;
+
+    .login-logo {
+      filter: brightness(0) invert(1) opacity(0.7);
+    }
+
+    .login-title {
+      color: $slate-100;
+    }
+
+    .login-subtitle {
+      color: $slate-400;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// OAuth Buttons
+// -----------------------------------------------------------------------------
+
+.login-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.btn-oauth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: $radius;
+  transition: all $transition-fast;
+  background-color: var(--bs-gray-200) !important;
+  border: none !important;
+  color: var(--bs-gray-600) !important;
+  box-shadow: 0 1px 2px $black-5 !important;
+
+  &:hover {
+    color: var(--bs-primary) !important;
+    background-color: var(--bs-gray-200) !important;
+    box-shadow: 0 1px 2px $black-5 !important;
+  }
+  
+  &:focus,
+  &:focus-visible {
+    outline: none !important;
+    box-shadow: 0 1px 2px $black-5 !important;
+  }
+
+  // Active while hovering = keep hover color, remove shadow for "pop"
+  &:active:hover,
+  &.active:hover,
+  &:first-child:active:hover {
+    color: var(--bs-primary) !important;
+    background-color: var(--bs-gray-300) !important;
+    box-shadow: none !important;
+  }
+
+  // Active but not hovering (dragged off) = reset to normal
+  &:active:not(:hover),
+  &.active:not(:hover),
+  &:first-child:active:not(:hover) {
+    color: var(--bs-gray-600) !important;
+    background-color: var(--bs-gray-200) !important;
+    box-shadow: 0 1px 2px $black-5 !important;
+  }
+}
+
+[data-bs-theme="dark"] .btn-oauth {
+  background-color: $slate-700 !important;
+  color: $slate-300 !important;
+  box-shadow: 0 1px 2px $black-30 !important;
+
+  &:hover {
+    color: $slate-100 !important;
+    background-color: $slate-700 !important;
+    box-shadow: 0 1px 2px $black-30 !important;
+  }
+  
+  &:focus,
+  &:focus-visible {
+    outline: none !important;
+    box-shadow: 0 1px 2px $black-30 !important;
+  }
+
+  // Active while hovering = keep hover color, slightly darker bg, remove shadow for "pop"
+  &:active:hover,
+  &.active:hover,
+  &:first-child:active:hover {
+    color: $slate-100 !important;
+    background-color: $slate-600 !important;
+    box-shadow: none !important;
+  }
+
+  // Active but not hovering (dragged off) = reset to normal
+  &:active:not(:hover),
+  &.active:not(:hover),
+  &:first-child:active:not(:hover) {
+    color: $slate-300 !important;
+    background-color: $slate-700 !important;
+    box-shadow: 0 1px 2px $black-30 !important;
+  }
+}

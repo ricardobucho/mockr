@@ -7,7 +7,11 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= favicon_link_tag("favicon.ico") %>
+    <%= favicon_link_tag("favicon.svg", type: "image/svg+xml") %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
@@ -17,5 +21,7 @@
     <%= yield %>
 
     <%= render "shared/modal" %>
+    <%= render "shared/drawer" %>
+    <%= render "shared/toast_container" %>
   </body>
 </html>

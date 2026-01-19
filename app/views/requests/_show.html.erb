@@ -1,202 +1,99 @@
-<%= turbo_frame_tag "modal" do %>
-  <% render "shared/modal_content", title: "Request Logs" do %>
-    <h6>
-      <%= @request.client.name %>
-      <i class="bi bi-chevron-right"></i>
-      <b class="text-muted"><%= @request.name %></b>
-    </h6>
-    <hr />
-    <% if @logs.empty? %>
-      <div class="alert alert-warning d-flex align-items-center m-0" role="alert">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i>
-        <div>
-          There are no logs for this request.
+<%= turbo_frame_tag "drawer" do %>
+  <div class="drawer-content">
+    <div class="drawer-header">
+      <div class="drawer-header-left">
+        <div class="drawer-title-group">
+          <h2 class="drawer-title">Request Logs</h2>
+          <span class="drawer-subtitle"><%= request.name %></span>
         </div>
       </div>
-    <% end %>
-    <% @logs.each.with_index do |log, index| %>
-      <ul class="list-group <%= index == 0 ? "" : "mt-3" %> log-entry">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-2 text-end fw-bold">
-              #<%= log["id"] %>
-            </div>
-            <div class="col-10">
-              <%= log["created_at_formatted"] %>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-2 text-end fw-bold">
-              Request
-            </div>
-            <div class="col-10">
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-2 text-end fw-bold">
-                      IP
-                    </div>
-                    <div class="col-10">
-                      <% if log["request_ip?"] %>
-                        <%= log["request_ip"] %>
-                      <% else %>
-                        -
+      <button type="button" class="drawer-close-btn" data-action="drawer#close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <% if logs.empty? %>
+        <div class="empty-state py-4">
+          <i class="bi bi-journal-x empty-state-icon"></i>
+          <div class="empty-state-title">No logs yet</div>
+          <p class="mb-0">Logs will appear here after requests are made.</p>
+        </div>
+      <% else %>
+        <div class="d-flex flex-column gap-3">
+          <% logs.each do |log| %>
+            <div class="log-entry">
+              <div class="log-entry-header">
+                <span class="log-entry-id">#<%= log["id"] %></span>
+                <span class="log-entry-time" data-bs-toggle="tooltip" data-bs-title="<%= log["created_at_formatted"] %>">
+                  <i class="bi bi-clock"></i> <%= log["created_at_ago"] %> ago
+                </span>
+              </div>
+              
+              <div class="row g-3">
+                <div class="col-12">
+                  <div class="small fw-medium text-muted mb-1">Request</div>
+                  <div class="d-flex flex-wrap gap-2 small">
+                    <% if log["request_ip?"] %>
+                      <span class="badge badge-condition">IP: <%= log["request_ip"] %></span>
+                    <% end %>
+                    <% if log["request_user_agent?"] %>
+                      <span class="badge badge-condition text-truncate" style="max-width: 300px;">
+                        Agent: <%= log["request_user_agent"] %>
+                      </span>
+                    <% end %>
+                  </div>
+                  <% if log["request_query_params?"] %>
+                    <div class="d-flex flex-wrap gap-1 mt-2">
+                      <% log["request_query_params"].each do |key, value| %>
+                        <span class="badge badge-condition"><%= key %>: <%= value %></span>
                       <% end %>
                     </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-2 text-end fw-bold">
-                      Agent
-                    </div>
-                    <div class="col-10">
-                      <% if log["request_user_agent?"] %>
-                        <%= log["request_user_agent"] %>
-                      <% else %>
-                        -
+                  <% end %>
+                  <% if log["request_body_params?"] %>
+                    <div class="d-flex flex-wrap gap-1 mt-2">
+                      <% log["request_body_params"].each do |key, value| %>
+                        <span class="badge badge-condition"><%= key %>: <%= value %></span>
                       <% end %>
                     </div>
+                  <% end %>
+                </div>
+                
+                <div class="col-12">
+                  <div class="small fw-medium text-muted mb-1">Response</div>
+                  <div class="d-flex flex-wrap gap-2 small">
+                    <span class="badge badge-condition"><%= log["response_name"] %></span>
+                    <span class="badge badge-condition"><%= log["response_status"] %></span>
+                    <% if log["response_throttle"].to_i > 0 %>
+                      <span class="badge badge-condition">Throttle: <%= log["response_throttle"] %>ms</span>
+                    <% end %>
                   </div>
-                </li>
-                <% if log["request_query_params?"] %>
-                  <li class="list-group-item">
-                    <div class="row">
-                      <div class="col-2 text-end fw-bold">
-                        Query
-                      </div>
-                      <div class="col-10">
-                        <% log["request_query_params"].each do |key, value| %>
-                          <span class="badge bg-secondary">
-                            <%= key %>: <%= value %>
-                          </span>
-                        <% end %>
-                      </div>
-                    </div>
-                  </li>
-                <% end %>
-                <% if log["request_body_params?"] %>
-                  <li class="list-group-item">
-                    <div class="row">
-                      <div class="col-2 text-end fw-bold">
-                        Body
-                      </div>
-                      <div class="col-10">
-                        <% log["request_body_params"].each do |key, value| %>
-                          <span class="badge bg-secondary">
-                            <%= key %>: <%= value %>
-                          </span>
-                        <% end %>
-                      </div>
-                    </div>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-2 text-end fw-bold">
-              Response
-            </div>
-            <div class="col-10">
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-2 text-end fw-bold">
-                      Name
-                    </div>
-                    <div class="col-10">
-                      <%= log["response_name"] %>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-2 text-end fw-bold">
-                      Status
-                    </div>
-                    <div class="col-10">
-                      <%= log["response_status"] %>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-2 text-end fw-bold">
-                      Throttle
-                    </div>
-                    <div class="col-10">
-                      <%= log["response_throttle"] %>ms
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-2 text-end fw-bold">
-                      Headers
-                    </div>
-                    <div class="col-10">
-                      <% if log["response_headers?"] %>
-                        <% log["response_headers"].each do |key, value| %>
-                          <span class="badge bg-secondary">
-                            <%= key %>: <%= value %>
-                          </span>
-                        <% end %>
-                      <% else %>
-                        -
+                  <% if log["response_headers?"] %>
+                    <div class="d-flex flex-wrap gap-1 mt-2">
+                      <% log["response_headers"].each do |key, value| %>
+                        <span class="badge badge-condition"><%= key %>: <%= value %></span>
                       <% end %>
                     </div>
-                  </div>
-                </li>
-                <% if log["response_conditions?"] %>
-                  <li class="list-group-item">
-                    <div class="row">
-                      <div class="col-2 text-end fw-bold">
-                        Conditions
-                      </div>
-                      <div class="col-10">
-                        <% if log["response_conditions?"] %>
-                          <% log["response_conditions"].each do |key, value| %>
-                            <span class="badge bg-secondary">
-                              <%= key %>: <%= value %>
-                            </span>
-                          <% end %>
-                        <% else %>
-                          -
-                        <% end %>
-                      </div>
+                  <% end %>
+                  <% if log["response_conditions?"] %>
+                    <div class="d-flex flex-wrap gap-1 mt-2">
+                      <% log["response_conditions"].each do |key, value| %>
+                        <span class="badge badge-condition"><%= key %>: <%= value %></span>
+                      <% end %>
                     </div>
-                  </li>
-                <% end %>
-                <% if log["response_properties?"] %>
-                  <li class="list-group-item">
-                    <div class="row">
-                      <div class="col-2 text-end fw-bold">
-                        Properties
-                      </div>
-                      <div class="col-10">
-                        <% if log["response_properties?"] %>
-                          <% log["response_properties"].each do |key, value| %>
-                            <span class="badge bg-secondary">
-                              <%= key %>: <%= value %>
-                            </span>
-                          <% end %>
-                        <% else %>
-                          -
-                        <% end %>
-                      </div>
-                    </div>
-                  </li>
-                <% end %>
-              </ul>
+                  <% end %>
+                </div>
+              </div>
             </div>
-          </div>
-        </li>
-      </ul>
-    <% end %>
-  <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="drawer-footer">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#close">
+        Close
+      </button>
+    </div>
+  </div>
 <% end %>

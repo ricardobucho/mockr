@@ -1,4 +1,4 @@
-ARG RUBY_VERSION=3.2.2
+ARG RUBY_VERSION=3.3.6
 
 FROM ruby:$RUBY_VERSION
 LABEL maintainer="Ricardo Bucho <ricardobucho@live.com>"
@@ -17,7 +17,7 @@ RUN apt-get update -qq \
 # Install Node.js using NVM
 COPY .nvmrc ./
 ENV NVM_VERSION v${NVM_VERSION:-0.39.3}
-ENV NODE_VERSION v${NODE_VERSION:-16.14.2}
+ENV NODE_VERSION v${NODE_VERSION:-20.18.1}
 ENV NVM_DIR /usr/local/nvm
 RUN mkdir $NVM_DIR
 

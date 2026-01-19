@@ -1,0 +1,33 @@
+<div class="mb-3">
+  <% if label.present? %>
+    <label class="form-label" for="<%= field_id %>">
+      <%= label %>
+      <% if required %><abbr title="required">*</abbr><% end %>
+    </label>
+  <% end %>
+  
+  <div 
+    class="code-editor-wrapper <%= 'is-invalid' if has_errors? %>"
+    data-controller="code-editor"
+    data-code-editor-mode-value="<%= mode %>"
+    data-code-editor-height-value="<%= height %>"
+  >
+    <textarea
+      name="<%= field_name %>"
+      id="<%= field_id %>"
+      class="code-editor-textarea"
+      data-code-editor-target="textarea"
+    ><%= current_value %></textarea>
+    <div class="code-editor-container" data-code-editor-target="editor"></div>
+  </div>
+
+  <% if has_errors? %>
+    <div class="invalid-feedback d-block">
+      <%= error_messages.to_sentence %>
+    </div>
+  <% end %>
+
+  <% if help_text.present? %>
+    <div class="form-text"><%= help_text %></div>
+  <% end %>
+</div>

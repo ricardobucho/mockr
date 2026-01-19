@@ -1,0 +1,210 @@
+// =============================================================================
+// Key-Value Editor Styles
+// =============================================================================
+
+@use '../variables' as *;
+
+.key-value-editor {
+  border: 1px solid var(--mockr-border);
+  border-radius: $radius;
+  overflow: hidden;
+  background-color: var(--mockr-surface);
+
+  &.is-invalid {
+    border-color: $danger;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Header
+// -----------------------------------------------------------------------------
+
+.key-value-header {
+  display: flex;
+  align-items: center;
+  background-color: var(--bs-gray-50);
+  border-bottom: 1px solid var(--mockr-border);
+  padding: 0.5rem;
+  gap: 0.5rem;
+}
+
+[data-bs-theme="dark"] .key-value-header {
+  background-color: var(--bs-gray-100);
+}
+
+.key-value-header-cell {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mockr-text-muted);
+}
+
+.key-value-header-key {
+  flex: 1;
+  padding-left: 2rem; // Account for drag handle space
+}
+
+.key-value-header-value {
+  flex: 1;
+}
+
+.key-value-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: $radius-sm;
+  background-color: transparent;
+  color: var(--mockr-text-muted);
+  cursor: pointer;
+  transition: background-color $transition-fast, color $transition-fast;
+
+  &:hover {
+    background-color: var(--bs-gray-200);
+    color: var(--mockr-text);
+  }
+
+  i {
+    font-size: 0.875rem;
+  }
+}
+
+[data-bs-theme="dark"] .key-value-add-btn:hover {
+  background-color: var(--bs-gray-300);
+}
+
+// -----------------------------------------------------------------------------
+// Body / Rows
+// -----------------------------------------------------------------------------
+
+.key-value-body {
+  min-height: 0;
+}
+
+.key-value-row {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--mockr-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: var(--bs-gray-50);
+  }
+}
+
+[data-bs-theme="dark"] .key-value-row:hover {
+  background-color: var(--bs-gray-100);
+}
+
+// Sortable ghost class
+.key-value-row-ghost {
+  opacity: 0.5;
+  background-color: var(--bs-gray-100);
+}
+
+// -----------------------------------------------------------------------------
+// Drag Handle
+// -----------------------------------------------------------------------------
+
+.key-value-drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--mockr-text-muted);
+  cursor: grab;
+  flex-shrink: 0;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Inputs
+// -----------------------------------------------------------------------------
+
+.key-value-input {
+  flex: 1;
+  padding: 0.375rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--mockr-text);
+  background-color: var(--mockr-surface);
+  border: 1px solid var(--mockr-border);
+  border-radius: $radius-sm;
+  transition: border-color $transition-fast;
+
+  &:focus {
+    outline: none;
+    border-color: var(--bs-primary);
+  }
+
+  &::placeholder {
+    color: var(--mockr-text-muted);
+    opacity: 0.6;
+  }
+}
+
+[data-bs-theme="dark"] .key-value-input {
+  background-color: var(--bs-gray-100);
+  border-color: var(--bs-gray-200);
+
+  &:focus {
+    border-color: var(--bs-primary);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Delete Button
+// -----------------------------------------------------------------------------
+
+.key-value-delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: $radius-sm;
+  background-color: transparent;
+  color: var(--mockr-text-muted);
+  cursor: pointer;
+  transition: background-color $transition-fast, color $transition-fast;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: $danger-10;
+    color: $danger;
+  }
+
+  i {
+    font-size: 0.875rem;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Empty State
+// -----------------------------------------------------------------------------
+
+.key-value-empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--mockr-text-muted);
+  font-size: 0.875rem;
+}

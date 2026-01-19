@@ -1,0 +1,84 @@
+<% stacked = local_assigns.fetch(:stacked, false) %>
+<%= simple_form_for index, url: index.persisted? ? manage_index_path(index) : manage_request_indices_path(request), html: { class: "drawer-form" } do |f| %>
+  <div class="drawer-form-body">
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Basic Information</h3>
+
+      <%= f.input :name, required: true, placeholder: "Example Index" %>
+      <%= f.input :description, as: :text, input_html: { rows: 2 } %>
+    </div>
+
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Index Configuration</h3>
+      <p class="text-muted small mb-3">
+        The path to this index endpoint is relative to the client but the response items used to process the aggregated array response will be taken from the parent request.
+      </p>
+
+      <div class="row">
+        <div class="col-md-3">
+          <%= f.input :method, collection: Request.methods.keys, required: true %>
+        </div>
+        <div class="col-md-9">
+          <%= f.input :path, required: true, placeholder: "/example" %>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.input :status, as: :integer, required: true, placeholder: "200", hint: "The HTTP status code." %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :throttle, as: :integer, placeholder: "0", hint: "Delay in milliseconds." %>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Request Headers</h3>
+      <p class="text-muted small mb-3">Headers to send with the external API request.</p>
+
+      <%= render Manage::Fields::KeyValueComponent.new(
+        form: f,
+        attribute: :headers,
+        label: nil,
+        key_label: "Header",
+        value_label: "Value"
+      ) %>
+    </div>
+
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Response Template</h3>
+      <p class="text-muted small mb-3">
+        JSON template rendered for each response. The <code>response</code> variable is a hash containing the response body.
+        Use <code>&lt;%= response.to_json %&gt;</code> to output the full response, or build a custom JSON object with the help of
+        <code>&lt;%= JsonPath.on(response, '$.key') %&gt;</code> to extract specific values.
+        Template must produce valid JSON or the item will be skipped.
+      </p>
+
+      <%= render Manage::Fields::CodeEditorComponent.new(
+        form: f,
+        attribute: :template,
+        label: nil,
+        language: :json,
+        height: "400px"
+      ) %>
+    </div>
+  </div>
+
+  <div class="drawer-form-footer">
+    <div class="drawer-form-actions-left">
+      <% if index.persisted? %>
+        <%= link_to delete_manage_index_path(index), class: "btn btn-action-danger-outline", data: { turbo_frame: "modal" } do %>
+          <i class="bi bi-trash me-1"></i>
+          Delete
+        <% end %>
+      <% end %>
+    </div>
+    <div class="drawer-form-actions">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#<%= stacked ? 'closeStacked' : 'close' %>">
+        Cancel
+      </button>
+      <%= f.submit index.persisted? ? "Save Changes" : "Create Index", class: "btn btn-action-primary" %>
+    </div>
+  </div>
+<% end %>

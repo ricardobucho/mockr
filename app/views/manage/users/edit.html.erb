@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "drawer-stacked" do %>
+  <%= render Manage::StackedDrawerComponent.new(title: "Edit User", subtitle: @user.provider_username) do %>
+    <%= render "form", user: @user %>
+  <% end %>
+<% end %>

@@ -1,0 +1,92 @@
+// =============================================================================
+// Tokens Component
+// =============================================================================
+
+@use '../variables' as *;
+
+// -----------------------------------------------------------------------------
+// Token Display
+// -----------------------------------------------------------------------------
+
+.token-display {
+  font-family: $font-family-mono;
+  font-size: 0.75rem;
+  background-color: var(--bs-gray-100);
+  padding: 0.5rem 0.75rem;
+  border-radius: $radius;
+  border: 1px solid var(--bs-gray-200);
+  word-break: break-all;
+}
+
+.token-group {
+  background-color: $white;
+  border-radius: $radius;
+
+  .input-group-text,
+  .form-control,
+  .btn-token-refresh {
+    background-color: transparent;
+    transition: border-color $transition-fast, color $transition-fast, background-color $transition-fast;
+  }
+
+  .input-group-text {
+    border-right: none;
+    border-color: var(--bs-gray-300);
+    color: var(--bs-gray-500);
+    font-size: 0.75rem;
+  }
+
+  .form-control {
+    border-color: var(--bs-gray-300);
+    border-left: none;
+    border-right: none;
+
+    &:focus {
+      box-shadow: none;
+      background-color: transparent;
+    }
+  }
+
+  .btn-token-refresh {
+    border: 1px solid var(--bs-gray-300);
+    border-left: none;
+    color: var(--bs-gray-400);
+
+    &:hover {
+      background-color: var(--bs-gray-100);
+      color: var(--bs-gray-600);
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+[data-bs-theme="dark"] {
+  .token-display {
+    background-color: $slate-900;
+    border-color: $slate-700;
+    color: $slate-200;
+  }
+
+  .token-group {
+    background-color: $slate-800;
+
+    .input-group-text,
+    .form-control,
+    .btn-token-refresh {
+      border-color: $slate-700;
+      color: $slate-400;
+    }
+
+    .form-control {
+      color: $slate-100;
+    }
+
+    .btn-token-refresh:hover {
+      background-color: $slate-700;
+      color: $slate-100;
+    }
+  }
+}

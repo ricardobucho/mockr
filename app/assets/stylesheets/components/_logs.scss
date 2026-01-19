@@ -1,0 +1,61 @@
+// =============================================================================
+// Logs Component
+// =============================================================================
+
+@use '../variables' as *;
+
+// -----------------------------------------------------------------------------
+// Log Entries
+// -----------------------------------------------------------------------------
+
+.log-entry {
+  font-size: 0.8125rem;
+  padding: 1rem;
+  border-radius: $radius-md;
+  background-color: $white;
+  border: 1px solid var(--bs-gray-300);
+}
+
+[data-bs-theme="dark"] .log-entry {
+  background-color: $slate-800;
+  border-color: $slate-700;
+}
+
+.log-entry-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.log-entry-id {
+  font-family: $font-family-mono;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--bs-gray-500);
+  background-color: var(--bs-gray-100);
+  padding: 0.25rem 0.5rem;
+  border-radius: $radius-sm;
+}
+
+[data-bs-theme="dark"] .log-entry-id {
+  background-color: $slate-700;
+  color: $slate-400;
+}
+
+.log-entry-time {
+  font-size: 0.75rem;
+  color: var(--bs-gray-500);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: default;
+
+  i {
+    font-size: 0.6875rem;
+  }
+}
+
+[data-bs-theme="dark"] .log-entry-time {
+  color: $slate-500;
+}

@@ -1,0 +1,84 @@
+<%= simple_form_for request, url: request.persisted? ? manage_request_path(request) : manage_client_requests_path(client), html: { class: "drawer-form" } do |f| %>
+  <div class="drawer-form-body">
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Basic Information</h3>
+
+      <%= f.input :name, required: true, placeholder: "Example Request" %>
+      <%= f.input :description, as: :text, input_html: { rows: 2 } %>
+    </div>
+
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Endpoint</h3>
+
+      <%= f.input :method, collection: Request.methods.keys, required: true %>
+      <%= f.input :path, required: true, placeholder: "/example/:id" %>
+    </div>
+
+    <% if request.persisted? %>
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Responses</h3>
+        <p class="text-muted small mb-3">
+          Mock responses returned when this endpoint is called. Use conditions to return different responses based on request parameters.
+        </p>
+
+        <div class="drawer-tag-cloud">
+          <% if request.responses.any? %>
+            <% request.responses.order(:name).each do |response| %>
+              <%= link_to edit_manage_response_path(response, stacked: true), class: "drawer-tag", data: { turbo_frame: "drawer-stacked" } do %>
+                <span><%= response.name %></span>
+                <span class="drawer-tag-status"><%= response.status %></span>
+              <% end %>
+            <% end %>
+          <% else %>
+            <span class="drawer-tag-empty">No responses yet</span>
+          <% end %>
+          <%= link_to new_manage_request_response_path(request), class: "drawer-tag-add", data: { turbo_frame: "drawer-stacked" } do %>
+            <i class="bi bi-plus"></i>
+            <span>Add</span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Indices</h3>
+        <p class="text-muted small mb-3">
+          Index endpoints return all responses as a JSON array. Useful for list/search endpoints that aggregate multiple response items.
+        </p>
+
+        <div class="drawer-tag-cloud">
+          <% if request.indices.any? %>
+            <% request.indices.order(:name).each do |index| %>
+              <%= link_to edit_manage_index_path(index, stacked: true), class: "drawer-tag", data: { turbo_frame: "drawer-stacked" } do %>
+                <span><%= index.name %></span>
+                <span class="drawer-tag-status"><%= index.method %></span>
+              <% end %>
+            <% end %>
+          <% else %>
+            <span class="drawer-tag-empty">No indices yet</span>
+          <% end %>
+          <%= link_to new_manage_request_index_path(request), class: "drawer-tag-add", data: { turbo_frame: "drawer-stacked" } do %>
+            <i class="bi bi-plus"></i>
+            <span>Add</span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="drawer-form-footer">
+    <div class="drawer-form-actions-left">
+      <% if request.persisted? %>
+        <%= link_to delete_manage_request_path(request), class: "btn btn-action-danger-outline", data: { turbo_frame: "modal" } do %>
+          <i class="bi bi-trash me-1"></i>
+          Delete
+        <% end %>
+      <% end %>
+    </div>
+    <div class="drawer-form-actions">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#close">
+        Cancel
+      </button>
+      <%= f.submit request.persisted? ? "Save Changes" : "Create Request", class: "btn btn-action-primary" %>
+    </div>
+  </div>
+<% end %>

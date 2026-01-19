@@ -1,0 +1,44 @@
+<%= simple_form_for user, url: manage_user_path(user), html: { class: "drawer-form" } do |f| %>
+  <div class="drawer-form-body">
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">User Information</h3>
+      
+      <div class="mb-3">
+        <div class="form-label">Provider</div>
+        <div>
+          <i class="bi bi-<%= user.provider_icon %> me-1"></i>
+          <%= user.provider.capitalize %>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <div class="form-label">Username</div>
+        <div><%= user.provider_username %></div>
+      </div>
+
+      <div class="mb-3">
+        <div class="form-label">Email</div>
+        <div><%= user.provider_email %></div>
+      </div>
+    </div>
+
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Role</h3>
+      
+      <%= f.input :role, 
+          collection: User.roles.keys.map { |r| [r.capitalize, r] }, 
+          selected: user.role,
+          hint: "Managers can create, edit, and delete clients, requests, responses, and indices." %>
+    </div>
+  </div>
+
+  <div class="drawer-form-footer">
+    <div class="drawer-form-actions-left"></div>
+    <div class="drawer-form-actions">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#closeStacked">
+        Cancel
+      </button>
+      <%= f.submit "Save Changes", class: "btn btn-action-primary" %>
+    </div>
+  </div>
+<% end %>

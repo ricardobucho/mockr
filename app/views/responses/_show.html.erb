@@ -1,16 +1,86 @@
-<%= turbo_frame_tag "modal" do %>
-  <% render "shared/modal_content", title: "Response" do %>
-    <h6>
-      <%= @response.request.client.name %>
-      <i class="bi bi-chevron-right"></i>
-      <%= @response.request.name %>
-      <i class="bi bi-chevron-right"></i>
-      <b class="text-muted"><%= @response.name %></b>
-    </h6>
-    <hr />
-    <div
-      data-controller="editor"
-      data-editor-language-value="<%= Response.formats[@response.format] %>"
-    ><%= @response.body %></div>
-  <% end %>
+<%= turbo_frame_tag "drawer" do %>
+  <div class="drawer-content">
+    <div class="drawer-header">
+      <div class="drawer-header-left">
+        <div class="drawer-title-group">
+          <h2 class="drawer-title"><%= response.name %></h2>
+          <span class="drawer-subtitle">
+            <%= response.request.client.name %> / <%= response.request.name %>
+          </span>
+        </div>
+      </div>
+      <button type="button" class="drawer-close-btn" data-action="drawer#close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Basic Information</h3>
+        
+        <% if response.description.present? %>
+          <div class="mb-3">
+            <div class="form-label">Description</div>
+            <div><%= response.description %></div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Response Configuration</h3>
+        
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <div class="form-label">Status</div>
+            <div><%= response.status %></div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-label">Format</div>
+            <div><%= response.format %></div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-label">Throttle</div>
+            <div><%= response.throttle.to_i > 0 ? "#{response.throttle}ms" : "None" %></div>
+          </div>
+        </div>
+      </div>
+
+      <% if response.conditions.present? && response.conditions.any? %>
+        <div class="drawer-section">
+          <h3 class="drawer-section-title">Conditions</h3>
+          <div class="d-flex flex-wrap gap-1">
+            <% response.conditions.each do |key, value| %>
+              <span class="badge badge-condition"><%= key %>: <%= value %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if response.headers.present? && response.headers.any? %>
+        <div class="drawer-section">
+          <h3 class="drawer-section-title">Headers</h3>
+          <div class="d-flex flex-wrap gap-1">
+            <% response.headers.each do |key, value| %>
+              <span class="badge badge-condition"><%= key %>: <%= value %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Response Body</h3>
+        
+        <%= render Manage::Fields::CodeViewerComponent.new(
+          code: response.body,
+          language: response.format
+        ) %>
+      </div>
+    </div>
+
+    <div class="drawer-footer">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#close">
+        Close
+      </button>
+    </div>
+  </div>
 <% end %>

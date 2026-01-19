@@ -1,0 +1,25 @@
+<div class="drawer-content">
+  <div class="drawer-header">
+    <div class="drawer-header-left">
+      <% if back_link? %>
+        <%= link_to back_url, class: "drawer-back-btn", data: { action: "drawer#closeStacked", turbo_frame: "drawer-stacked" } do %>
+          <i class="bi bi-arrow-left"></i>
+        <% end %>
+      <% else %>
+        <button type="button" class="drawer-back-btn" data-action="drawer#closeStacked">
+          <i class="bi bi-arrow-left"></i>
+        </button>
+      <% end %>
+      <div class="drawer-title-group">
+        <h2 class="drawer-title"><%= title %></h2>
+        <% if subtitle.present? %>
+          <span class="drawer-subtitle"><%= subtitle %></span>
+        <% end %>
+      </div>
+    </div>
+    <button type="button" class="drawer-close-btn" data-action="drawer#closeStacked">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+  <%= content %>
+</div>

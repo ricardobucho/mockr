@@ -1,0 +1,35 @@
+// =============================================================================
+// Empty States Component
+// =============================================================================
+
+@use '../variables' as *;
+
+// -----------------------------------------------------------------------------
+// Empty State Display
+// -----------------------------------------------------------------------------
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--bs-gray-500);
+
+  .empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  .empty-state-title {
+    font-weight: 600;
+    color: var(--bs-gray-700);
+    margin-bottom: 0.5rem;
+  }
+}
+
+[data-bs-theme="dark"] .empty-state {
+  color: $slate-500;
+
+  .empty-state-title {
+    color: $slate-400;
+  }
+}

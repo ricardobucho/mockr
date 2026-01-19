@@ -1,0 +1,204 @@
+// =============================================================================
+// _variables.scss - Single Source of Truth for All Design Tokens
+// =============================================================================
+//
+// This file defines ALL color and design tokens for the Mockr application.
+// Other SCSS files should @use this file and reference these variables.
+//
+// DO NOT define colors directly in other files - always use these variables.
+//
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// 1. PALETTE - Raw Color Values
+// -----------------------------------------------------------------------------
+
+// Slate Scale (Tailwind-inspired grays)
+// Used for: backgrounds, borders, text
+$slate-50:  #f8fafc !default;
+$slate-100: #f1f5f9 !default;
+$slate-200: #e2e8f0 !default;
+$slate-300: #cbd5e1 !default;
+$slate-400: #94a3b8 !default;
+$slate-500: #64748b !default;
+$slate-600: #475569 !default;
+$slate-700: #334155 !default;
+$slate-800: #1e293b !default;
+$slate-900: #0f172a !default;
+
+// Brand - Primary
+$primary:       #5064A8 !default;
+$primary-light: #C4CDEC !default;
+$primary-dark:  #3d4a7a !default;
+
+// Semantic - Status Colors
+$danger:  #dc3545 !default;
+$success: #10b981 !default;
+$warning: #f59e0b !default;
+$info:    #3b82f6 !default;
+
+// Alert colors (info-subtle variant)
+$alert-info-bg:          #eff6ff !default;
+$alert-info-border:      #dbeafe !default;
+$alert-info-text:        #1e40af !default;
+$alert-info-bg-dark:     #1e3a5f !default;
+$alert-info-border-dark: #1e40af !default;
+$alert-info-text-dark:   #93c5fd !default;
+
+// Icon colors
+$icon-sun:  #f59e0b !default;  // Sun icon in theme switch (amber)
+$icon-moon: #a5b4fc !default;  // Moon icon in theme switch (indigo)
+$icon-code-pink: #f472b6 !default;  // Code element color
+
+// Secondary (Bootstrap compatibility)
+$secondary: $slate-500 !default;
+
+// Light/Dark extremes
+$white: #ffffff !default;
+$black: #000000 !default;
+
+// -----------------------------------------------------------------------------
+// 2. ALPHA VARIANTS - Computed from Palette
+// -----------------------------------------------------------------------------
+
+// Primary alpha variants (for backgrounds, borders with transparency)
+$primary-5:  rgba($primary, 0.05) !default;
+$primary-10: rgba($primary, 0.1) !default;
+$primary-15: rgba($primary, 0.15) !default;
+$primary-20: rgba($primary, 0.2) !default;
+$primary-25: rgba($primary, 0.25) !default;
+$primary-40: rgba($primary, 0.4) !default;
+$primary-60: rgba($primary, 0.6) !default;
+
+// Danger alpha variants
+$danger-10: rgba($danger, 0.1) !default;
+$danger-15: rgba($danger, 0.15) !default;
+$danger-20: rgba($danger, 0.2) !default;
+$danger-light: #f87171 !default;  // Light red for dark mode
+
+// Black alpha variants (for shadows, overlays)
+$black-5:  rgba($black, 0.05) !default;
+$black-10: rgba($black, 0.1) !default;
+$black-15: rgba($black, 0.15) !default;
+$black-20: rgba($black, 0.2) !default;
+$black-30: rgba($black, 0.3) !default;
+$black-40: rgba($black, 0.4) !default;
+$black-50: rgba($black, 0.5) !default;
+$black-70: rgba($black, 0.7) !default;
+
+// -----------------------------------------------------------------------------
+// 3. SEMANTIC TOKENS - Light Mode
+// -----------------------------------------------------------------------------
+
+$light-bg:             $slate-50 !default;
+$light-surface:        $white !default;
+$light-surface-subtle: $slate-100 !default;
+$light-border:           $slate-300 !default;
+$light-border-light:     $slate-200 !default;
+$light-text:             $slate-800 !default;
+$light-text-muted:       $slate-500 !default;
+$light-text-subtle:      $slate-400 !default;
+
+// -----------------------------------------------------------------------------
+// 4. SEMANTIC TOKENS - Dark Mode
+// -----------------------------------------------------------------------------
+
+$dark-bg:               $slate-900 !default;
+$dark-surface:          $slate-800 !default;
+$dark-surface-elevated: $slate-700 !default;
+$dark-border:           $slate-700 !default;
+$dark-border-light:     $slate-600 !default;
+$dark-text:             $slate-100 !default;
+$dark-text-muted:       $slate-400 !default;
+$dark-text-subtle:      $slate-500 !default;
+
+// -----------------------------------------------------------------------------
+// 5. SYNTAX HIGHLIGHTING PALETTE (Code Editors)
+// -----------------------------------------------------------------------------
+// These are intentionally separate from UI colors.
+// Syntax highlighting has different contrast/readability requirements.
+
+$syntax-string:    #16a34a !default;  // Green 600
+$syntax-number:    #2563eb !default;  // Blue 600
+$syntax-keyword:   #7c3aed !default;  // Violet 600
+$syntax-atom:      #dc2626 !default;  // Red 600 (true, false, null)
+$syntax-tag:       #dc2626 !default;  // Red 600 (HTML/XML tags)
+$syntax-property:  #0891b2 !default;  // Cyan 600
+$syntax-attribute: #7c3aed !default;  // Violet 600
+$syntax-comment:   $slate-500 !default;
+
+// -----------------------------------------------------------------------------
+// 6. HTTP METHOD BADGE COLORS
+// -----------------------------------------------------------------------------
+// Each method has light and dark variants for background and text.
+
+// GET - Green
+$method-get-bg:         #dcfce7 !default;
+$method-get-text:       #166534 !default;
+$method-get-bg-dark:    #166534 !default;
+$method-get-text-dark:  #86efac !default;
+
+// POST - Blue
+$method-post-bg:        #dbeafe !default;
+$method-post-text:      #1e40af !default;
+$method-post-bg-dark:   #1e40af !default;
+$method-post-text-dark: #93c5fd !default;
+
+// PUT - Amber
+$method-put-bg:         #fef3c7 !default;
+$method-put-text:       #92400e !default;
+$method-put-bg-dark:    #92400e !default;
+$method-put-text-dark:  #fcd34d !default;
+
+// PATCH - Purple
+$method-patch-bg:         #f3e8ff !default;
+$method-patch-text:       #6b21a8 !default;
+$method-patch-bg-dark:    #6b21a8 !default;
+$method-patch-text-dark:  #d8b4fe !default;
+
+// DELETE - Red
+$method-delete-bg:        #fee2e2 !default;
+$method-delete-text:      #991b1b !default;
+$method-delete-bg-dark:   #991b1b !default;
+$method-delete-text-dark: #fca5a5 !default;
+
+// -----------------------------------------------------------------------------
+// 7. COMPONENT TOKENS
+// -----------------------------------------------------------------------------
+
+// Typography
+$font-family-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco,
+  "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono",
+  "Ubuntu Mono", "Source Code Pro", "Fira Mono", "Droid Sans Mono",
+  "Consolas", "Courier New", monospace !default;
+
+// Border radius
+$radius-sm: 0.25rem !default;
+$radius:    0.375rem !default;
+$radius-md: 0.5rem !default;
+$radius-lg: 0.75rem !default;
+$radius-pill: 50rem !default;
+
+// Spacing (if needed for consistency)
+$spacing-xs: 0.25rem !default;
+$spacing-sm: 0.5rem !default;
+$spacing:    1rem !default;
+$spacing-md: 1.5rem !default;
+$spacing-lg: 2rem !default;
+
+// Z-index layers
+$z-drawer:    1050 !default;
+$z-modal:     1060 !default;
+$z-toast:     1100 !default;
+$z-tooltip:   1080 !default;
+
+// Component-specific
+$drawer-width:          85% !default;
+$drawer-max-width:      900px !default;
+$drawer-stacked-offset: 24px !default;
+$toast-max-width:       400px !default;
+
+// Transitions
+$transition-fast:   0.15s ease !default;
+$transition-normal: 0.2s ease !default;
+$transition-slow:   0.3s ease !default;

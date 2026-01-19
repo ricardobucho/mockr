@@ -1,0 +1,15 @@
+<div class="drawer-container" data-controller="drawer">
+  <div 
+    class="drawer-backdrop" 
+    data-drawer-target="backdrop"
+    data-action="click->drawer#backdropClick"
+  ></div>
+  
+  <div class="drawer-panel" data-drawer-target="panel">
+    <%= turbo_frame_tag "drawer" %>
+  </div>
+  
+  <div class="drawer-panel drawer-panel-stacked" data-drawer-target="stackedPanel">
+    <%= turbo_frame_tag "drawer-stacked" %>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<% stacked = local_assigns.fetch(:stacked, false) %>
+<%= simple_form_for response, url: response.persisted? ? manage_response_path(response) : manage_request_responses_path(request), html: { class: "drawer-form" } do |f| %>
+  <div class="drawer-form-body">
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Basic Information</h3>
+
+      <%= f.input :name, required: true, placeholder: "Example Response" %>
+      <%= f.input :description, as: :text, input_html: { rows: 2 } %>
+    </div>
+
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Response Configuration</h3>
+
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.input :status, as: :integer, required: true, placeholder: "200", hint: "The HTTP status code." %>
+        </div>
+        <div class="col-md-4">
+          <%= f.input :format, collection: Response.formats.keys, required: true %>
+        </div>
+        <div class="col-md-4">
+          <%= f.input :throttle, as: :integer, placeholder: "0", hint: "Delay in milliseconds." %>
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Conditions</h3>
+      <p class="text-muted small mb-3">Match request parameters to return this response. Leave empty to use as default.</p>
+
+      <%= render Manage::Fields::KeyValueComponent.new(
+        form: f,
+        attribute: :conditions,
+        label: nil,
+        key_label: "Parameter",
+        value_label: "Value"
+      ) %>
+    </div>
+
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Headers</h3>
+
+      <%= render Manage::Fields::KeyValueComponent.new(
+        form: f,
+        attribute: :headers,
+        label: nil,
+        key_label: "Header",
+        value_label: "Value"
+      ) %>
+    </div>
+
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Response Body</h3>
+
+      <%= render Manage::Fields::CodeEditorComponent.new(
+        form: f,
+        attribute: :body,
+        label: nil,
+        language: response.format || :json,
+        required: true,
+        height: "400px"
+      ) %>
+    </div>
+  </div>
+
+  <div class="drawer-form-footer">
+    <div class="drawer-form-actions-left">
+      <% if response.persisted? %>
+        <%= link_to delete_manage_response_path(response), class: "btn btn-action-danger-outline", data: { turbo_frame: "modal" } do %>
+          <i class="bi bi-trash me-1"></i>
+          Delete
+        <% end %>
+      <% end %>
+    </div>
+    <div class="drawer-form-actions">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#<%= stacked ? 'closeStacked' : 'close' %>">
+        Cancel
+      </button>
+      <%= f.submit response.persisted? ? "Save Changes" : "Create Response", class: "btn btn-action-primary" %>
+    </div>
+  </div>
+<% end %>

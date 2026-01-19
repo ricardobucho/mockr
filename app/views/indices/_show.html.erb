@@ -1,16 +1,90 @@
-<%= turbo_frame_tag "modal" do %>
-  <% render "shared/modal_content", title: "Index" do %>
-    <h6>
-      <%= @index.request.client.name %>
-      <i class="bi bi-chevron-right"></i>
-      <%= @index.request.name %>
-      <i class="bi bi-chevron-right"></i>
-      <b class="text-muted"><%= @index.name %></b>
-    </h6>
-    <hr />
-    <div
-      data-controller="editor"
-      data-editor-language-value="html"
-    ><%== @index.template %></div>
-  <% end %>
+<%= turbo_frame_tag "drawer" do %>
+  <div class="drawer-content">
+    <div class="drawer-header">
+      <div class="drawer-header-left">
+        <div class="drawer-title-group">
+          <h2 class="drawer-title"><%= index.name %></h2>
+          <span class="drawer-subtitle">
+            <%= index.request.client.name %> / <%= index.request.name %>
+          </span>
+        </div>
+      </div>
+      <button type="button" class="drawer-close-btn" data-action="drawer#close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Basic Information</h3>
+        
+        <% if index.description.present? %>
+          <div class="mb-3">
+            <div class="form-label">Description</div>
+            <div><%= index.description %></div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Endpoint Configuration</h3>
+        
+        <div class="row g-3 mb-3">
+          <div class="col-md-3">
+            <div class="form-label">Method</div>
+            <div><span class="method-badge method-<%= index.method.downcase %>"><%= index.method %></span></div>
+          </div>
+          <div class="col-md-5">
+            <div class="form-label">Path</div>
+            <div class="text-mono small"><%= index.path %></div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-label">Status</div>
+            <div><%= index.status %></div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-label">Throttle</div>
+            <div><%= index.throttle.to_i > 0 ? "#{index.throttle}ms" : "None" %></div>
+          </div>
+        </div>
+      </div>
+
+      <% if index.headers.present? && index.headers.any? %>
+        <div class="drawer-section">
+          <h3 class="drawer-section-title">Headers</h3>
+          <div class="d-flex flex-wrap gap-1">
+            <% index.headers.each do |key, value| %>
+              <span class="badge badge-condition"><%= key %>: <%= value %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if index.properties.present? && index.properties.any? %>
+        <div class="drawer-section">
+          <h3 class="drawer-section-title">Properties</h3>
+          <div class="d-flex flex-wrap gap-1">
+            <% index.properties.each do |key, value| %>
+              <span class="badge badge-condition"><%= key %>: <%= value %></span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Template</h3>
+        
+        <%= render Manage::Fields::CodeViewerComponent.new(
+          code: index.template,
+          language: :erb
+        ) %>
+      </div>
+    </div>
+
+    <div class="drawer-footer">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#close">
+        Close
+      </button>
+    </div>
+  </div>
 <% end %>

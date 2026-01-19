@@ -1,0 +1,405 @@
+// =============================================================================
+// Header Component
+// =============================================================================
+
+@use '../variables' as *;
+
+// -----------------------------------------------------------------------------
+// App Header
+// -----------------------------------------------------------------------------
+
+.app-header {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--bs-gray-300);
+
+  .logo {
+    height: 28px;
+    transition: opacity $transition-fast;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+// Dark mode: soften logo brightness
+[data-bs-theme="dark"] .logo {
+  filter: brightness(0) invert(1) opacity(0.7);
+}
+
+[data-bs-theme="dark"] .app-header {
+  border-bottom-color: $slate-800;
+}
+
+.btn-header-icon {
+  background-color: transparent;
+  border: none;
+  color: var(--bs-gray-500);
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+
+  &:hover {
+    color: var(--bs-gray-700);
+    background-color: var(--bs-gray-100);
+    border-radius: $radius-sm;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.header-left,
+.header-right {
+  flex: 1;
+  min-width: 0;
+}
+
+.header-center {
+  flex: 0 1 400px;
+  max-width: 400px;
+  margin: 0 1rem;
+
+  form {
+    margin: 0;
+    width: 100%;
+  }
+}
+
+.header-right {
+  .user-info {
+    color: var(--bs-gray-600);
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+
+  .header-buttons {
+    background-color: $white;
+    border: 1px solid var(--bs-gray-300);
+    border-radius: $radius;
+    padding: 0.125rem;
+
+    .btn-header-action {
+      color: var(--bs-gray-500);
+      padding: 0.25rem 0.5rem;
+      border: none;
+      background: transparent;
+      border-radius: $radius-sm;
+      line-height: 1;
+
+      &:hover {
+        color: var(--bs-gray-700);
+        background-color: var(--bs-gray-100);
+      }
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 1rem;
+      background-color: var(--bs-gray-300);
+      margin: 0 0.125rem;
+    }
+  }
+}
+
+[data-bs-theme="dark"] .header-right {
+  .user-info {
+    color: var(--bs-gray-500);
+  }
+
+  .header-buttons {
+    background-color: $slate-800;
+    border-color: $slate-700;
+
+    .btn-header-action {
+      color: $slate-400;
+
+      &:hover {
+        color: $slate-100;
+        background-color: $slate-700;
+      }
+    }
+
+    .header-divider {
+      background-color: $slate-700;
+    }
+  }
+}
+
+// Standalone btn-header-action (e.g., in offcanvas)
+.btn-header-action {
+  color: var(--bs-gray-500);
+  padding: 0.5rem;
+  border: none !important;
+  background: transparent !important;
+  border-radius: $radius;
+  line-height: 1;
+
+  &:hover {
+    color: var(--bs-gray-700);
+    background-color: var(--bs-gray-100) !important;
+  }
+
+  &:focus,
+  &:active,
+  &:focus-visible {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+}
+
+[data-bs-theme="dark"] .btn-header-action {
+  color: $slate-400;
+
+  &:hover {
+    color: $slate-100;
+    background-color: $slate-700 !important;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Manage Dropdown
+// -----------------------------------------------------------------------------
+
+.manage-dropdown {
+  background-color: $white;
+  border: 1px solid var(--bs-gray-300);
+  border-radius: $radius;
+  padding: 0.125rem;
+
+  .btn-header-manage {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    height: 23px;
+    color: var(--bs-gray-500);
+    background-color: transparent;
+    border: none;
+    border-radius: $radius-sm;
+    transition: all $transition-fast;
+    line-height: 1;
+
+    &:hover {
+      color: var(--bs-gray-700);
+      background-color: var(--bs-gray-100);
+    }
+
+    &:focus,
+    &:active,
+    &.show {
+      box-shadow: none;
+      outline: none;
+      color: var(--bs-gray-700);
+      background-color: var(--bs-gray-100);
+    }
+
+    &::after {
+      display: none; // Remove default Bootstrap caret
+    }
+
+    i {
+      font-size: 1rem;
+    }
+
+    .bi-chevron-down {
+      font-size: 0.5rem;
+      transition: transform $transition-fast;
+    }
+
+    &.show .bi-chevron-down {
+      transform: rotate(180deg);
+    }
+  }
+
+  .dropdown-menu {
+    min-width: calc(100% + 2px); // Account for parent border
+    padding: 0.125rem;
+    border: 1px solid var(--bs-gray-300);
+    border-radius: $radius;
+    box-shadow: 0 4px 12px $black-10;
+    background-color: $white;
+    margin-top: 0.25rem;
+    right: -1px; // Align with parent border
+    left: auto;
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: $radius-sm;
+    color: var(--bs-gray-600);
+    transition: all $transition-fast;
+    line-height: 1;
+
+    &:hover {
+      background-color: var(--bs-gray-100);
+      color: var(--bs-gray-700);
+    }
+
+    &:active {
+      background-color: var(--bs-gray-200);
+    }
+
+    i {
+      font-size: 1rem;
+      color: var(--bs-gray-500);
+    }
+  }
+}
+
+[data-bs-theme="dark"] .manage-dropdown {
+  background-color: $slate-800;
+  border-color: $slate-700;
+
+  .btn-header-manage {
+    color: $slate-400;
+
+    &:hover,
+    &.show {
+      color: $slate-100;
+      background-color: $slate-700;
+    }
+  }
+
+  .dropdown-menu {
+    background-color: $slate-800;
+    border-color: $slate-700;
+    box-shadow: 0 4px 12px $black-30;
+  }
+
+  .dropdown-item {
+    color: $slate-400;
+
+    &:hover {
+      background-color: $slate-700;
+      color: $slate-100;
+    }
+
+    &:active {
+      background-color: $slate-600;
+    }
+
+    i {
+      color: $slate-500;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Search
+// -----------------------------------------------------------------------------
+
+.search-group {
+  background-color: $white;
+  border-radius: $radius;
+
+  .input-group-text,
+  .form-control,
+  .btn-search-clear {
+    transition:
+      border-color $transition-fast,
+      color $transition-fast,
+      background-color $transition-fast;
+    background-color: transparent;
+    font-size: 0.8125rem;
+  }
+
+  .input-group-text {
+    border-right: none;
+    color: var(--bs-gray-500);
+    padding-left: 0.625rem;
+    padding-right: 0.25rem;
+  }
+
+  .form-control {
+    border-left: none;
+    border-right: none;
+
+    &:focus {
+      box-shadow: none;
+      background-color: transparent;
+    }
+
+    &::placeholder {
+      color: var(--bs-gray-500);
+    }
+  }
+
+  .btn-search-clear {
+    border: 1px solid var(--bs-gray-300);
+    border-left: none;
+    color: var(--bs-gray-400);
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: var(--bs-gray-100);
+      color: var(--bs-gray-600);
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  &:focus-within {
+    .input-group-text,
+    .form-control,
+    .btn-search-clear {
+      border-color: var(--bs-primary);
+    }
+
+    .input-group-text {
+      color: var(--bs-primary);
+    }
+  }
+}
+
+[data-bs-theme="dark"] .search-group {
+  background-color: $slate-800;
+
+  .input-group-text,
+  .form-control,
+  .btn-search-clear {
+    border-color: $slate-700;
+    color: $slate-400;
+  }
+
+  .form-control {
+    color: $slate-100;
+
+    &::placeholder {
+      color: $slate-500;
+    }
+  }
+
+  .btn-search-clear:hover {
+    background-color: $slate-700;
+    color: $slate-100;
+  }
+
+  &:focus-within {
+    .input-group-text,
+    .form-control,
+    .btn-search-clear {
+      border-color: var(--bs-primary);
+    }
+
+    .input-group-text {
+      color: var(--bs-primary);
+    }
+  }
+}

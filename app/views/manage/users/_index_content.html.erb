@@ -1,0 +1,31 @@
+<div class="drawer-body">
+  <div class="user-list">
+    <% users.each do |user| %>
+      <div class="user-list-item">
+        <div class="user-list-item-info">
+          <div class="user-list-item-avatar">
+            <i class="bi bi-<%= user.provider_icon %>"></i>
+          </div>
+          <div class="user-list-item-details">
+            <span class="user-list-item-name"><%= user.provider_username %></span>
+            <span class="user-list-item-email"><%= user.provider_email %></span>
+          </div>
+        </div>
+        <div class="user-list-item-actions">
+          <span class="user-list-item-badge <%= user.manager? ? 'badge-outline-primary' : 'badge-outline-secondary' %>">
+            <%= user.role %>
+          </span>
+          <%= link_to edit_manage_user_path(user), class: "btn btn-sm btn-outline-secondary", data: { turbo_frame: "drawer-stacked" } do %>
+            <i class="bi bi-pencil"></i>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if users.empty? %>
+      <div class="drawer-nested-empty">
+        No users found.
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<%= simple_form_for client, url: client.persisted? ? manage_client_path(client) : manage_clients_path, html: { class: "drawer-form" } do |f| %>
+  <div class="drawer-form-body">
+    <div class="drawer-section">
+      <h3 class="drawer-section-title">Basic Information</h3>
+      
+      <%= f.input :name, required: true, placeholder: "Example API" %>
+      <%= f.input :slug, required: true, placeholder: "example-api", hint: "URL-friendly identifier. Used in endpoint paths." %>
+      <%= f.input :description, as: :text, input_html: { rows: 3 } %>
+    </div>
+  </div>
+
+  <div class="drawer-form-footer">
+    <div class="drawer-form-actions-left">
+      <% if client.persisted? %>
+        <%= link_to delete_manage_client_path(client), class: "btn btn-action-danger-outline", data: { turbo_frame: "modal" } do %>
+          <i class="bi bi-trash me-1"></i>
+          Delete
+        <% end %>
+      <% end %>
+    </div>
+    <div class="drawer-form-actions">
+      <button type="button" class="btn btn-action-secondary" data-action="drawer#close">
+        Cancel
+      </button>
+      <%= f.submit client.persisted? ? "Save Changes" : "Create Client", class: "btn btn-action-primary" %>
+    </div>
+  </div>
+<% end %>

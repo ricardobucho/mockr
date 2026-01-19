@@ -1,0 +1,100 @@
+// =============================================================================
+// Badges Component
+// =============================================================================
+
+@use '../variables' as *;
+
+// -----------------------------------------------------------------------------
+// HTTP Method Badges
+// -----------------------------------------------------------------------------
+
+.method-badge {
+  font-family: $font-family-mono;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  padding: 0.25em 0.5em;
+  border-radius: $radius-sm;
+  text-transform: uppercase;
+}
+
+.method-get {
+  background-color: $method-get-bg;
+  color: $method-get-text;
+}
+
+.method-post {
+  background-color: $method-post-bg;
+  color: $method-post-text;
+}
+
+.method-put {
+  background-color: $method-put-bg;
+  color: $method-put-text;
+}
+
+.method-patch {
+  background-color: $method-patch-bg;
+  color: $method-patch-text;
+}
+
+.method-delete {
+  background-color: $method-delete-bg;
+  color: $method-delete-text;
+}
+
+[data-bs-theme="dark"] {
+  .method-get {
+    background-color: $method-get-bg-dark;
+    color: $method-get-text-dark;
+  }
+
+  .method-post {
+    background-color: $method-post-bg-dark;
+    color: $method-post-text-dark;
+  }
+
+  .method-put {
+    background-color: $method-put-bg-dark;
+    color: $method-put-text-dark;
+  }
+
+  .method-patch {
+    background-color: $method-patch-bg-dark;
+    color: $method-patch-text-dark;
+  }
+
+  .method-delete {
+    background-color: $method-delete-bg-dark;
+    color: $method-delete-text-dark;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// General Badges
+// -----------------------------------------------------------------------------
+
+.badge {
+  font-weight: 500;
+}
+
+.badge-role {
+  font-size: 0.6875rem;
+  padding: 0.25em 0.5em;
+  background-color: var(--bs-primary);
+}
+
+.badge-condition {
+  font-family: $font-family-mono;
+  font-size: 0.6875rem;
+  background-color: var(--bs-gray-100);
+  color: var(--bs-gray-700);
+  border: 1px solid var(--bs-gray-300);
+  white-space: nowrap;
+}
+
+[data-bs-theme="dark"] .badge-condition {
+  background-color: $slate-700;
+  color: $slate-200;
+  border-color: $slate-600;
+}
