@@ -6,6 +6,39 @@ RSpec.describe "Manage::Clients" do
   let(:manager) { create(:user, role: "Manager") }
   let(:regular_user) { create(:user, role: "User") }
 
+  describe "GET /manage/clients" do
+    context "when user is a manager" do
+      before { allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(manager) }
+
+      it "returns success" do
+        get manage_clients_path
+        expect(response).to have_http_status(:success)
+      end
+
+      it "displays the clients list" do
+        client = create(:client, name: "Test Client")
+        get manage_clients_path
+        expect(response.body).to include("Test Client")
+      end
+    end
+
+    context "when user is not a manager" do
+      before { allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(regular_user) }
+
+      it "redirects to root" do
+        get manage_clients_path
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context "when user is not logged in" do
+      it "redirects to login" do
+        get manage_clients_path
+        expect(response).to redirect_to(login_path)
+      end
+    end
+  end
+
   describe "GET /manage/clients/new" do
     context "when user is a manager" do
       before { allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(manager) }
